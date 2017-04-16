@@ -5,7 +5,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import edu.unomaha.nhippen.sprite.game.SpriteGame;
+import edu.unomaha.nhippen.sprite.game.TileFramework;
 import edu.unomaha.nhippen.sprite.vectors.AxisAlignedBoundingBox;
 import edu.unomaha.nhippen.sprite.vectors.Vector2f;
 
@@ -27,8 +27,8 @@ public class TreeSprite extends BoundingSprite {
 	public TreeSprite() {
 		super(BASE_IMAGE);
 		setOuterBound(new AxisAlignedBoundingBox(
-				new Vector2f(-SpriteGame.TILE_SIZE / 4F, -SpriteGame.TILE_SIZE / 2),
-				new Vector2f(SpriteGame.TILE_SIZE / 4F, -SpriteGame.TILE_SIZE)));
+				new Vector2f(-TileFramework.TILE_SIZE / 4F, -TileFramework.TILE_SIZE / 2),
+				new Vector2f(TileFramework.TILE_SIZE / 4F, -TileFramework.TILE_SIZE)));
 	}
 
 }

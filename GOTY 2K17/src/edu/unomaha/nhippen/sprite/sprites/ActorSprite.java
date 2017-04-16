@@ -9,7 +9,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import edu.unomaha.nhippen.sprite.game.SpriteGame;
+import edu.unomaha.nhippen.sprite.game.TileFramework;
 import edu.unomaha.nhippen.sprite.vectors.AxisAlignedBoundingBox;
 import edu.unomaha.nhippen.sprite.vectors.Vector2f;
 import edu.unomaha.nhippen.sprite.vectors.VectorObject;
@@ -65,16 +65,16 @@ public class ActorSprite extends BoundingSprite {
 		super(BASE_IMAGES.get(Direction.SOUTH));
 		direction = Direction.SOUTH;
 		setOuterBound(new AxisAlignedBoundingBox(
-				new Vector2f(-SpriteGame.TILE_SIZE / 2F, SpriteGame.TILE_SIZE / 2F),
-				new Vector2f(SpriteGame.TILE_SIZE / 2F, -SpriteGame.TILE_SIZE / 2F)));
+				new Vector2f(-TileFramework.TILE_SIZE / 2F, TileFramework.TILE_SIZE / 2F),
+				new Vector2f(TileFramework.TILE_SIZE / 2F, -TileFramework.TILE_SIZE / 2F)));
 		// Although not really needed for this sprite, use inner bounds for an example
 		List<VectorObject> innerBounds = new ArrayList<>();
 		innerBounds.add(new AxisAlignedBoundingBox(
-				new Vector2f(-SpriteGame.TILE_SIZE / 2F, SpriteGame.TILE_SIZE / 2F),
-				new Vector2f(SpriteGame.TILE_SIZE / 2F, 0)));
+				new Vector2f(-TileFramework.TILE_SIZE / 2F, TileFramework.TILE_SIZE / 2F),
+				new Vector2f(TileFramework.TILE_SIZE / 2F, 0)));
 		innerBounds.add(new AxisAlignedBoundingBox(
-				new Vector2f(-SpriteGame.TILE_SIZE / 4F, 0),
-				new Vector2f(SpriteGame.TILE_SIZE / 4F, -SpriteGame.TILE_SIZE / 2F)));
+				new Vector2f(-TileFramework.TILE_SIZE / 4F, 0),
+				new Vector2f(TileFramework.TILE_SIZE / 4F, -TileFramework.TILE_SIZE / 2F)));
 		setInnerBounds(innerBounds);
 	}
 

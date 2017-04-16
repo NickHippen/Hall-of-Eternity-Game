@@ -12,31 +12,33 @@ import com.sun.glass.events.KeyEvent;
 import edu.unomaha.nhippen.sprite.sprites.ActorSprite;
 import edu.unomaha.nhippen.sprite.sprites.BoundingSprite;
 import edu.unomaha.nhippen.sprite.sprites.Direction;
-import edu.unomaha.nhippen.sprite.sprites.GrassSprite;
 import edu.unomaha.nhippen.sprite.sprites.RockSprite;
 import edu.unomaha.nhippen.sprite.sprites.SpellSprite;
 import edu.unomaha.nhippen.sprite.sprites.SpriteObject;
-import edu.unomaha.nhippen.sprite.sprites.TreeSprite;
+import edu.unomaha.nhippen.sprite.util.Location;
 import edu.unomaha.nhippen.sprite.util.Matrix3x3f;
 import edu.unomaha.nhippen.sprite.util.SimpleFramework;
 import edu.unomaha.nhippen.sprite.vectors.Vector2f;
 import edu.unomaha.nhippen.sprite.vectors.VectorObject;
 
 
-public class SpriteGame extends SimpleFramework {
+public class TileFramework extends SimpleFramework {
 
-	public static final float TILE_SIZE = 2F / 15F;
+	public static final int TILES_X_Y = 20;
+
+	public static final float TILE_SIZE = 2F / (float) TILES_X_Y;
 	
 	private ActorSprite actor;
-	private List<SpriteObject> backgroundSprites;
 	private List<BoundingSprite> boundingSprites;
 	private List<SpellSprite> spellSprites;
 	
+	private SpriteObject[][] tiles;
+	
 	private boolean displayBounds;
 
-	public SpriteGame() {
-		appWidth = 720;
-		appHeight = 720;
+	public TileFramework() {
+		appWidth = 960;
+		appHeight = 960;
 		appSleep = 0L;
 		appTitle = "Sprite Game";
 		appBackground = Color.DARK_GRAY;
@@ -46,42 +48,20 @@ public class SpriteGame extends SimpleFramework {
 	@Override
 	protected void initialize() {
 		super.initialize();
-		backgroundSprites = new ArrayList<>();
+		initializeTiles();
 		boundingSprites = new ArrayList<>();
 		spellSprites = new ArrayList<>();
 		
 		// Actor
 		actor = new ActorSprite();
 		actor.setLocation(new Vector2f(0, 0));
-		
-		// Grass
-		for (int x = 0; x < 15; x++) {
-			for (int y = 0; y < 15; y++) {
-				GrassSprite grass = new GrassSprite();
-				grass.setLocation(new Vector2f(TILE_SIZE * x - 1F + (TILE_SIZE / 2), TILE_SIZE * y - 1F + (TILE_SIZE / 2)));
-				backgroundSprites.add(grass);
-			}
-		}
-		
-		// Rocks
-		for (int x = 0; x < 15; x++) {
-			for (int y = 0; y < 15; y++) {
-				if ((y != 0 && y != 14) && (x != 0 && x != 14)) {
-					continue;
-				}
-				RockSprite rock = new RockSprite();
-				rock.setLocation(new Vector2f(TILE_SIZE * x - 1F + (TILE_SIZE / 2), TILE_SIZE * y - 1F + (TILE_SIZE / 2)));
-				boundingSprites.add(rock);
-			}
-		}
-		
-		// Trees
-		TreeSprite tree = new TreeSprite();
-		tree.setLocation(new Vector2f(-0.5F, 0.5F));
-		boundingSprites.add(tree);
-		tree = new TreeSprite();
-		tree.setLocation(new Vector2f(0.5F, -0.5F));
-		boundingSprites.add(tree);
+	}
+	
+	private void initializeTiles() {
+		 tiles = new SpriteObject[TILES_X_Y][];
+		 for (int i = 0; i < tiles.length; i++) {
+			 tiles[i] = new SpriteObject[TILES_X_Y];
+		 }
 	}
 
 	@Override
@@ -156,10 +136,14 @@ public class SpriteGame extends SimpleFramework {
 		Graphics2D g2d = (Graphics2D) g;
 		Matrix3x3f view = getViewportTransform();
 		
-		// Background
-		for (SpriteObject sprite : backgroundSprites) {
-			sprite.setView(view);
-			sprite.draw(g2d);
+		for (SpriteObject[] sprites : tiles) {
+			for (SpriteObject sprite : sprites) {
+				if (sprite == null) {
+					continue;
+				}
+				sprite.setView(view);
+				sprite.draw(g2d);
+			}
 		}
 
 		// Actor
@@ -201,8 +185,14 @@ public class SpriteGame extends SimpleFramework {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-		launchApp(new SpriteGame());
+	
+	public void setTile(int x, int y, SpriteObject sprite) {
+		sprite.setLocation(new Vector2f(TILE_SIZE * x - 1F + (TILE_SIZE / 2), TILE_SIZE * (TILES_X_Y - y - 1) - 1F + (TILE_SIZE / 2)));
+		tiles[x][y] = sprite;
 	}
+	
+	public void setTile(Location loc, SpriteObject sprite) {
+		setTile(loc.getX(), loc.getY(), sprite);
+	}
+
 }
