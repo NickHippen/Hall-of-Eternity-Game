@@ -9,26 +9,27 @@ import edu.unomaha.nhippen.sprite.game.TileFramework;
 import edu.unomaha.nhippen.sprite.vectors.AxisAlignedBoundingBox;
 import edu.unomaha.nhippen.sprite.vectors.Vector2f;
 
-public class TreeSprite extends BoundingSprite {
+public class BlastSprite extends BoundingSprite {
 
 	private static BufferedImage BASE_IMAGE;
 	
 	static {
 		try {
-			URL url = TreeSprite.class.getResource("/sprites/Tiles.png");
+			URL url = BlastSprite.class.getResource("/sprites/blast.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
-			BASE_IMAGE = spriteSheet.getSubimage(48, 0, 48, 96);
+			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 	
-	public TreeSprite() {
+	public BlastSprite() {
 		super(BASE_IMAGE);
 		setOuterBound(new AxisAlignedBoundingBox(
-				new Vector2f(-TileFramework.TILE_SIZE_X / 4F, -TileFramework.TILE_SIZE_Y / 2),
-				new Vector2f(TileFramework.TILE_SIZE_X / 4F, -TileFramework.TILE_SIZE_Y)));
+				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
+				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
+		setScale(0.95);
 	}
 
 }

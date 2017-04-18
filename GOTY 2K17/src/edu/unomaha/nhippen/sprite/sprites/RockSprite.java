@@ -27,8 +27,8 @@ public class RockSprite extends BoundingSprite {
 	public RockSprite() {
 		super(BASE_IMAGE);
 		setOuterBound(new AxisAlignedBoundingBox(
-				new Vector2f(-TileFramework.TILE_SIZE / 2F, TileFramework.TILE_SIZE / 2F),
-				new Vector2f(TileFramework.TILE_SIZE / 2F, -TileFramework.TILE_SIZE / 2F)));
+				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
+				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
 	}
 
 }

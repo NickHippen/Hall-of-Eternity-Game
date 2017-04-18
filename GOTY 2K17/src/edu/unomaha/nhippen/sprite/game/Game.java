@@ -8,9 +8,9 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 		
-		for (int x = 0; x < TILES_X_Y; x++) {
-			for (int y = 0; y < TILES_X_Y; y++) {
-				if ((y != 0 && y != TILES_X_Y - 1) && (x != 0 && x != TILES_X_Y - 1)) {
+		for (int x = 0; x < TILES_X; x++) {
+			for (int y = 0; y < TILES_Y; y++) {
+				if ((y != 0 && y != TILES_Y - 1) && (x != 0 && x != TILES_X - 1)) {
 					continue;
 				}
 				setTile(x, y, new RockSprite());

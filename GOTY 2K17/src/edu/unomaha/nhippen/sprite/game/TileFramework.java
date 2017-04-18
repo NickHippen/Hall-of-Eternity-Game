@@ -9,10 +9,9 @@ import java.util.List;
 
 import com.sun.glass.events.KeyEvent;
 
-import edu.unomaha.nhippen.sprite.sprites.ActorSprite;
+import edu.unomaha.nhippen.sprite.sprites.BlastSprite;
 import edu.unomaha.nhippen.sprite.sprites.BoundingSprite;
 import edu.unomaha.nhippen.sprite.sprites.Direction;
-import edu.unomaha.nhippen.sprite.sprites.RockSprite;
 import edu.unomaha.nhippen.sprite.sprites.SpellSprite;
 import edu.unomaha.nhippen.sprite.sprites.SpriteObject;
 import edu.unomaha.nhippen.sprite.util.Location;
@@ -24,11 +23,16 @@ import edu.unomaha.nhippen.sprite.vectors.VectorObject;
 
 public class TileFramework extends SimpleFramework {
 
-	public static final int TILES_X_Y = 20;
-
-	public static final float TILE_SIZE = 2F / (float) TILES_X_Y;
+	public static final int TILES_X = 30;
+	public static final int TILES_Y = 20;
 	
-	private ActorSprite actor;
+	private static final float APP_WORLD_WIDTH = 6f;
+	private static final float APP_WORLD_HEIGHT = 4f;
+
+	public static final float TILE_SIZE_X = APP_WORLD_WIDTH / (float) TILES_X;
+	public static final float TILE_SIZE_Y = APP_WORLD_HEIGHT / (float) TILES_Y;
+	
+	private BlastSprite actor;
 	private List<BoundingSprite> boundingSprites;
 	private List<SpellSprite> spellSprites;
 	
@@ -37,8 +41,10 @@ public class TileFramework extends SimpleFramework {
 	private boolean displayBounds;
 
 	public TileFramework() {
-		appWidth = 960;
+		appWidth = 1440;
 		appHeight = 960;
+		appWorldWidth = APP_WORLD_WIDTH;
+		appWorldHeight = APP_WORLD_HEIGHT;
 		appSleep = 0L;
 		appTitle = "Sprite Game";
 		appBackground = Color.DARK_GRAY;
@@ -53,14 +59,14 @@ public class TileFramework extends SimpleFramework {
 		spellSprites = new ArrayList<>();
 		
 		// Actor
-		actor = new ActorSprite();
+		actor = new BlastSprite();
 		actor.setLocation(new Vector2f(0, 0));
 	}
 	
 	private void initializeTiles() {
-		 tiles = new SpriteObject[TILES_X_Y][];
+		 tiles = new SpriteObject[TILES_X][];
 		 for (int i = 0; i < tiles.length; i++) {
-			 tiles[i] = new SpriteObject[TILES_X_Y];
+			 tiles[i] = new SpriteObject[TILES_Y];
 		 }
 	}
 
@@ -71,28 +77,28 @@ public class TileFramework extends SimpleFramework {
 		boolean walking = false;
 		if (keyboard.keyDown(KeyEvent.VK_W)) {
 			actor.move(new Vector2f(0F, 0.2F), boundingSprites, delta);
-			actor.setDirection(Direction.NORTH);
+//			actor.setDirection(Direction.NORTH);
 			walking = true;
 		} else if (keyboard.keyDown(KeyEvent.VK_S)) {
 			actor.move(new Vector2f(0F, -0.2F), boundingSprites, delta);
-			actor.setDirection(Direction.SOUTH);
+//			actor.setDirection(Direction.SOUTH);
 			walking = true;
 		} else if (keyboard.keyDown(KeyEvent.VK_A)) {
 			actor.move(new Vector2f(-0.2F, 0F), boundingSprites, delta);
-			actor.setDirection(Direction.WEST);
+//			actor.setDirection(Direction.WEST);
 			walking = true;
 		} else if (keyboard.keyDown(KeyEvent.VK_D)) {
 			actor.move(new Vector2f(0.2F, 0F), boundingSprites, delta);
-			actor.setDirection(Direction.EAST);
+//			actor.setDirection(Direction.EAST);
 			walking = true;
 		}
 		
 		// Reset
 		if (keyboard.keyDownOnce(KeyEvent.VK_R)) {
-			actor.setDead(false);
+//			actor.setDead(false);
 			actor.setLocation(new Vector2f());
 			actor.setRotation(0F);
-			actor.setDirection(Direction.SOUTH);
+//			actor.setDirection(Direction.SOUTH);
 		}
 		
 		// Spawn Spell
@@ -106,8 +112,8 @@ public class TileFramework extends SimpleFramework {
 		if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
 			displayBounds = !displayBounds;
 		}
-		actor.setWalking(walking);
-		actor.updateAnimations(delta);
+//		actor.setWalking(walking);
+//		actor.updateAnimations(delta);
 	}
 
 	@Override
@@ -126,7 +132,7 @@ public class TileFramework extends SimpleFramework {
 			sprite.setRotation(sprite.getRotation() + 4F * delta);
 			if (sprite.hasAnyBoundViolations(Arrays.asList(actor))) {
 				spellSprites.remove(i);
-				actor.setDead(true);
+//				actor.setDead(true);
 			}
 		}
 	}
@@ -187,7 +193,8 @@ public class TileFramework extends SimpleFramework {
 	}
 	
 	public void setTile(int x, int y, SpriteObject sprite) {
-		sprite.setLocation(new Vector2f(TILE_SIZE * x - 1F + (TILE_SIZE / 2), TILE_SIZE * (TILES_X_Y - y - 1) - 1F + (TILE_SIZE / 2)));
+		sprite.setLocation(new Vector2f(TILE_SIZE_X * x - (APP_WORLD_WIDTH / 2F) + (TILE_SIZE_X / 2F),
+										TILE_SIZE_Y * (TILES_Y - y - 1) - (APP_WORLD_HEIGHT / 2F) + (TILE_SIZE_Y / 2F)));
 		tiles[x][y] = sprite;
 	}
 	
