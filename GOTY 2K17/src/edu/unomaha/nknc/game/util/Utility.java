@@ -1,13 +1,13 @@
-package edu.unomaha.nhippen.sprite.util;
+package edu.unomaha.nknc.game.util;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.util.List;
 
-import edu.unomaha.nhippen.sprite.vectors.AxisAlignedBoundingBox;
-import edu.unomaha.nhippen.sprite.vectors.BoundingCircle;
-import edu.unomaha.nhippen.sprite.vectors.Vector2f;
+import edu.unomaha.nknc.game.vectors.AxisAlignedBoundingBox;
+import edu.unomaha.nknc.game.vectors.BoundingCircle;
+import edu.unomaha.nknc.game.vectors.Vector2f;
 
 public class Utility {
 	

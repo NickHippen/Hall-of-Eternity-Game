@@ -1,4 +1,4 @@
-package edu.unomaha.nhippen.sprite.util;
+package edu.unomaha.nknc.game.util;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -15,7 +15,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import edu.unomaha.nhippen.sprite.vectors.Vector2f;
+import edu.unomaha.nknc.game.vectors.Vector2f;
 
 public class SimpleFramework extends JFrame implements Runnable {
 	

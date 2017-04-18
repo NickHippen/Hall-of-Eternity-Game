@@ -1,4 +1,4 @@
-package edu.unomaha.nhippen.sprite.sprites;
+package edu.unomaha.nknc.game.sprites;
 
 public enum Direction {
 

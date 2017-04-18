@@ -1,9 +1,9 @@
-package edu.unomaha.nhippen.sprite.vectors;
+package edu.unomaha.nknc.game.vectors;
 
 import java.awt.Graphics;
 
-import edu.unomaha.nhippen.sprite.util.Matrix3x3f;
-import edu.unomaha.nhippen.sprite.util.Utility;
+import edu.unomaha.nknc.game.util.Matrix3x3f;
+import edu.unomaha.nknc.game.util.Utility;
 
 public class AxisAlignedBoundingBox extends VectorObject {
 

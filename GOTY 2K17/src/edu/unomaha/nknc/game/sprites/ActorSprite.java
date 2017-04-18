@@ -1,4 +1,4 @@
-package edu.unomaha.nhippen.sprite.sprites;
+package edu.unomaha.nknc.game.sprites;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -9,10 +9,10 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import edu.unomaha.nhippen.sprite.game.TileFramework;
-import edu.unomaha.nhippen.sprite.vectors.AxisAlignedBoundingBox;
-import edu.unomaha.nhippen.sprite.vectors.Vector2f;
-import edu.unomaha.nhippen.sprite.vectors.VectorObject;
+import edu.unomaha.nknc.game.TileFramework;
+import edu.unomaha.nknc.game.vectors.AxisAlignedBoundingBox;
+import edu.unomaha.nknc.game.vectors.Vector2f;
+import edu.unomaha.nknc.game.vectors.VectorObject;
 
 public class ActorSprite extends BoundingSprite {
 	

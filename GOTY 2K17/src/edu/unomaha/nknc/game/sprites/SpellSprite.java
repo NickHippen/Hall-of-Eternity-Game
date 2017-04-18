@@ -1,11 +1,11 @@
-package edu.unomaha.nhippen.sprite.sprites;
+package edu.unomaha.nknc.game.sprites;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import edu.unomaha.nhippen.sprite.vectors.BoundingCircle;
+import edu.unomaha.nknc.game.vectors.BoundingCircle;
 
 public class SpellSprite extends BoundingSprite {
 

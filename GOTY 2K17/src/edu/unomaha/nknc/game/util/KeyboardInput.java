@@ -1,4 +1,4 @@
-package edu.unomaha.nhippen.sprite.util;
+package edu.unomaha.nknc.game.util;
 
 
 import java.awt.event.*;

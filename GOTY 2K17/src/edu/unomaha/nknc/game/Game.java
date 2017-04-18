@@ -1,6 +1,6 @@
-package edu.unomaha.nhippen.sprite.game;
+package edu.unomaha.nknc.game;
 
-import edu.unomaha.nhippen.sprite.sprites.RockSprite;
+import edu.unomaha.nknc.game.sprites.RockSprite;
 
 public class Game extends TileFramework {
 

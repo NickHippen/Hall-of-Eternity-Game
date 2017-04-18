@@ -1,11 +1,11 @@
-package edu.unomaha.nhippen.sprite.sprites;
+package edu.unomaha.nknc.game.sprites;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import edu.unomaha.nhippen.sprite.util.Matrix3x3f;
-import edu.unomaha.nhippen.sprite.vectors.Vector2f;
-import edu.unomaha.nhippen.sprite.vectors.VectorObject;
+import edu.unomaha.nknc.game.util.Matrix3x3f;
+import edu.unomaha.nknc.game.vectors.Vector2f;
+import edu.unomaha.nknc.game.vectors.VectorObject;
 
 public class BoundingSprite extends SpriteObject {
 	

@@ -1,6 +1,6 @@
-package edu.unomaha.nhippen.sprite.util;
+package edu.unomaha.nknc.game.util;
 
-import edu.unomaha.nhippen.sprite.vectors.Vector2f;
+import edu.unomaha.nknc.game.vectors.Vector2f;
 
 public class Matrix3x3f {
 	private float[][] m = new float[3][3];

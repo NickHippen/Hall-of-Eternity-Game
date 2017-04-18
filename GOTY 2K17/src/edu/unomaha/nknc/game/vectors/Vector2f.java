@@ -1,4 +1,4 @@
-package edu.unomaha.nhippen.sprite.vectors;
+package edu.unomaha.nknc.game.vectors;
 
 public class Vector2f {
 	

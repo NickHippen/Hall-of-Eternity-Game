@@ -1,4 +1,4 @@
-package edu.unomaha.nhippen.sprite.game;
+package edu.unomaha.nknc.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,16 +9,15 @@ import java.util.List;
 
 import com.sun.glass.events.KeyEvent;
 
-import edu.unomaha.nhippen.sprite.sprites.BlastSprite;
-import edu.unomaha.nhippen.sprite.sprites.BoundingSprite;
-import edu.unomaha.nhippen.sprite.sprites.Direction;
-import edu.unomaha.nhippen.sprite.sprites.SpellSprite;
-import edu.unomaha.nhippen.sprite.sprites.SpriteObject;
-import edu.unomaha.nhippen.sprite.util.Location;
-import edu.unomaha.nhippen.sprite.util.Matrix3x3f;
-import edu.unomaha.nhippen.sprite.util.SimpleFramework;
-import edu.unomaha.nhippen.sprite.vectors.Vector2f;
-import edu.unomaha.nhippen.sprite.vectors.VectorObject;
+import edu.unomaha.nknc.game.sprites.BlastSprite;
+import edu.unomaha.nknc.game.sprites.BoundingSprite;
+import edu.unomaha.nknc.game.sprites.SpellSprite;
+import edu.unomaha.nknc.game.sprites.SpriteObject;
+import edu.unomaha.nknc.game.util.Location;
+import edu.unomaha.nknc.game.util.Matrix3x3f;
+import edu.unomaha.nknc.game.util.SimpleFramework;
+import edu.unomaha.nknc.game.vectors.Vector2f;
+import edu.unomaha.nknc.game.vectors.VectorObject;
 
 
 public class TileFramework extends SimpleFramework {
