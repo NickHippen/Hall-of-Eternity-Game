@@ -204,6 +204,12 @@ public class TileFramework extends SimpleFramework {
 	public SpriteObject getTileAtPosition(Vector2f pos) {
 		int x = (int) (TILES_X * ((pos.x + (APP_WORLD_WIDTH / 2)) / APP_WORLD_WIDTH));
 		int y = TILES_Y - 1 - (int) (TILES_Y * ((pos.y + (APP_WORLD_HEIGHT / 2)) / APP_WORLD_HEIGHT));
+		if (x >= TILES_X) {
+			x = TILES_X - 1;
+		}
+		if (y >= TILES_Y) {
+			y = TILES_Y - 1;
+		}
 		return tiles[x][y];
 	}
 	

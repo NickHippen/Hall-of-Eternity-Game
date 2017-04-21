@@ -122,11 +122,7 @@ public class SimpleFramework extends JFrame implements Runnable {
 	}
 	
 	protected Vector2f getCenteredRelativeWorldMousePosition() {
-		float sx = appWorldWidth / (canvas.getWidth() - 1);
-		float sy = appWorldHeight / (canvas.getHeight() - 1);
-		Matrix3x3f viewport = Matrix3x3f.scale(sx, -sy);
-		Point p = mouse.getPosition();
-		Vector2f pos = viewport.mul(new Vector2f(p.x, p.y));
+		Vector2f pos = getRelativeWorldMousePosition();
 		pos.x -= appWorldWidth / 2f;
 		pos.y += appWorldHeight / 2f;
 		return pos;
