@@ -1,6 +1,9 @@
 package edu.unomaha.nknc.game;
 
+import java.awt.event.MouseEvent;
+
 import edu.unomaha.nknc.game.sprites.RockSprite;
+import edu.unomaha.nknc.game.sprites.SpriteObject;
 
 public class Game extends TileFramework {
 
@@ -15,6 +18,17 @@ public class Game extends TileFramework {
 				}
 				setTile(x, y, new RockSprite());
 			}
+		}
+	}
+	
+	@Override
+	protected void processInput(float delta) {
+		super.processInput(delta);
+		
+		if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+			System.out.println(getCenteredRelativeWorldMousePosition());
+			SpriteObject sprite = getTileAtPosition(getCenteredRelativeWorldMousePosition());
+			System.out.println(sprite);
 		}
 	}
 	

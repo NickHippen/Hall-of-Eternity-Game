@@ -200,5 +200,11 @@ public class TileFramework extends SimpleFramework {
 	public void setTile(Location loc, SpriteObject sprite) {
 		setTile(loc.getX(), loc.getY(), sprite);
 	}
-
+	
+	public SpriteObject getTileAtPosition(Vector2f pos) {
+		int x = (int) (TILES_X * ((pos.x + (APP_WORLD_WIDTH / 2)) / APP_WORLD_WIDTH));
+		int y = TILES_Y - 1 - (int) (TILES_Y * ((pos.y + (APP_WORLD_HEIGHT / 2)) / APP_WORLD_HEIGHT));
+		return tiles[x][y];
+	}
+	
 }
