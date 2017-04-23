@@ -1,15 +1,16 @@
 package edu.unomaha.nknc.game;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import edu.unomaha.nknc.game.cards.Card;
 import edu.unomaha.nknc.game.cards.Deck;
 import edu.unomaha.nknc.game.cards.monsters.ZombieCard;
+import edu.unomaha.nknc.game.maps.GameMap;
 import edu.unomaha.nknc.game.maps.Map2;
-import edu.unomaha.nknc.game.sprites.RockSprite;
-import edu.unomaha.nknc.game.sprites.SpriteObject;
 import edu.unomaha.nknc.game.util.Matrix3x3f;
 import edu.unomaha.nknc.game.vectors.Vector2f;
 
@@ -18,7 +19,7 @@ public class Game extends TileFramework {
 	private Deck deck;
 	private Card grabbedCard;
 	
-	private SpriteObject map;
+	private GameMap map;
 	
 	@Override
 	protected void initialize() {
@@ -91,6 +92,21 @@ public class Game extends TileFramework {
 			if (displayBounds) {
 				renderBounds(card, g2d);
 			}
+		}
+		
+		if (grabbedCard != null) {
+			renderGrid(g2d);
+		}
+	}
+	
+	@Override
+	public void renderGrid(Graphics2D g) {
+		super.renderGrid(g);
+		g.setStroke(new BasicStroke(2));
+		for (TileLocation loc : map.getInvalidTileLocations()) {
+			Point p = convertTileLocationToPoint(loc);
+			g.drawLine(p.x, p.y, p.x + 48, p.y + 48);
+			g.drawLine(p.x, p.y + 48, p.x + 48, p.y);
 		}
 	}
 	

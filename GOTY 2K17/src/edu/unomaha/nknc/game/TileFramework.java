@@ -3,6 +3,7 @@ package edu.unomaha.nknc.game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -173,7 +174,7 @@ public class TileFramework extends SimpleFramework {
 		}
 	}
 	
-	void renderBounds(BoundingSprite sprite, Graphics2D g) {
+	public void renderBounds(BoundingSprite sprite, Graphics2D g) {
 		g.setColor(Color.RED);
 		if (sprite.getOuterBound() != null) {
 			sprite.getOuterBound().render(g);
@@ -184,6 +185,20 @@ public class TileFramework extends SimpleFramework {
 				innerBound.render(g);
 			}
 		}
+	}
+	
+	public void renderGrid(Graphics2D g) {
+		g.setColor(Color.RED);
+		for (int y = 0; y < 674; y += 48) {
+			g.drawLine(0, y, appWidth, y);
+		}
+		for (int x = 0; x < appWidth; x += 48) {
+			g.drawLine(x, 0, x, 673);
+		}
+	}
+	
+	public Point convertTileLocationToPoint(TileLocation loc) {
+		return new Point(loc.getX() * 48, loc.getY() * 48);
 	}
 	
 	public TileWorld getWorld() {
