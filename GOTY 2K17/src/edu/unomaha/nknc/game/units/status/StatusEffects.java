@@ -1,6 +1,6 @@
 package edu.unomaha.nknc.game.units.status;
 
-import edu.unomaha.nknc.game.units.Hero;
+import edu.unomaha.nknc.game.units.heroes.Hero;
 import edu.unomaha.nknc.game.units.heroes.HeroDamageType;
 
 public class StatusEffects {
@@ -27,7 +27,6 @@ public class StatusEffects {
 		stun = new Stun(STUN_DURATION);
 		impair = new Impair(hero.getDamagePerHit(), IMPAIR_DURATION);
 		vuln = new Vulnerability(VULN_DURATION);
-		
 	}
 	
 	public float processStatus(float delta) {
@@ -59,13 +58,13 @@ public class StatusEffects {
 	}
 	
 	public void applySilenceStatus() {
-		if(hero.getHeroType() == HeroDamageType.Caster) {
+		if(hero.getHeroType() == HeroDamageType.CASTER) {
 			impair.applyImpair();
 		}
 	}
 	
 	public void applyBlindStatus() {
-		if(hero.getHeroType() == HeroDamageType.Melee || hero.getHeroType() == HeroDamageType.Ranged) {
+		if(hero.getHeroType() == HeroDamageType.MELEE || hero.getHeroType() == HeroDamageType.RANGED) {
 			impair.applyImpair();
 		}
 	}

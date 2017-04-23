@@ -1,8 +1,8 @@
-package edu.unomaha.nknc.game.units;
+package edu.unomaha.nknc.game.units.heroes;
 
 import java.awt.image.BufferedImage;
 
-import edu.unomaha.nknc.game.units.heroes.HeroDamageType;
+import edu.unomaha.nknc.game.units.LivingUnit;
 import edu.unomaha.nknc.game.units.status.StatusEffects;
 
 public class Hero extends LivingUnit {
@@ -11,8 +11,8 @@ public class Hero extends LivingUnit {
 	
 	private int dropAmount;
 	private StatusEffects status;
-	private float movementTimer = MOVE_TIMER;
 	private HeroDamageType heroDamageType;
+	private float movementTimer = MOVE_TIMER;
 	
 	protected Hero(BufferedImage image, int maxHealth, HeroDamageType type) {
 		super(image, maxHealth);
@@ -25,15 +25,16 @@ public class Hero extends LivingUnit {
 		delta = status.processStatus(delta);
 	}
 
-	public int getDropAmount() {
-		return dropAmount;
-	}
 	
 	public void applyDamage(int damage) {
 		if(status.isVulnerable()) {
 			this.setHealth(this.getHealth() - damage*2);
 		}
 		else this.setHealth(this.getHealth() - damage);
+	}
+
+	public int getDropAmount() {
+		return dropAmount;
 	}
 	
 	public void setDropAmount(int amount) {

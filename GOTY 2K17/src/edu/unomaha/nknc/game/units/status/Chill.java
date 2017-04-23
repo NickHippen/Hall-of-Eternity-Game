@@ -1,6 +1,6 @@
 package edu.unomaha.nknc.game.units.status;
 
-import edu.unomaha.nknc.game.units.Hero;
+import edu.unomaha.nknc.game.units.heroes.Hero;
 
 public class Chill {
 	private boolean isChilled = false;
