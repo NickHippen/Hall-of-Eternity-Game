@@ -75,10 +75,15 @@ public abstract class VectorObject implements Drawable {
 	}
 	
 	public Vector2f adjustPoint(Vector2f point) {
-		Vector2f adjustedPoint = getWorld().mul(point);
+		Vector2f adjustedPoint = adjustPointRelative(point);
 		if (getViewportTranform() != null) {
 			adjustedPoint = getViewportTranform().mul(adjustedPoint);
 		}
+		return adjustedPoint;
+	}
+	
+	public Vector2f adjustPointRelative(Vector2f point) {
+		Vector2f adjustedPoint = getWorld().mul(point);
 		return adjustedPoint;
 	}
 	
@@ -91,5 +96,7 @@ public abstract class VectorObject implements Drawable {
 	}
 	
 	public abstract boolean isIntersecting(VectorObject bound);
+	
+	public abstract boolean isPointWithin(Vector2f point);
 
 }

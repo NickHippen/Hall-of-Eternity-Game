@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
@@ -43,6 +44,7 @@ public class SimpleFramework extends JFrame implements Runnable {
 	}
 
 	protected void createAndShowGUI() {
+		setLocation(0, 0);
 		canvas = new Canvas();
 		canvas.setBackground(appBackground);
 		canvas.setIgnoreRepaint(true);

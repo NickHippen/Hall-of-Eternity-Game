@@ -1,6 +1,7 @@
 package edu.unomaha.nknc.game.vectors;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 import edu.unomaha.nknc.game.util.Matrix3x3f;
 import edu.unomaha.nknc.game.util.Utility;
@@ -38,8 +39,16 @@ public class AxisAlignedBoundingBox extends VectorObject {
 		return adjustPoint(minPoint);
 	}
 
+	public Vector2f getRelativeMinPoint() {
+		return adjustPointRelative(minPoint);
+	}
+	
 	public Vector2f getMaxPoint() {
 		return adjustPoint(maxPoint);
+	}
+	
+	public Vector2f getRelativeMaxPoint() {
+		return adjustPointRelative(maxPoint);
 	}
 	
 	@Override
@@ -48,6 +57,10 @@ public class AxisAlignedBoundingBox extends VectorObject {
 			return Utility.intersectAABB(this, (AxisAlignedBoundingBox) bound);
 		}
 		return false;
+	}
+	
+	public boolean isPointWithin(Vector2f point) {
+		return Utility.pointInAABB(point, this);
 	}
 	
 }

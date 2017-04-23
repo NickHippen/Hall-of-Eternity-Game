@@ -1,11 +1,11 @@
-package edu.unomaha.nknc.game.util;
+package edu.unomaha.nknc.game;
 
-public class Location {
+public class TileLocation {
 
 	private int x;
 	private int y;
 	
-	public Location(int x, int y) {
+	public TileLocation(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}

@@ -9,11 +9,10 @@ import java.util.List;
 
 import com.sun.glass.events.KeyEvent;
 
-import edu.unomaha.nknc.game.sprites.BlastSprite;
 import edu.unomaha.nknc.game.sprites.BoundingSprite;
 import edu.unomaha.nknc.game.sprites.SpellSprite;
-import edu.unomaha.nknc.game.sprites.SpriteObject;
-import edu.unomaha.nknc.game.util.Location;
+import edu.unomaha.nknc.game.units.Unit;
+import edu.unomaha.nknc.game.units.monsters.Zombie;
 import edu.unomaha.nknc.game.util.Matrix3x3f;
 import edu.unomaha.nknc.game.util.SimpleFramework;
 import edu.unomaha.nknc.game.vectors.Vector2f;
@@ -31,13 +30,13 @@ public class TileFramework extends SimpleFramework {
 	public static final float TILE_SIZE_X = APP_WORLD_WIDTH / (float) TILES_X;
 	public static final float TILE_SIZE_Y = APP_WORLD_HEIGHT / (float) TILES_Y;
 	
-	private BlastSprite actor;
+	private BoundingSprite actor;
 	private List<BoundingSprite> boundingSprites;
 	private List<SpellSprite> spellSprites;
 	
-	private SpriteObject[][] tiles;
+	boolean displayBounds;
 	
-	private boolean displayBounds;
+	private TileWorld tileWorld;
 
 	public TileFramework() {
 		appWidth = 1440;
@@ -53,22 +52,16 @@ public class TileFramework extends SimpleFramework {
 	@Override
 	protected void initialize() {
 		super.initialize();
-		initializeTiles();
+		tileWorld = new TileWorld(TILES_X, TILES_Y, TILE_SIZE_X, TILE_SIZE_Y, APP_WORLD_WIDTH, APP_WORLD_HEIGHT);
+		
 		boundingSprites = new ArrayList<>();
 		spellSprites = new ArrayList<>();
 		
 		// Actor
-		actor = new BlastSprite();
+		actor = new Zombie();
 		actor.setLocation(new Vector2f(0, 0));
 	}
 	
-	private void initializeTiles() {
-		 tiles = new SpriteObject[TILES_X][];
-		 for (int i = 0; i < tiles.length; i++) {
-			 tiles[i] = new SpriteObject[TILES_Y];
-		 }
-	}
-
 	@Override
 	protected void processInput(float delta) {
 		super.processInput(delta);
@@ -138,19 +131,10 @@ public class TileFramework extends SimpleFramework {
 
 	@Override
 	protected void render(Graphics g) {
+		super.render(g);
 		Graphics2D g2d = (Graphics2D) g;
 		Matrix3x3f view = getViewportTransform();
 		
-		for (SpriteObject[] sprites : tiles) {
-			for (SpriteObject sprite : sprites) {
-				if (sprite == null) {
-					continue;
-				}
-				sprite.setView(view);
-				sprite.draw(g2d);
-			}
-		}
-
 		// Actor
 		actor.setView(view);
 		actor.draw(g2d);
@@ -175,10 +159,21 @@ public class TileFramework extends SimpleFramework {
 				renderBounds(sprite, g2d);
 			}
 		}
-		super.render(g);
 	}
 	
-	private void renderBounds(BoundingSprite sprite, Graphics2D g) {
+	public void renderTiles(Graphics2D g2d) {
+		Matrix3x3f view = getViewportTransform();
+		for (Tile[] tiles : tileWorld.getTiles()) {
+			for (Tile tile : tiles) {
+				for (Unit unit : tile.getUnits()) {
+					unit.setView(view);
+					unit.draw(g2d);
+				}
+			}
+		}
+	}
+	
+	void renderBounds(BoundingSprite sprite, Graphics2D g) {
 		g.setColor(Color.RED);
 		if (sprite.getOuterBound() != null) {
 			sprite.getOuterBound().render(g);
@@ -191,26 +186,8 @@ public class TileFramework extends SimpleFramework {
 		}
 	}
 	
-	public void setTile(int x, int y, SpriteObject sprite) {
-		sprite.setLocation(new Vector2f(TILE_SIZE_X * x - (APP_WORLD_WIDTH / 2F) + (TILE_SIZE_X / 2F),
-										TILE_SIZE_Y * (TILES_Y - y - 1) - (APP_WORLD_HEIGHT / 2F) + (TILE_SIZE_Y / 2F)));
-		tiles[x][y] = sprite;
-	}
-	
-	public void setTile(Location loc, SpriteObject sprite) {
-		setTile(loc.getX(), loc.getY(), sprite);
-	}
-	
-	public SpriteObject getTileAtPosition(Vector2f pos) {
-		int x = (int) (TILES_X * ((pos.x + (APP_WORLD_WIDTH / 2)) / APP_WORLD_WIDTH));
-		int y = TILES_Y - 1 - (int) (TILES_Y * ((pos.y + (APP_WORLD_HEIGHT / 2)) / APP_WORLD_HEIGHT));
-		if (x >= TILES_X) {
-			x = TILES_X - 1;
-		}
-		if (y >= TILES_Y) {
-			y = TILES_Y - 1;
-		}
-		return tiles[x][y];
+	public TileWorld getWorld() {
+		return tileWorld;
 	}
 	
 }
