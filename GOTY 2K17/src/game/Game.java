@@ -84,6 +84,10 @@ public class Game extends TileFramework {
 
 		renderTiles(g2d);
 		
+		if (grabbedCard != null) {
+			renderGrid(g2d);
+		}
+		
 		// Deck
 		for (int i = 0; i < deck.getHand().size(); i++) {
 			Card card = deck.getHand().get(i);
@@ -92,10 +96,6 @@ public class Game extends TileFramework {
 			if (displayBounds) {
 				renderBounds(card, g2d);
 			}
-		}
-		
-		if (grabbedCard != null) {
-			renderGrid(g2d);
 		}
 	}
 	

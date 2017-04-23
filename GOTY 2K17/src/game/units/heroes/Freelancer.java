@@ -6,7 +6,7 @@ import game.TileFramework;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
-public class Freelancer extends Hero{
+public class Freelancer extends Hero {
 	private final static int MAX_HEALTH = 75;
 	private final static int DAMAGE = 20;
 	
