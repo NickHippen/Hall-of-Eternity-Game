@@ -2,29 +2,32 @@ package edu.unomaha.nknc.game.units;
 
 import java.awt.image.BufferedImage;
 
-public class LivingUnit extends Unit {
 
+public class LivingUnit extends Unit {
+	
 	private int maxHealth;
 	private int health;
+	private int attackSpeed;
 
-	protected LivingUnit(BufferedImage image) {
+	protected LivingUnit(BufferedImage image, int maxHealth) {
 		super(image);
-	}
-
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
-	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
+		this.health = maxHealth;
 	}
 
 	public int getHealth() {
 		return health;
 	}
 
-	public void setHealth(int health) {
+	protected void setHealth(int health) {
 		this.health = health;
 	}
-
+	
+	protected int getAttackSpeed() {
+		return attackSpeed;
+	}
+	
+	protected void setAttackSpeed(int attackSpeed) {
+		this.attackSpeed = attackSpeed;
+	}
 }
