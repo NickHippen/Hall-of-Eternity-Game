@@ -90,6 +90,20 @@ public class BoundingSprite extends SpriteObject {
 		return false;
 	}
 	
+	public boolean isPointWithin(Vector2f point) {
+		if (outerBound.isPointWithin(point)) {
+			if (innerBounds == null || innerBounds.isEmpty()) {
+				return true;
+			}
+			for (VectorObject bound : innerBounds) {
+				if (bound.isPointWithin(point)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public void updateWorld() {
 		if (outerBound == null) {
 			return;

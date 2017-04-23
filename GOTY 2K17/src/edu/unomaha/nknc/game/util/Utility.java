@@ -2,6 +2,7 @@ package edu.unomaha.nknc.game.util;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.util.List;
 
@@ -96,6 +97,22 @@ public class Utility {
 
 	public static boolean intersectCircleAABB(BoundingCircle circle, AxisAlignedBoundingBox aabb) {
 		return intersectCircleAABB(circle.adjustPoint(circle.getLocation()), circle.getRadius(), aabb.getMinPoint(), aabb.getMaxPoint());
+	}
+	
+	public static boolean pointInAABB(Vector2f p, AxisAlignedBoundingBox aabb) {
+		Vector2f relMin = aabb.getRelativeMinPoint();
+		Vector2f relMax = aabb.getRelativeMaxPoint();
+		relMax.y -= 2 * Math.abs(relMax.y - relMin.y);
+		return p.x > relMin.x && p.x < relMax.x && p.y < relMin.y && p.y > relMax.y;
+	}
+	
+	public static boolean pointInCircle(Vector2f p, Vector2f c, float r) {
+		Vector2f dist = p.sub(c); //Find distance between point and circle
+		return dist.lenSqr() < r * r; //Once again avoid using sqrt
+	}
+	
+	public static boolean pointInCircle(Vector2f p, BoundingCircle circle) {
+		return pointInCircle(p, circle.adjustPoint(circle.getLocation()), circle.getRadius());
 	}
 	
 }
