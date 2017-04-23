@@ -2,7 +2,7 @@ package edu.unomaha.nknc.game.units;
 
 import java.awt.image.BufferedImage;
 
-import edu.unomaha.nknc.game.units.heroes.HeroType;
+import edu.unomaha.nknc.game.units.heroes.HeroDamageType;
 import edu.unomaha.nknc.game.units.status.StatusEffects;
 
 public class Hero extends LivingUnit {
@@ -12,12 +12,12 @@ public class Hero extends LivingUnit {
 	private int dropAmount;
 	private StatusEffects status;
 	private float movementTimer = MOVE_TIMER;
-	private HeroType heroType;
+	private HeroDamageType heroDamageType;
 	
-	protected Hero(BufferedImage image, int maxHealth, HeroType type) {
+	protected Hero(BufferedImage image, int maxHealth, HeroDamageType type) {
 		super(image, maxHealth);
-		heroType = type;
-		status = new StatusEffects(this, heroType);
+		heroDamageType = type;
+		status = new StatusEffects(this, heroDamageType);
 	}
 	
 	protected void updateHero(float delta) {
@@ -46,8 +46,8 @@ public class Hero extends LivingUnit {
 		return status;
 	}
 	
-	public HeroType getHeroType() {
-		return heroType;
+	public HeroDamageType getHeroType() {
+		return heroDamageType;
 	}
 	
 }

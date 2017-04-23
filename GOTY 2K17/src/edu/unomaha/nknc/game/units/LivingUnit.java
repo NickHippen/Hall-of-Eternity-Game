@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 
 public class LivingUnit extends Unit {
+	private final int ATTACK_SPEED = 1; // attack rate adjustments to all living units
 	
 	private int maxHealth;
 	private int health;
@@ -13,6 +14,7 @@ public class LivingUnit extends Unit {
 		super(image);
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
+		this.setAttackSpeed(ATTACK_SPEED);
 	}
 
 	public int getHealth() {

@@ -1,6 +1,6 @@
 package edu.unomaha.nknc.game.units.heroes;
 
-public enum HeroType {
+public enum HeroDamageType {
 	Ranged,
 	Caster,
 	Melee

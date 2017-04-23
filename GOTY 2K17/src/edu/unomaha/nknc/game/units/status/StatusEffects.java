@@ -1,7 +1,7 @@
 package edu.unomaha.nknc.game.units.status;
 
 import edu.unomaha.nknc.game.units.Hero;
-import edu.unomaha.nknc.game.units.heroes.HeroType;
+import edu.unomaha.nknc.game.units.heroes.HeroDamageType;
 
 public class StatusEffects {
 	private final float BURN_DURATION = 200;
@@ -19,7 +19,7 @@ public class StatusEffects {
 	
 	private Hero hero;
 	
-	public StatusEffects(Hero hero, HeroType type) {
+	public StatusEffects(Hero hero, HeroDamageType type) {
 		this.hero = hero;
 		poison = new Poison();
 		burn = new Burn(BURN_DURATION);
@@ -59,13 +59,13 @@ public class StatusEffects {
 	}
 	
 	public void applySilenceStatus() {
-		if(hero.getHeroType() == HeroType.Caster) {
+		if(hero.getHeroType() == HeroDamageType.Caster) {
 			impair.applyImpair();
 		}
 	}
 	
 	public void applyBlindStatus() {
-		if(hero.getHeroType() == HeroType.Melee || hero.getHeroType() == HeroType.Ranged) {
+		if(hero.getHeroType() == HeroDamageType.Melee || hero.getHeroType() == HeroDamageType.Ranged) {
 			impair.applyImpair();
 		}
 	}

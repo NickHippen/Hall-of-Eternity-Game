@@ -6,8 +6,8 @@ import edu.unomaha.nknc.game.units.LivingUnit;
 
 public class Monster extends LivingUnit {
 
-	protected Monster(BufferedImage image) {
-		super(image);
+	protected Monster(BufferedImage image, int maxHealth) {
+		super(image, maxHealth);
 	}
 
 }
