@@ -26,4 +26,16 @@ public class TileLocation {
 		this.y = y;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TileLocation)) {
+			return false;
+		}
+		TileLocation tileLoc = (TileLocation) obj;
+		return tileLoc.x == this.x && tileLoc.y == this.y;
+	}
+	
 }
