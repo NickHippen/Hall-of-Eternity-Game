@@ -15,7 +15,7 @@ public class ZombieCard extends MonsterSpawnCard {
 
 	static {
 		try {
-			URL url = Zombie.class.getResource("/sprites/cards/monsters/card_monster_zombie.png");
+			URL url = Zombie.class.getResource("/resources/cards/monsters/card_monster_zombie.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {

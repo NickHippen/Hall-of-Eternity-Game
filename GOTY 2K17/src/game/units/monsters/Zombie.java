@@ -22,7 +22,7 @@ public class Zombie extends Monster {
 //			URL url = Zombie.class.getResource("/sprites/units/monsters/Zombie.gif");
 //			BufferedImage spriteSheet = ImageIO.read(url).getSubimage(0, 0, 48, 48);
 //			BASE_IMAGE = spriteSheet;
-			URL url = RockSprite.class.getResource("/sprites/Tiles.png");
+			URL url = RockSprite.class.getResource("/game/sprites/Tiles.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet.getSubimage(0, 48, 48, 48);
 		} catch (Exception e) {

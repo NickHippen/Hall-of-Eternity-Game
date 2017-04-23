@@ -25,7 +25,7 @@ public class Map2 extends GameMap {
 		
 		// Image
 		try {
-			URL url = Map2.class.getResource("/sprites/maps/map02.png");
+			URL url = Map2.class.getResource("/resources/maps/map02.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
