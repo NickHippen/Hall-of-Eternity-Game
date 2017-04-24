@@ -2,6 +2,7 @@ package game.units.heroes;
 
 import java.awt.image.BufferedImage;
 
+import game.TileWorld;
 import game.units.LivingUnit;
 import game.units.status.StatusEffects;
 
@@ -14,8 +15,8 @@ public class Hero extends LivingUnit {
 	private HeroDamageType heroDamageType;
 	private float movementTimer = MOVE_TIMER;
 	
-	protected Hero(BufferedImage image, int maxHealth, HeroDamageType type) {
-		super(image, maxHealth);
+	protected Hero(BufferedImage image, TileWorld world, int maxHealth, HeroDamageType type) {
+		super(image, world, maxHealth);
 		heroDamageType = type;
 		status = new StatusEffects(this, heroDamageType);
 	}

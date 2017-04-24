@@ -2,14 +2,11 @@ package game.units.monsters;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import game.TileFramework;
-import game.sprites.Direction;
-import game.units.Unit;
+import game.TileWorld;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
@@ -31,8 +28,8 @@ public class Zombie extends Monster {
 		}
 	}
 	
-	public Zombie() {
-		super(BASE_IMAGE, MAX_HEALTH);
+	public Zombie(TileWorld world) {
+		super(BASE_IMAGE, world, MAX_HEALTH);
 		this.setFrameSize(64);
 
 		setOuterBound(new AxisAlignedBoundingBox(

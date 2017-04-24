@@ -2,10 +2,8 @@ package game.units.monsters;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import game.sprites.Direction;
+import game.TileWorld;
 import game.units.LivingUnit;
 
 public class Monster extends LivingUnit {
@@ -16,8 +14,8 @@ public class Monster extends LivingUnit {
 
 	private final ArrayList<BufferedImage> actionSprites = new ArrayList<>();
 
-	protected Monster(BufferedImage image, int maxHealth) {
-		super(image, maxHealth);
+	protected Monster(BufferedImage image, TileWorld world, int maxHealth) {
+		super(image, world, maxHealth);
 		//All monster sprite sheets are 4x4
 		this.horizontalFrameNum = 4;
 		this.verticalFrameNum = 4;

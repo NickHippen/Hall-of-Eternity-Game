@@ -3,6 +3,7 @@ package game.units.heroes;
 import java.awt.image.BufferedImage;
 
 import game.TileFramework;
+import game.TileWorld;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
@@ -23,8 +24,8 @@ public class Freelancer extends Hero {
 		}
 	}
 	
-	public Freelancer() {
-		super(BASE_IMAGE, MAX_HEALTH, HeroDamageType.MELEE);
+	public Freelancer(TileWorld world) {
+		super(BASE_IMAGE, world, MAX_HEALTH, HeroDamageType.MELEE);
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));

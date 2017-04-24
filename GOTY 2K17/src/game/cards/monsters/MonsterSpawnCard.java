@@ -29,7 +29,7 @@ public abstract class MonsterSpawnCard extends Card {
 	
 	@Override
 	public boolean performAction(Vector2f pos) {
-		Monster monster = MONSTER_FACTORY.getMonster(getType());
+		Monster monster = MONSTER_FACTORY.getMonster(getType(), getWorld());
 		TileLocation location = world.getTileLocationAtPosition(pos);
 		if (world.getMap().getInvalidTileLocations().contains(location)) {
 			return false;
