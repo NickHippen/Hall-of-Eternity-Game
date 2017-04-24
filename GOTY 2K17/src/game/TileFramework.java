@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.sun.glass.events.KeyEvent;
 
+import game.maps.Map2;
 import game.sprites.BoundingSprite;
 import game.sprites.SpellSprite;
 import game.units.Unit;
@@ -53,7 +54,7 @@ public class TileFramework extends SimpleFramework {
 	@Override
 	protected void initialize() {
 		super.initialize();
-		tileWorld = new TileWorld(TILES_X, TILES_Y, TILE_SIZE_X, TILE_SIZE_Y, APP_WORLD_WIDTH, APP_WORLD_HEIGHT);
+		tileWorld = new TileWorld(new Map2(), TILES_X, TILES_Y, TILE_SIZE_X, TILE_SIZE_Y, APP_WORLD_WIDTH, APP_WORLD_HEIGHT);
 		
 		boundingSprites = new ArrayList<>();
 		spellSprites = new ArrayList<>();

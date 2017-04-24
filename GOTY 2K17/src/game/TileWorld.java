@@ -1,5 +1,6 @@
 package game;
 
+import game.maps.GameMap;
 import game.units.Unit;
 import game.vectors.Vector2f;
 
@@ -7,6 +8,7 @@ public class TileWorld {
 
 	private Tile[][] tiles;
 	
+	private GameMap map;
 	private int tilesX;
 	private int tilesY;
 	private float tileSizeX;
@@ -14,7 +16,8 @@ public class TileWorld {
 	private float worldWidth;
 	private float worldHeight;
 	
-	protected TileWorld(int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
+	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
+		this.map = map;
 		this.tilesX = tilesX;
 		this.tilesY = tilesY;
 		this.tileSizeX = tileSizeX;
@@ -33,6 +36,10 @@ public class TileWorld {
 	
 	public Tile[][] getTiles() {
 		return tiles;
+	}
+	
+	public GameMap getMap() {
+		return map;
 	}
 	
 	public void addUnitToTile(TileLocation location, Unit unit) {

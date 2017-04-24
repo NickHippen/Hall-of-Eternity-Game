@@ -19,8 +19,6 @@ public class Game extends TileFramework {
 	private Deck deck;
 	private Card grabbedCard;
 	
-	private GameMap map;
-	
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -30,8 +28,6 @@ public class Game extends TileFramework {
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
-		
-		map = new Map2();
 	}
 	
 	@Override
@@ -79,8 +75,8 @@ public class Game extends TileFramework {
 		Matrix3x3f view = getViewportTransform();
 		Graphics2D g2d = (Graphics2D) g;
 		
-		map.setView(view);
-		map.draw(g2d);
+		getWorld().getMap().setView(view);
+		getWorld().getMap().draw(g2d);
 
 		renderTiles(g2d);
 		
@@ -103,7 +99,7 @@ public class Game extends TileFramework {
 	public void renderGrid(Graphics2D g) {
 		super.renderGrid(g);
 		g.setStroke(new BasicStroke(2));
-		for (TileLocation loc : map.getInvalidTileLocations()) {
+		for (TileLocation loc : getWorld().getMap().getInvalidTileLocations()) {
 			Point p = convertTileLocationToPoint(loc);
 			g.drawLine(p.x, p.y, p.x + 48, p.y + 48);
 			g.drawLine(p.x, p.y + 48, p.x + 48, p.y);
