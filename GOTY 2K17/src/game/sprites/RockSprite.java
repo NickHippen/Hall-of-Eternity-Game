@@ -32,4 +32,10 @@ public class RockSprite extends Unit {
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
 	}
 
+	@Override
+	public void setSize() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

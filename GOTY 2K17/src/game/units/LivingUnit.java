@@ -3,7 +3,7 @@ package game.units;
 import java.awt.image.BufferedImage;
 
 
-public class LivingUnit extends Unit {
+public abstract class LivingUnit extends Unit {
 	private final int ATTACK_SPEED = 1; // attack rate adjustments to all living units
 	
 	private int maxHealth;

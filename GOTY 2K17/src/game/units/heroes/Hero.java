@@ -50,5 +50,11 @@ public class Hero extends LivingUnit {
 	public HeroDamageType getHeroType() {
 		return heroDamageType;
 	}
+
+	@Override
+	public void setSize() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
