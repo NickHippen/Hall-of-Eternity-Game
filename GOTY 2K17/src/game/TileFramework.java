@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.sun.glass.events.KeyEvent;
 
 import game.sprites.BoundingSprite;
 import game.sprites.SpellSprite;
