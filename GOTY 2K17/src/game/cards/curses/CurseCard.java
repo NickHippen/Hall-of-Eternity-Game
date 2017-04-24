@@ -12,8 +12,8 @@ public class CurseCard extends Card {
 	}
 
 	@Override
-	public void performAction(Vector2f location) {
-		
+	public boolean performAction(Vector2f location) {
+		return false;
 	}
 
 }

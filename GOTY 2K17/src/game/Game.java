@@ -37,8 +37,9 @@ public class Game extends TileFramework {
 		Vector2f centeredMouseVec = getCenteredRelativeWorldMousePosition();
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
 			// Player dropped card
-			grabbedCard.performAction(centeredMouseVec);
-			System.out.println(deck.getHand().remove(grabbedCard));
+			if (grabbedCard.performAction(centeredMouseVec)) {
+				deck.getHand().remove(grabbedCard);
+			}
 			grabbedCard = null;
 		}
 		if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {

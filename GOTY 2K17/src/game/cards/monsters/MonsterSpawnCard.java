@@ -28,11 +28,14 @@ public abstract class MonsterSpawnCard extends Card {
 	public abstract MonsterType getType();
 	
 	@Override
-	public void performAction(Vector2f pos) {
-		System.out.println("Spawning mob at " + pos);
+	public boolean performAction(Vector2f pos) {
 		Monster monster = MONSTER_FACTORY.getMonster(getType());
 		TileLocation location = world.getTileLocationAtPosition(pos);
+		if (world.getMap().getInvalidTileLocations().contains(location)) {
+			return false;
+		}
 		world.addUnitToTile(location, monster);
+		return true;
 	}
 	
 }
