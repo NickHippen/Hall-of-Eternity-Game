@@ -2,10 +2,13 @@ package game.units.monsters;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import game.TileFramework;
+import game.sprites.Direction;
 import game.units.Unit;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
@@ -30,6 +33,8 @@ public class Zombie extends Monster {
 	
 	public Zombie() {
 		super(BASE_IMAGE, MAX_HEALTH);
+		this.setFrameSize(64);
+
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
@@ -37,7 +42,11 @@ public class Zombie extends Monster {
 		this.setDamagePerHit(DAMAGE);
 	}
 	
-	public void setSize(){
-		Unit.size = 64f;
+	public void addActionSprites(){
+		for(int i = 0; i < this.getHorizontalFrameNum(); i++){
+			for(int j = 0; j < this.getHorizontalFrameNum(); j++){
+				
+			}
+		}
 	}
 }
