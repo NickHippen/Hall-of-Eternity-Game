@@ -101,6 +101,9 @@ public class Game extends TileFramework {
 		super.renderGrid(g);
 		g.setStroke(new BasicStroke(2));
 		for (TileLocation loc : getWorld().getMap().getInvalidTileLocations()) {
+			if (loc.getY() > 13) {
+				continue;
+			}
 			Point p = convertTileLocationToPoint(loc);
 			g.drawLine(p.x, p.y, p.x + 48, p.y + 48);
 			g.drawLine(p.x, p.y + 48, p.x + 48, p.y);
