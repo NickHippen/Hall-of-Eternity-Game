@@ -111,14 +111,5 @@ public class SpriteObject {
 	
 	public int getVerticalFrameNum(){
 		return this.verticalFrameNum;
-	}
-	
-	public void setFrameSize(int frameSize){
-		this.frameSize = frameSize;
-	}
-	
-	public int getFrameSize(){
-		return this.frameSize;
-	}
-	
+	}	
 }

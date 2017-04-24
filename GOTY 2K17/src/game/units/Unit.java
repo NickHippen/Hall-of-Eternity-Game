@@ -5,14 +5,17 @@ import java.awt.image.BufferedImage;
 import game.TileWorld;
 import game.sprites.BoundingSprite;
 
-public class Unit extends BoundingSprite {
+public abstract class Unit extends BoundingSprite {
 	
 	private TileWorld world;
 	
 	private int damagePerHit;
 	
+	private int frameSize;
+	
 	protected Unit(BufferedImage image, TileWorld world) {
 		super(image);
+		this.frameSize = this.getFrameSize();
 	}
 
 	public int getDamagePerHit() {
@@ -31,4 +34,5 @@ public class Unit extends BoundingSprite {
 		this.world = world;
 	}
 	
+	public abstract int getFrameSize();
 }

@@ -51,4 +51,8 @@ public class Hero extends LivingUnit {
 	public HeroDamageType getHeroType() {
 		return heroDamageType;
 	}
+	
+	public int getFrameSize(){
+		return 0; //not implemented
+	}
 }

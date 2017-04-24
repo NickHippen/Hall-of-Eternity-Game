@@ -17,5 +17,5 @@ public abstract class Card extends BoundingSprite {
 	}
 	
 	public abstract boolean performAction(Vector2f pos);
-
+	
 }
