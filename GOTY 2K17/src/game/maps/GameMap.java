@@ -10,7 +10,7 @@ import game.util.Direction;
 public abstract class GameMap extends SpriteObject {
 	
 	public GameMap(BufferedImage image) {
-		super(image);
+		super(image, 1, 1);
 	}
 	
 	public boolean isTileLocationValid(TileLocation loc) {

@@ -9,7 +9,7 @@ import game.vectors.Vector2f;
 public abstract class Card extends BoundingSprite {
 
 	protected Card(BufferedImage image) {
-		super(image);
+		super(image, 1, 1);
 		setScale(0.95);
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-0.02f, 0.02f),
@@ -17,5 +17,5 @@ public abstract class Card extends BoundingSprite {
 	}
 	
 	public abstract boolean performAction(Vector2f pos);
-
+	
 }

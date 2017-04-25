@@ -29,6 +29,7 @@ public class Game extends TileFramework {
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
+		deck.getHand().add(new ZombieCard(getWorld()));
 	}
 	
 	@Override

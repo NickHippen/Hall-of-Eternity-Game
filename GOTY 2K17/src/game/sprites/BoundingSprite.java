@@ -8,13 +8,13 @@ import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 import game.vectors.VectorObject;
 
-public class BoundingSprite extends SpriteObject {
+public abstract class BoundingSprite extends SpriteObject {
 	
 	private VectorObject outerBound;
 	private List<VectorObject> innerBounds;
 
-	public BoundingSprite(BufferedImage image) {
-		super(image);
+	public BoundingSprite(BufferedImage image, int horizontalFrameNum, int verticalFrameNum) {
+		super(image, horizontalFrameNum, verticalFrameNum);
 	}
 
 	@Override
