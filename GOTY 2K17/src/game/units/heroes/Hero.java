@@ -16,7 +16,7 @@ public class Hero extends LivingUnit {
 	private float movementTimer = MOVE_TIMER;
 	
 	protected Hero(BufferedImage image, TileWorld world, int maxHealth, HeroDamageType type) {
-		super(image, world, maxHealth);
+		super(image, world, maxHealth, 1, 1);
 		heroDamageType = type;
 		status = new StatusEffects(this, heroDamageType);
 		this.setHorizontalFrameNum(1);

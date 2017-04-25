@@ -16,8 +16,7 @@ public class Monster extends LivingUnit {
 	private final ArrayList<BufferedImage> actionSprites = new ArrayList<>();
 
 	protected Monster(BufferedImage image, TileWorld world, int maxHealth) {
-		super(image, world, maxHealth);
-		//All monster sprite sheets are 4x4
+		super(image, world, maxHealth, 4, 4);
 	}
 	
 //	public void attackAnimation(float delta) {

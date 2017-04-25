@@ -16,8 +16,8 @@ public abstract class Unit extends BoundingSprite {
 	
 	private ArrayList<BufferedImage> attackAnimation;
 		
-	protected Unit(BufferedImage image, TileWorld world) {
-		super(image);
+	protected Unit(BufferedImage image, TileWorld world, int horizontalFrameNum, int verticalFrameNum) {
+		super(image, horizontalFrameNum, verticalFrameNum);
 		attackAnimation = new ArrayList<BufferedImage>();
 		this.createAnimation();
 	}
@@ -40,11 +40,11 @@ public abstract class Unit extends BoundingSprite {
 	
 	public void createAnimation(){
 		int FS = this.getFrameSize();
-		for(int i = 0; i < this.getVerticalFrameNum(); i++){
-			for(int j = 0; j < this.getHorizontalFrameNum(); i++){
-				System.out.println(this.getSpriteSheet().getWidth());
-				System.out.println(i * FS);
-				attackAnimation.add(this.getSpriteSheet().getSubimage(i * FS, j * FS, i * FS + FS, j * FS + FS));
+		int horizontalFrameNum = this.getHorizontalFrameNum();
+		int verticalFrameNum = this.getVerticalFrameNum();
+		for(int i = 0; i < verticalFrameNum; i++){
+			for(int j = 0; j < horizontalFrameNum; j++){
+				attackAnimation.add(this.getSpriteSheet().getSubimage(i * FS, j * FS, FS, FS));
 			}
 		}
 	}

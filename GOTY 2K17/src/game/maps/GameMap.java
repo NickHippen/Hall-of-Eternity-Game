@@ -9,7 +9,7 @@ import game.sprites.SpriteObject;
 public abstract class GameMap extends SpriteObject {
 	
 	public GameMap(BufferedImage image) {
-		super(image);
+		super(image, 1, 1);
 	}
 	
 	public abstract List<TileLocation> getInvalidTileLocations();

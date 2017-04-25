@@ -9,7 +9,7 @@ import game.vectors.Vector2f;
 
 public class SpriteObject {
 
-	protected int horizontalFrameNum = 1;
+	protected int horizontalFrameNum;
 	protected int verticalFrameNum;
 	protected int frameSize;
 	
@@ -21,14 +21,16 @@ public class SpriteObject {
 	
 	private BufferedImage spriteSheet;
 	private BufferedImage renderedImage;
-	public SpriteObject(BufferedImage image) {
+	public SpriteObject(BufferedImage image, int horizontalFrameNum, int verticalFrameNum) {
 		this.spriteSheet = image;
 		this.renderedImage = image;
+		this.horizontalFrameNum = horizontalFrameNum;
+		this.verticalFrameNum = verticalFrameNum;
+		
 		this.location = new Vector2f(0F, 0F);
 		this.rotation = 0F;
 		this.scale = 1;
-		
-		System.out.println(horizontalFrameNum);
+
 		this.frameSize = this.spriteSheet.getWidth() / this.horizontalFrameNum;
 	}
 	
