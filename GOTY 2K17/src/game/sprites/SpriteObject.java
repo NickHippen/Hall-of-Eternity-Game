@@ -41,6 +41,10 @@ public class SpriteObject {
 		g.drawImage(renderedImage, transform, null);
 	}
 	
+	public void update(float delta){
+		if( this instanceof Monster) ((Monster)this).attackAnimation(delta); 
+	}
+	
 	private AffineTransform createTransform() {
 		Vector2f screen = view.mul(location);
 		AffineTransform transform = AffineTransform.getTranslateInstance(
@@ -109,6 +113,10 @@ public class SpriteObject {
 	
 	public BufferedImage getRenderedImage(){
 		return this.renderedImage;
+	}
+	
+	public void setRenderedImage(BufferedImage renderedImage){
+		this.renderedImage = renderedImage;
 	}
 	
 	public BufferedImage getSpriteSheet(){

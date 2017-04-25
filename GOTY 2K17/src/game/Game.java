@@ -93,9 +93,11 @@ public class Game extends TileFramework {
 					if (unit.getMoving() != null) {
 						unit.move(unit.getMoving(), 0.25f, delta);
 					}
+					unit.update(delta);
 				}
 			}
 		}
+		
 	}
 	
 	@Override
