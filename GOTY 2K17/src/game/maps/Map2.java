@@ -8,8 +8,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import game.TileLocation;
-import game.util.Direction;
-import javafx.util.converter.LocalDateStringConverter;
 
 public class Map2 extends GameMap {
 
