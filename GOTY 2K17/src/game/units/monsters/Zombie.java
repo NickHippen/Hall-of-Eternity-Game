@@ -29,7 +29,9 @@ public class Zombie extends Monster {
 	
 	public Zombie(TileWorld world) {
 		super(spriteSheet, world, MAX_HEALTH);
-
+		this.maxFrameNum = 14;
+		
+		
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
