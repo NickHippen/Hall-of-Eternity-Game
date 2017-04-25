@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
-
+import game.units.monsters.Monster;
 public class SpriteObject {
 
 	protected int horizontalFrameNum;
@@ -21,6 +21,7 @@ public class SpriteObject {
 	
 	private BufferedImage spriteSheet;
 	private BufferedImage renderedImage;
+	
 	public SpriteObject(BufferedImage image, int horizontalFrameNum, int verticalFrameNum) {
 		this.spriteSheet = image;
 		this.renderedImage = image;
@@ -32,11 +33,12 @@ public class SpriteObject {
 		this.scale = 1;
 
 		this.frameSize = this.spriteSheet.getWidth() / this.horizontalFrameNum;
+		if( this instanceof Monster) this.renderedImage = this.spriteSheet.getSubimage(0, 0, frameSize, frameSize);
 	}
 	
 	public void draw(Graphics2D g) {
 		AffineTransform transform = createTransform();
-		g.drawImage(spriteSheet, transform, null);
+		g.drawImage(renderedImage, transform, null);
 	}
 	
 	private AffineTransform createTransform() {
@@ -110,6 +112,6 @@ public class SpriteObject {
 	}
 	
 	public BufferedImage getSpriteSheet(){
-		return this.renderedImage;
+		return this.spriteSheet;
 	}
 }
