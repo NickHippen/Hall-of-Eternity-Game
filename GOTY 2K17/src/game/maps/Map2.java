@@ -3,15 +3,19 @@ package game.maps;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import game.TileLocation;
+import game.util.Direction;
 
 public class Map2 extends GameMap {
 
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
+	private static final Map<TileLocation, Direction> DIRECTIONS = new HashMap<>();
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -68,6 +72,13 @@ public class Map2 extends GameMap {
 			}
 		}
 		
+		// Directions
+		for (int x = 0; x < 5; x++) {
+			for (int y = 5; y < 9; y++) {
+				DIRECTIONS.put(new TileLocation(x, y), Direction.UP);
+			}
+		}
+		
 		// Image
 		try {
 			URL url = Map2.class.getResource("/resources/maps/map02.png");
@@ -86,6 +97,11 @@ public class Map2 extends GameMap {
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
 		return INVALID_TILE_LOCATIONS;
+	}
+
+	@Override
+	public Direction getDirectionForTileLocation(TileLocation loc) {
+		return DIRECTIONS.get(loc);
 	}
 
 }

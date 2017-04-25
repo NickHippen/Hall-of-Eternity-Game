@@ -1,16 +1,17 @@
 package game;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.util.Random;
+
+import com.sun.glass.events.KeyEvent;
 
 import game.cards.Card;
 import game.cards.Deck;
 import game.cards.monsters.ZombieCard;
-import game.maps.GameMap;
-import game.maps.Map2;
+import game.units.Unit;
+import game.util.Direction;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 
@@ -55,6 +56,23 @@ public class Game extends TileFramework {
 				grabbedCard.setLocation(centeredMouseVec);
 			}
 		}
+		
+		if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
+			for (int i = 0; i < 100; i++) {
+				getWorld().valueIteration();
+			}
+			displayDirections = !displayDirections;
+		}
+		
+		if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) { // TODO Remove me!
+			for (Tile[] tileRow : getWorld().getTiles()) {
+				for (Tile tile : tileRow) {
+					for (Unit unit : tile.getUnits()) {
+						unit.setMoving(Direction.values()[new Random().nextInt(4)]);
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -67,6 +85,16 @@ public class Game extends TileFramework {
 				continue;
 			}
 			card.setLocation(new Vector2f(-2.95f + (i * 1f), -0.87f));
+		}
+		
+		for (Tile[] tileRow : getWorld().getTiles()) {
+			for (Tile tile : tileRow) {
+				for (Unit unit : tile.getUnits()) {
+					if (unit.getMoving() != null) {
+						unit.move(unit.getMoving(), 0.25f, delta);
+					}
+				}
+			}
 		}
 	}
 	
@@ -94,19 +122,9 @@ public class Game extends TileFramework {
 				renderBounds(card, g2d);
 			}
 		}
-	}
-	
-	@Override
-	public void renderGrid(Graphics2D g) {
-		super.renderGrid(g);
-		g.setStroke(new BasicStroke(2));
-		for (TileLocation loc : getWorld().getMap().getInvalidTileLocations()) {
-			if (loc.getY() > 13) {
-				continue;
-			}
-			Point p = convertTileLocationToPoint(loc);
-			g.drawLine(p.x, p.y, p.x + 48, p.y + 48);
-			g.drawLine(p.x, p.y + 48, p.x + 48, p.y);
+		
+		if (displayDirections) {
+			renderDirections(g2d);
 		}
 	}
 	

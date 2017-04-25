@@ -8,6 +8,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import game.TileLocation;
+import game.util.Direction;
 
 public class Map1 extends GameMap {
 
@@ -31,6 +32,11 @@ public class Map1 extends GameMap {
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
 		return Arrays.asList();
+	}
+
+	@Override
+	public Direction getDirectionForTileLocation(TileLocation loc) {
+		return null;
 	}
 
 }

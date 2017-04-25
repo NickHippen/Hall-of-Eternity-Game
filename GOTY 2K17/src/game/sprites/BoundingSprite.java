@@ -3,6 +3,7 @@ package game.sprites;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import game.util.Direction;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 import game.vectors.VectorObject;
@@ -57,17 +58,36 @@ public class BoundingSprite extends SpriteObject {
 		}
 	}
 	
+	public void move(Direction direction, float speed, float delta) {
+		switch (direction) {
+		case DOWN:
+			move(new Vector2f(0f, -speed), null, delta);
+			break;
+		case LEFT:
+			move(new Vector2f(-speed, 0f), null, delta);
+			break;
+		case RIGHT:
+			move(new Vector2f(speed, 0f), null, delta);
+			break;
+		case UP:
+			move(new Vector2f(0f, speed), null, delta);
+			break;
+		}
+	}
+	
 	private boolean hasBoundViolationsOnPersonalBound(List<BoundingSprite> bounds, VectorObject personalBound) {
-		for (BoundingSprite boundingSprite : bounds) {
-			if (personalBound.isIntersecting(boundingSprite.getOuterBound())) {
-				if (boundingSprite.getInnerBounds() != null && !boundingSprite.getInnerBounds().isEmpty()) {
-					for (VectorObject innerBound : boundingSprite.getInnerBounds()) {
-						if (personalBound.isIntersecting(innerBound)) {
-							return true;
+		if (bounds != null) {
+			for (BoundingSprite boundingSprite : bounds) {
+				if (personalBound.isIntersecting(boundingSprite.getOuterBound())) {
+					if (boundingSprite.getInnerBounds() != null && !boundingSprite.getInnerBounds().isEmpty()) {
+						for (VectorObject innerBound : boundingSprite.getInnerBounds()) {
+							if (personalBound.isIntersecting(innerBound)) {
+								return true;
+							}
 						}
+					} else {
+						return true;
 					}
-				} else {
-					return true;
 				}
 			}
 		}
