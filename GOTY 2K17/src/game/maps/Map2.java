@@ -8,7 +8,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import game.TileLocation;
-import game.util.Direction;
 
 public class Map2 extends GameMap {
 
