@@ -6,19 +6,18 @@ import java.util.ArrayList;
 import game.TileWorld;
 import game.units.LivingUnit;
 
-public abstract class Monster extends LivingUnit {
+public class Monster extends LivingUnit {
 
 	private boolean attacking;
 	private float animationTime = 1;
 	protected int frameNum;
+	protected int frameSize;
 
 	private final ArrayList<BufferedImage> actionSprites = new ArrayList<>();
 
 	protected Monster(BufferedImage image, TileWorld world, int maxHealth) {
 		super(image, world, maxHealth);
 		//All monster sprite sheets are 4x4
-		this.horizontalFrameNum = 4;
-		this.verticalFrameNum = 4;
 	}
 	
 //	public void attackAnimation(float delta) {

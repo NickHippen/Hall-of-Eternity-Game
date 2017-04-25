@@ -14,15 +14,13 @@ public class Zombie extends Monster {
 
 	private final static int MAX_HEALTH = 200;
 	private final static int DAMAGE = 35;
-	private final static int frameSize = 64;
 	
-	private static BufferedImage BASE_IMAGE;
+	private static BufferedImage spriteSheet;
 	
 	static {
 		try {
 			URL url = Zombie.class.getResource("/resources/units/monsters/zombie.png");
-			BufferedImage spriteSheet = ImageIO.read(url).getSubimage(0, 0, 64, 64);
-			BASE_IMAGE = spriteSheet;
+			spriteSheet = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -30,7 +28,7 @@ public class Zombie extends Monster {
 	}
 	
 	public Zombie(TileWorld world) {
-		super(BASE_IMAGE, world, MAX_HEALTH);
+		super(spriteSheet, world, MAX_HEALTH);
 
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
@@ -45,9 +43,5 @@ public class Zombie extends Monster {
 				
 			}
 		}
-	}
-	
-	public int getFrameSize(){
-		return frameSize;
 	}
 }

@@ -1,6 +1,9 @@
 package game.units;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import game.TileWorld;
 import game.sprites.BoundingSprite;
@@ -11,11 +14,12 @@ public abstract class Unit extends BoundingSprite {
 	
 	private int damagePerHit;
 	
-	private int frameSize;
-	
+	private ArrayList<BufferedImage> attackAnimation;
+		
 	protected Unit(BufferedImage image, TileWorld world) {
 		super(image);
-		this.frameSize = this.getFrameSize();
+		attackAnimation = new ArrayList<BufferedImage>();
+		this.createAnimation();
 	}
 
 	public int getDamagePerHit() {
@@ -34,5 +38,18 @@ public abstract class Unit extends BoundingSprite {
 		this.world = world;
 	}
 	
-	public abstract int getFrameSize();
+	public void createAnimation(){
+		int FS = this.getFrameSize();
+		for(int i = 0; i < this.getVerticalFrameNum(); i++){
+			for(int j = 0; j < this.getHorizontalFrameNum(); i++){
+				System.out.println(this.getSpriteSheet().getWidth());
+				System.out.println(i * FS);
+				attackAnimation.add(this.getSpriteSheet().getSubimage(i * FS, j * FS, i * FS + FS, j * FS + FS));
+			}
+		}
+	}
+	
+	public ArrayList<BufferedImage> getAttackAnimation(){
+		return attackAnimation;
+	}
 }

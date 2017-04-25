@@ -43,11 +43,9 @@ public class TileWorld {
 	}
 	
 	public void addUnitToTile(TileLocation location, Unit unit) {
-		System.out.println(tileSizeX * location.getX());
 		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (worldWidth/unit.getFrameSize()),
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY - (worldHeight/unit.getFrameSize())));
 		tiles[location.getX()][location.getY()].getUnits().add(unit);
-		System.out.println(unit.getLocation().x + " " + unit.getLocation().y);
 	}
 	
 	public TileLocation getTileLocationAtPosition(Vector2f pos) {

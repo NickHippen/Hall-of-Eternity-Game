@@ -19,6 +19,8 @@ public class Hero extends LivingUnit {
 		super(image, world, maxHealth);
 		heroDamageType = type;
 		status = new StatusEffects(this, heroDamageType);
+		this.setHorizontalFrameNum(1);
+		this.setVerticalFrameNum(1);
 	}
 	
 	protected void updateHero(float delta) {
