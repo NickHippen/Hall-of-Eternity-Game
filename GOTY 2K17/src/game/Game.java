@@ -9,6 +9,8 @@ import java.util.Random;
 import game.cards.Card;
 import game.cards.Deck;
 import game.cards.monsters.ZombieCard;
+import game.cards.monsters.DragonCard;
+
 import game.units.Unit;
 import game.util.Direction;
 import game.util.Matrix3x3f;
@@ -26,9 +28,9 @@ public class Game extends TileFramework {
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
-		deck.getHand().add(new ZombieCard(getWorld()));
-		deck.getHand().add(new ZombieCard(getWorld()));
-		deck.getHand().add(new ZombieCard(getWorld()));
+		deck.getHand().add(new DragonCard(getWorld()));
+		deck.getHand().add(new DragonCard(getWorld()));
+		deck.getHand().add(new DragonCard(getWorld()));
 	}
 	
 	@Override

@@ -10,7 +10,7 @@ import game.TileWorld;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
-public class Zombie extends Monster {
+public class Dragon extends Monster {
 
 	private final static int MAX_HEALTH = 200;
 	private final static int DAMAGE = 35;
@@ -19,7 +19,7 @@ public class Zombie extends Monster {
 	
 	static {
 		try {
-			URL url = Zombie.class.getResource("/resources/units/monsters/zombie.png");
+			URL url = Zombie.class.getResource("/resources/units/monsters/dragon.png");
 			spriteSheet = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,9 +27,9 @@ public class Zombie extends Monster {
 		}
 	}
 	
-	public Zombie(TileWorld world) {
+	public Dragon(TileWorld world) {
 		super(spriteSheet, world, MAX_HEALTH);
-		this.maxFrameNum = 14;
+		this.maxFrameNum = 8;
 		
 		
 		setOuterBound(new AxisAlignedBoundingBox(

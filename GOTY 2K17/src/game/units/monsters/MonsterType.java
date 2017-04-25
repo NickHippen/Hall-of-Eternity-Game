@@ -2,6 +2,7 @@ package game.units.monsters;
 
 public enum MonsterType {
 
-	ZOMBIE;
+	ZOMBIE,
+	DRAGON;
 	
 }

@@ -8,6 +8,8 @@ public class MonsterFactory {
 		switch (monsterType) {
 		case ZOMBIE:
 			return new Zombie(world);
+		case DRAGON:
+			return new Dragon(world);
 		default:
 			return null;
 		}
