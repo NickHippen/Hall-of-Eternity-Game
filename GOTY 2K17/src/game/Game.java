@@ -2,10 +2,9 @@ package game;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Random;
-
-import com.sun.glass.events.KeyEvent;
 
 import game.cards.Card;
 import game.cards.Deck;
