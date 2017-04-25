@@ -5,7 +5,6 @@ import java.util.List;
 
 import game.TileLocation;
 import game.sprites.SpriteObject;
-import game.util.Direction;
 
 public abstract class GameMap extends SpriteObject {
 	
@@ -19,6 +18,6 @@ public abstract class GameMap extends SpriteObject {
 	
 	public abstract List<TileLocation> getInvalidTileLocations();
 	
-	public abstract Direction getDirectionForTileLocation(TileLocation loc);
+	public abstract List<TileLocation> getGoalLocations();
 	
 }

@@ -13,10 +13,8 @@ public class Tile {
 
 	private List<Unit> units;
 	
-	public double U;
-	public Direction D;
-	public double value;
-	public Map<Direction, Double> Q = new HashMap<>();
+	private double qValue;
+	private final Map<Direction, Double> actionQMap = new HashMap<>();
 
 	public Tile() {
 		units = new ArrayList<>();
@@ -28,6 +26,18 @@ public class Tile {
 
 	public void setUnits(List<Unit> units) {
 		this.units = units;
+	}
+	
+	public double getQValue() {
+		return qValue;
+	}
+
+	public void setQValue(double qValue) {
+		this.qValue = qValue;
+	}
+	
+	public Map<Direction, Double> getActionQMap() {
+		return actionQMap;
 	}
 	
 	public boolean hasMonster() {

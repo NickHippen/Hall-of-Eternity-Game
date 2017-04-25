@@ -114,11 +114,10 @@ public class TileFramework extends SimpleFramework {
 					continue;
 				}
 				Point p = convertTileLocationToPoint(loc);
-//				Direction dir = getWorld().getTiles()[x][y].D;
 				List<Direction> dirs = new ArrayList<>();
-				for (Direction direction : getWorld().getTiles()[x][y].Q.keySet()) {
-					if (getWorld().getTiles()[x][y].Q.get(direction).equals(getWorld().getTiles()[x][y].value)) {
-//						dir = direction;
+				Tile tile = getWorld().getTiles()[x][y]; 
+				for (Direction direction : getWorld().getTiles()[x][y].getActionQMap().keySet()) {
+					if (tile.getActionQMap().get(direction).equals(tile.getQValue())) {
 						dirs.add(direction);
 					}
 				}

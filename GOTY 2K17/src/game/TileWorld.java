@@ -1,7 +1,5 @@
 package game;
 
-import java.util.Arrays;
-
 import game.maps.GameMap;
 import game.units.Unit;
 import game.util.Direction;
@@ -66,7 +64,7 @@ public class TileWorld {
 	public void valueIteration() {
 		double prevDelta = 0;
 		do {
-			double delta = dostep();
+			double delta = calculateActionValues();
 			if (Math.abs(delta - prevDelta) <= 0) {
 				break;
 			}
@@ -74,29 +72,27 @@ public class TileWorld {
 		} while (true);
 	}
 	
-	private double discount = 0.9;
-	
-	public double dostep() {
+	public double calculateActionValues() {
 		double delta = 0;
-		double newvalues[][] = new double[tilesX][tilesY];
+		double newValues[][] = new double[tilesX][tilesY];
 		for (int x = 0; x < tilesX; x++) {
 			for (int y = 0; y < tilesY; y++) {
-				double d = calculateValues(x, y, Direction.values()[0]);
+				double d = calculateValue(x, y, Direction.values()[0]);
 				if (d > delta) {
 					delta = d;
 				}
-				tiles[x][y].Q.put(Direction.values()[0], d);
-				newvalues[x][y] = tiles[x][y].Q.get(Direction.values()[0]);
-//				for (Direction action : Direction.values()) {
+				Tile tile = tiles[x][y];
+				tile.getActionQMap().put(Direction.values()[0], d);
+				newValues[x][y] = tile.getActionQMap().get(Direction.values()[0]);
 				for (int i = 0; i < Direction.values().length; i++) {
 					Direction action = Direction.values()[i];
-					d = calculateValues(x, y, action);
+					d = calculateValue(x, y, action);
 					if (d > delta) {
 						delta = d;
 					}
-					tiles[x][y].Q.put(action, d);
-					if (tiles[x][y].Q.get(action) > newvalues[x][y]) {
-						newvalues[x][y] = tiles[x][y].Q.get(action);
+					tile.getActionQMap().put(action, d);
+					if (tile.getActionQMap().get(action) > newValues[x][y]) {
+						newValues[x][y] = tile.getActionQMap().get(action);
 					}
 				}
 			}
@@ -104,15 +100,17 @@ public class TileWorld {
 		// Apply new values
 		for (int x = 0; x < tilesX; x++) {
 			for (int y = 0; y < tilesY; y++) {
-				tiles[x][y].value = newvalues[x][y];
+				tiles[x][y].setQValue(newValues[x][y]);
 			}
 		}
 		return delta;
 	}
 	
-	public double calculateValues(int x, int y, Direction action) {
-		if (x == 28 && (y == 6 || y == 7)) {
-			return 100;
+	public double calculateValue(int x, int y, Direction action) {
+		for (TileLocation goalLoc : getMap().getGoalLocations()) {
+			if (new TileLocation(x, y).equals(goalLoc)) {
+				return 100;
+			}
 		}
 		if (tiles[x][y].hasMonster()) {
 			return 20;
@@ -135,77 +133,27 @@ public class TileWorld {
 		switch (dir) {
 		case DOWN:
 			if (isOutOfBounds(x, y + 1)) {
-				return /*-1 + */discount * tiles[x][y].value;
+				return 0.9 * tiles[x][y].getQValue();
 			}
-			return discount * tiles[x][y + 1].value;
+			return 0.9 * tiles[x][y + 1].getQValue();
 		case LEFT:
 			if (isOutOfBounds(x - 1, y)) {
-				return /*-1 + */discount * tiles[x][y].value;
+				return 0.9 * tiles[x][y].getQValue();
 			}
-			return discount * tiles[x - 1][y].value;
+			return 0.9 * tiles[x - 1][y].getQValue();
 		case RIGHT:
 			if (isOutOfBounds(x + 1, y)) {
-				return /*-1 + */discount * tiles[x][y].value;
+				return 0.9 * tiles[x][y].getQValue();
 			}
-			return discount * tiles[x + 1][y].value;
+			return 0.9 * tiles[x + 1][y].getQValue();
 		case UP:
 			if (isOutOfBounds(x, y - 1)) {
-				return /*-1 + */discount * tiles[x][y].value;
+				return 0.9 * tiles[x][y].getQValue();
 			}
-			return discount * tiles[x][y - 1].value;
+			return 0.9 * tiles[x][y - 1].getQValue();
 		}
 		return 0;
 	}
-	
-//	public double calculateValues(boolean applyBest, int k) {
-//		double delta = 0;
-//		for (int i = 0; i < k; i++) {
-//			for (int y = 0; y < tilesY; y++) {
-//				for (int x = tilesX - 1; x >= 0; x--) {
-//					if ((y == 6 || y == 7) && x == 28) { // Goal
-//						continue;
-//					}
-//					double d = calculateValue(x, y, applyBest);
-//					if (d > delta) {
-//						delta = d;
-//					}
-//				}
-//			}
-//		}
-//		return delta;
-//	}
-//	
-//	public double calculateValue(int x, int y, boolean applyBest) {
-//		double maxValue = Double.NEGATIVE_INFINITY;
-//		Direction bestDir = null;
-//		for (Direction primaryDir : Direction.values()) {
-//			double value = 0;
-//			if (!isOutOfBounds(x + primaryDir.getColDif(), y + primaryDir.getRowDif())) {
-//				value += tiles[x + primaryDir.getColDif()][y + primaryDir.getRowDif()].U;
-//			} else {
-//				// Apply reward function for staying in place
-//				value += tiles[x][y].U;
-//			}
-//			if (value > maxValue) {
-//				maxValue = value;
-//				bestDir = primaryDir;
-//			}
-//		}
-//		double oldValue = tiles[x][y].U;
-//		if (getMap().isTileLocationValid(new TileLocation(x, y))) {
-//			if (tiles[x][y].hasMonster()) {
-//				tiles[x][y].U = maxValue + 1000;
-//			} else {
-//				tiles[x][y].U = maxValue - 400;
-//			}
-//		} else {
-//			tiles[x][y].U = maxValue - 1000;
-//		}
-//		if (applyBest) {
-//			tiles[x][y].D = bestDir;
-//		}
-//		return Math.abs(oldValue - tiles[x][y].U);
-//	}
 	
 	public boolean isOutOfBounds(int x, int y) {
 		if (y < 0 || x < 0) {

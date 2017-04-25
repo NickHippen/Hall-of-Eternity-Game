@@ -35,8 +35,8 @@ public class Map1 extends GameMap {
 	}
 
 	@Override
-	public Direction getDirectionForTileLocation(TileLocation loc) {
-		return null;
+	public List<TileLocation> getGoalLocations() {
+		return Arrays.asList();
 	}
 
 }
