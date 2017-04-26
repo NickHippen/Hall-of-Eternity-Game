@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -18,7 +20,8 @@ public class Game extends TileFramework {
 
 	private Deck deck;
 	private Card grabbedCard;
-	
+	private int waveNum;
+	private int boneNum;
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -31,6 +34,9 @@ public class Game extends TileFramework {
 		deck.getHand().add(new DragonCard(getWorld()));
 		
 		getWorld().policyIteration();
+		
+		this.waveNum = 69;
+		this.boneNum = 420;
 	}
 	
 	@Override
@@ -116,6 +122,16 @@ public class Game extends TileFramework {
 		if (displayCoordinates) {
 			renderCoordinates(g2d);
 		}
+		
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Cooper Black", Font.PLAIN, 18));
+		g.drawString("WAVE", 90,640);
+		g.drawString("BONES", 1287, 640);
+		
+		g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
+		g.drawString(String.format("%03d", waveNum), 99, 664);
+		g.drawString(String.format("%03d", boneNum), 1299, 664);
+
 	}
 	
 	public static void main(String[] args) {
