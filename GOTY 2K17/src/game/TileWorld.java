@@ -44,8 +44,11 @@ public class TileWorld {
 	}
 	
 	public void addUnitToTile(TileLocation location, Unit unit) {
-		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (worldWidth/unit.getFrameSize()),
-				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY - (worldHeight/unit.getFrameSize())));
+		//Get the tile it was placed. The middle of the sprite spawns at 0,0 (upper left) of tile.
+		//Sprite must be shifted 24 pixels to the right to line up with the center
+		//It must also be shifted frameSize/2 - 48 pixels up/down for the bottom to line up with the tile
+		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
+				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
 		tiles[location.getX()][location.getY()].getUnits().add(unit);
 	}
 	
