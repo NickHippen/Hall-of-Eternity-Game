@@ -2,11 +2,10 @@ package game;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
@@ -29,8 +28,8 @@ public class TileFramework extends SimpleFramework {
 	public static final float TILE_SIZE_Y = APP_WORLD_HEIGHT / (float) TILES_Y;
 	
 	protected boolean displayBounds;
-	
 	protected boolean displayDirections;
+	protected boolean displayCoordinates;
 	
 	private TileWorld tileWorld;
 
@@ -57,6 +56,13 @@ public class TileFramework extends SimpleFramework {
 		// Display Bounds
 		if (keyboard.keyDownOnce(KeyEvent.VK_B)) {
 			displayBounds = !displayBounds;
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
+			getWorld().policyIteration();
+			displayDirections = !displayDirections;
+		}
+		if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
+			displayCoordinates = !displayCoordinates;
 		}
 	}
 
@@ -114,14 +120,7 @@ public class TileFramework extends SimpleFramework {
 					continue;
 				}
 				Point p = convertTileLocationToPoint(loc);
-				List<Direction> dirs = new ArrayList<>();
-				Tile tile = getWorld().getTiles()[x][y]; 
-				for (Direction direction : getWorld().getTiles()[x][y].getActionQMap().keySet()) {
-					if (tile.getActionQMap().get(direction).equals(tile.getQValue())) {
-						dirs.add(direction);
-					}
-				}
-				for (Direction dir : dirs) {
+				for (Direction dir : getWorld().getTiles()[x][y].getPathfindingDirections()) {
 					switch (dir) {
 					case DOWN:
 						g.drawLine(p.x + 18, p.y + 36, p.x + 24, p.y + 48);
@@ -141,6 +140,20 @@ public class TileFramework extends SimpleFramework {
 						break;
 					}
 				}
+			}
+		}
+	}
+	
+	public void renderCoordinates(Graphics2D g) {
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 10)); 
+		for (int x = 0; x < TILES_X; x++) {
+			for (int y = 0; y < TILES_Y; y++) {
+				TileLocation loc = new TileLocation(x, y);
+				Point p = convertTileLocationToPoint(loc);
+				g.setColor(Color.BLACK);
+				g.fillRect(p.x, p.y + 14, 36, 15);
+				g.setColor(Color.RED);
+				g.drawString(String.format("(%d, %d)", x, y), p.x, p.y + 24);
 			}
 		}
 	}

@@ -4,15 +4,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 import game.cards.Card;
 import game.cards.Deck;
-import game.cards.monsters.ZombieCard;
 import game.cards.monsters.DragonCard;
-
+import game.cards.monsters.ZombieCard;
 import game.units.Unit;
-import game.util.Direction;
+import game.units.heroes.Freelancer;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 
@@ -31,6 +29,8 @@ public class Game extends TileFramework {
 		deck.getHand().add(new DragonCard(getWorld()));
 		deck.getHand().add(new DragonCard(getWorld()));
 		deck.getHand().add(new DragonCard(getWorld()));
+		
+		getWorld().policyIteration();
 	}
 	
 	@Override
@@ -59,21 +59,8 @@ public class Game extends TileFramework {
 			}
 		}
 		
-		if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
-			for (int i = 0; i < 100; i++) {
-				getWorld().valueIteration();
-			}
-			displayDirections = !displayDirections;
-		}
-		
-		if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) { // TODO Remove me!
-			for (Tile[] tileRow : getWorld().getTiles()) {
-				for (Tile tile : tileRow) {
-					for (Unit unit : tile.getUnits()) {
-						unit.setMoving(Direction.values()[new Random().nextInt(4)]);
-					}
-				}
-			}
+		if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
+			getWorld().addUnitToTile(new TileLocation(0, 6), new Freelancer(getWorld()));
 		}
 	}
 	
@@ -92,9 +79,6 @@ public class Game extends TileFramework {
 		for (Tile[] tileRow : getWorld().getTiles()) {
 			for (Tile tile : tileRow) {
 				for (Unit unit : tile.getUnits()) {
-					if (unit.getMoving() != null) {
-						unit.move(unit.getMoving(), 0.25f, delta);
-					}
 					unit.update(delta);
 				}
 			}
@@ -113,10 +97,6 @@ public class Game extends TileFramework {
 
 		renderTiles(g2d);
 		
-		if (grabbedCard != null) {
-			renderGrid(g2d);
-		}
-		
 		// Deck
 		for (int i = 0; i < deck.getHand().size(); i++) {
 			Card card = deck.getHand().get(i);
@@ -127,8 +107,14 @@ public class Game extends TileFramework {
 			}
 		}
 		
+		if (grabbedCard != null || displayCoordinates) {
+			renderGrid(g2d);
+		}
 		if (displayDirections) {
 			renderDirections(g2d);
+		}
+		if (displayCoordinates) {
+			renderCoordinates(g2d);
 		}
 	}
 	
