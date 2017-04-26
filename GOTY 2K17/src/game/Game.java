@@ -31,7 +31,6 @@ public class Game extends TileFramework {
 		deck.getHand().add(new DragonCard(getWorld()));
 		
 		getWorld().policyIteration();
-		displayDirections = true;
 	}
 	
 	@Override
@@ -58,11 +57,6 @@ public class Game extends TileFramework {
 			if (grabbedCard != null) {
 				grabbedCard.setLocation(centeredMouseVec);
 			}
-		}
-		
-		if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
-			getWorld().policyIteration();
-			displayDirections = !displayDirections;
 		}
 		
 		if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
@@ -119,6 +113,9 @@ public class Game extends TileFramework {
 		
 		if (displayDirections) {
 			renderDirections(g2d);
+		}
+		if (displayCoordinates) {
+			renderCoordinates(g2d);
 		}
 	}
 	
