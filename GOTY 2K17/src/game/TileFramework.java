@@ -66,6 +66,12 @@ public class TileFramework extends SimpleFramework {
 		}
 	}
 
+	
+	public void renderSelectedTile(Graphics2D g, TileLocation location){
+		g.setColor(Color.GREEN);
+		g.drawRect(location.getX() * 48, location.getY() * 48, 48, 48);
+	}
+	
 	public void renderTiles(Graphics2D g2d) {
 		Matrix3x3f view = getViewportTransform();
 		for (Tile[] tiles : tileWorld.getTiles()) {

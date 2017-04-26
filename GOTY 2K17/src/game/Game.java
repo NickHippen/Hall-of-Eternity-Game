@@ -22,9 +22,12 @@ public class Game extends TileFramework {
 	private Card grabbedCard;
 	private int waveNum;
 	private int boneNum;
+	Vector2f centeredMouseVec;
+
 	@Override
 	protected void initialize() {
 		super.initialize();
+		
 		deck = new Deck();
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
@@ -73,6 +76,8 @@ public class Game extends TileFramework {
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
+		centeredMouseVec = getCenteredRelativeWorldMousePosition();
+
 		// Deck
 		for (int i = 0; i < deck.getHand().size(); i++) {
 			Card card = deck.getHand().get(i);
@@ -94,7 +99,9 @@ public class Game extends TileFramework {
 	
 	@Override
 	protected void render(Graphics g) {
-		super.render(g);
+		super.render(g);		
+
+
 		Matrix3x3f view = getViewportTransform();
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -132,6 +139,7 @@ public class Game extends TileFramework {
 		g.drawString(String.format("%03d", waveNum), 99, 664);
 		g.drawString(String.format("%03d", boneNum), 1299, 664);
 
+		renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
 	}
 	
 	public static void main(String[] args) {
