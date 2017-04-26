@@ -108,9 +108,9 @@ public class TileWorld {
 				return 100;
 			}
 		}
-		if (tiles[x][y].hasMonster()) {
-			return 20;
-		}
+//		if (tiles[x][y].hasMonster()) {
+//			return 20;
+//		}
 		double newQ = 0;
 		for (Direction dir : Direction.values()) {
 			double contrib = contribution(x, y, dir);
