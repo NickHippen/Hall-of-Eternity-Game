@@ -92,16 +92,17 @@ public class TileFramework extends SimpleFramework {
 	}
 	
 	public void renderGrid(Graphics2D g) {
+		int stopY = 13;
 		g.setColor(Color.RED);
-		for (int y = 0; y < 674; y += 48) {
+		for (int y = 0; y < (48 * stopY); y += 48) {
 			g.drawLine(0, y, appWidth, y);
 		}
 		for (int x = 0; x < appWidth; x += 48) {
-			g.drawLine(x, 0, x, 673);
+			g.drawLine(x, 0, x, (48 * (stopY - 1)));
 		}
 		g.setStroke(new BasicStroke(2));
 		for (TileLocation loc : getWorld().getMap().getInvalidTileLocations()) {
-			if (loc.getY() > 13) {
+			if (loc.getY() > 11) {
 				continue;
 			}
 			Point p = convertTileLocationToPoint(loc);
