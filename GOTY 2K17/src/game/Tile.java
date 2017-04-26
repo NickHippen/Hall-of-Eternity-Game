@@ -2,8 +2,10 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import game.units.Unit;
 import game.units.monsters.Monster;
@@ -15,6 +17,8 @@ public class Tile {
 	
 	private double qValue;
 	private final Map<Direction, Double> actionQMap = new HashMap<>();
+	
+	private Set<Direction> pathfindingDirections = new HashSet<>(0);
 
 	public Tile() {
 		units = new ArrayList<>();
@@ -38,6 +42,26 @@ public class Tile {
 	
 	public Map<Direction, Double> getActionQMap() {
 		return actionQMap;
+	}
+	
+	/**
+	 * Updates the pathfinding directions based on action values
+	 * @return whether or not any of the actions changed
+	 */
+	public boolean updatePathfindingDirections() {
+		Set<Direction> dirs = new HashSet<>();
+		for (Direction direction : getActionQMap().keySet()) {
+			if (getActionQMap().get(direction).equals(getQValue())) {
+				dirs.add(direction);
+			}
+		}
+		boolean same = dirs.equals(getPathfindingDirections());
+		pathfindingDirections = dirs;
+		return !same;
+	}
+	
+	public Set<Direction> getPathfindingDirections() {
+		return pathfindingDirections;
 	}
 	
 	public boolean hasMonster() {

@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
@@ -114,14 +112,7 @@ public class TileFramework extends SimpleFramework {
 					continue;
 				}
 				Point p = convertTileLocationToPoint(loc);
-				List<Direction> dirs = new ArrayList<>();
-				Tile tile = getWorld().getTiles()[x][y]; 
-				for (Direction direction : getWorld().getTiles()[x][y].getActionQMap().keySet()) {
-					if (tile.getActionQMap().get(direction).equals(tile.getQValue())) {
-						dirs.add(direction);
-					}
-				}
-				for (Direction dir : dirs) {
+				for (Direction dir : getWorld().getTiles()[x][y].getPathfindingDirections()) {
 					switch (dir) {
 					case DOWN:
 						g.drawLine(p.x + 18, p.y + 36, p.x + 24, p.y + 48);

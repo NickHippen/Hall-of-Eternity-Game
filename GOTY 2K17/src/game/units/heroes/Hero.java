@@ -1,12 +1,19 @@
 package game.units.heroes;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
+import java.util.Set;
 
+import game.Tile;
 import game.TileWorld;
 import game.units.LivingUnit;
+import game.units.MovementTask;
 import game.units.status.StatusEffects;
+import game.util.Direction;
 
 public class Hero extends LivingUnit {
+	
+	private static final Random RANDOM = new Random();
 	
 	private final float MOVE_TIMER = 5; // Time before moving to next tile
 	
@@ -35,6 +42,35 @@ public class Hero extends LivingUnit {
 		}
 		else this.setHealth(this.getHealth() - damage);
 	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		if (getMovementTask() != null) {
+			boolean taskComplete = getMovementTask().contributeTask(this, delta);
+			if (taskComplete) {
+				setMovementTask(null);
+			}
+		} else {
+			Tile tile = getWorld().getTileAtPosition(getLocation());
+			Set<Direction> dirs = tile.getPathfindingDirections();
+			if (dirs.isEmpty()) {
+				System.out.println("WARNING: NO PATHFINDING CONFIGURED.");
+				return;
+			}
+			Direction dir = (Direction) dirs.toArray()[RANDOM.nextInt(dirs.size())];
+			switch (dir) {
+			case UP:
+			case DOWN:
+				setMovementTask(new MovementTask(dir, getWorld().getTileSizeY(), 0.25f));
+				break;
+			case LEFT:
+			case RIGHT:
+				setMovementTask(new MovementTask(dir, getWorld().getTileSizeX(), 0.25f));
+				break;
+			}
+		}
+	}
 
 	public int getDropAmount() {
 		return dropAmount;
@@ -53,8 +89,5 @@ public class Hero extends LivingUnit {
 	public HeroDamageType getHeroType() {
 		return heroDamageType;
 	}
-	
-	public int getFrameSize(){
-		return 0; //not implemented
-	}
+
 }

@@ -61,38 +61,34 @@ public class TileWorld {
 		return new TileLocation(x, y);
 	}
 	
-	public void valueIteration() {
-		double prevDelta = 0;
-		do {
-			double delta = calculateActionValues();
-			if (Math.abs(delta - prevDelta) <= 0) {
-				break;
-			}
-			prevDelta = delta;
-		} while (true);
+	public Tile getTileAtPosition(Vector2f pos) {
+		TileLocation tileLoc = getTileLocationAtPosition(pos);
+		return tiles[tileLoc.getX()][tileLoc.getY()];
 	}
 	
-	public double calculateActionValues() {
-		double delta = 0;
+	public void policyIteration() {
+		boolean changed;
+		do {
+			changed = calculateActionValues();
+		} while (changed);
+	}
+	
+	public boolean calculateActionValues() {
+		boolean changed = false;
 		double newValues[][] = new double[tilesX][tilesY];
 		for (int x = 0; x < tilesX; x++) {
 			for (int y = 0; y < tilesY; y++) {
-				double d = calculateValue(x, y, Direction.values()[0]);
-				if (d > delta) {
-					delta = d;
-				}
 				Tile tile = tiles[x][y];
-				tile.getActionQMap().put(Direction.values()[0], d);
+				tile.getActionQMap().put(Direction.values()[0], calculateValue(x, y, Direction.values()[0]));
 				newValues[x][y] = tile.getActionQMap().get(Direction.values()[0]);
 				for (int i = 0; i < Direction.values().length; i++) {
 					Direction action = Direction.values()[i];
-					d = calculateValue(x, y, action);
-					if (d > delta) {
-						delta = d;
-					}
-					tile.getActionQMap().put(action, d);
+					tile.getActionQMap().put(action, calculateValue(x, y, action));
 					if (tile.getActionQMap().get(action) > newValues[x][y]) {
 						newValues[x][y] = tile.getActionQMap().get(action);
+					}
+					if (tile.updatePathfindingDirections()) {
+						changed = true;
 					}
 				}
 			}
@@ -103,7 +99,7 @@ public class TileWorld {
 				tiles[x][y].setQValue(newValues[x][y]);
 			}
 		}
-		return delta;
+		return changed;
 	}
 	
 	public double calculateValue(int x, int y, Direction action) {
@@ -163,6 +159,30 @@ public class TileWorld {
 			return true;
 		}
 		return false;
+	}
+	
+	public int getTilesX() {
+		return tilesX;
+	}
+
+	public int getTilesY() {
+		return tilesY;
+	}
+
+	public float getTileSizeX() {
+		return tileSizeX;
+	}
+
+	public float getTileSizeY() {
+		return tileSizeY;
+	}
+
+	public float getWorldWidth() {
+		return worldWidth;
+	}
+
+	public float getWorldHeight() {
+		return worldHeight;
 	}
 	
 }

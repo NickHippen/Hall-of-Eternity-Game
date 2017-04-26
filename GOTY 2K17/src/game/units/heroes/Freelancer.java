@@ -1,11 +1,11 @@
 package game.units.heroes;
 
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
-import game.TileFramework;
+import javax.imageio.ImageIO;
+
 import game.TileWorld;
-import game.vectors.AxisAlignedBoundingBox;
-import game.vectors.Vector2f;
 
 public class Freelancer extends Hero {
 	private final static int MAX_HEALTH = 75;
@@ -15,9 +15,9 @@ public class Freelancer extends Hero {
 	
 	static {
 		try {
-//			URL url = RockSprite.class.getResource("/sprites/Tiles.png");
-//			BufferedImage spriteSheet = ImageIO.read(url);
-//			BASE_IMAGE = spriteSheet.getSubimage(0, 48, 48, 48);
+			URL url = Freelancer.class.getResource("/resources/units/heroes/freelancer.png");
+			BufferedImage spriteSheet = ImageIO.read(url);
+			BASE_IMAGE = spriteSheet.getSubimage(0, 0, 64, 64);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -26,10 +26,7 @@ public class Freelancer extends Hero {
 	
 	public Freelancer(TileWorld world) {
 		super(BASE_IMAGE, world, MAX_HEALTH, HeroDamageType.MELEE);
-		setOuterBound(new AxisAlignedBoundingBox(
-				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
-				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
-		setScale(0.95);
+//		setScale(0.95);
 		
 		this.setDamagePerHit(DAMAGE);
 	}

@@ -4,14 +4,14 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import game.units.monsters.Monster;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
-import game.units.monsters.Monster;
 public class SpriteObject {
 
 	protected int horizontalFrameNum;
 	protected int verticalFrameNum;
-	protected int frameSize;
+	private int frameSize;
 	
 	private Matrix3x3f view;
 	
