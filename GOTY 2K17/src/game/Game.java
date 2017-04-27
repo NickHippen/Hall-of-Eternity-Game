@@ -9,8 +9,11 @@ import java.awt.event.MouseEvent;
 
 import game.cards.Card;
 import game.cards.Deck;
-import game.cards.monsters.DragonCard;
-import game.cards.monsters.ZombieCard;
+
+import game.cards.monsters.*;
+
+import game.cards.curses.*;
+
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.util.Matrix3x3f;
@@ -30,16 +33,16 @@ public class Game extends TileFramework {
 		
 		deck = new Deck();
 		deck.getHand().add(new ZombieCard(getWorld()));
+		deck.getHand().add(new HealCard(getWorld()));
+		deck.getHand().add(new DragonCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
-		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new DragonCard(getWorld()));
-		deck.getHand().add(new DragonCard(getWorld()));
-		deck.getHand().add(new DragonCard(getWorld()));
+		deck.getHand().add(new BlastCard(getWorld()));
 		
 		getWorld().policyIteration();
 		
-		this.waveNum = 69;
-		this.boneNum = 420;
+		this.waveNum = 0;
+		this.boneNum = 123;
 	}
 	
 	@Override
