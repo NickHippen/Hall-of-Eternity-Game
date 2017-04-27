@@ -26,6 +26,11 @@ public class Game extends TileFramework {
 	private int waveNum;
 	private int boneNum;
 	Vector2f centeredMouseVec;
+	
+	//Used for card movement
+	Vector2f initialLoc = null;
+	Vector2f initialLocCard = null;
+	
 
 	@Override
 	protected void initialize() {
@@ -34,10 +39,10 @@ public class Game extends TileFramework {
 		deck = new Deck();
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new HealCard(getWorld()));
-		deck.getHand().add(new DragonCard(getWorld()));
+		deck.getHand().add(new tempCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new DragonCard(getWorld()));
-		deck.getHand().add(new BlastCard(getWorld()));
+		deck.getHand().add(new tempCard2(getWorld()));
 		
 		getWorld().policyIteration();
 		
@@ -50,24 +55,33 @@ public class Game extends TileFramework {
 		super.processInput(delta);
 		
 		Vector2f centeredMouseVec = getCenteredRelativeWorldMousePosition();
+		
+		// Player drops card
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
-			// Player dropped card
 			if (grabbedCard.performAction(centeredMouseVec)) {
 				deck.getHand().remove(grabbedCard);
 			}
 			grabbedCard = null;
 		}
+		
+		//Player grabs card
 		if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 			for (Card card : deck.getHand()) {
 				if (card.isPointWithin(centeredMouseVec)) {
 					grabbedCard = card;
+					initialLocCard = grabbedCard.getLocation();
+					initialLoc = centeredMouseVec;
 					break;
 				}
 			}
 		}
+		
+		//Moves card that player has grabbed
 		if (mouse.buttonDown(MouseEvent.BUTTON1)) {
 			if (grabbedCard != null) {
-				grabbedCard.setLocation(centeredMouseVec);
+				System.out.println(initialLoc);
+				System.out.println(centeredMouseVec);
+				grabbedCard.setLocation(initialLocCard.sub(initialLoc.sub(centeredMouseVec)));
 			}
 		}
 		
@@ -142,7 +156,7 @@ public class Game extends TileFramework {
 		g.drawString(String.format("%03d", waveNum), 99, 664);
 		g.drawString(String.format("%03d", boneNum), 1299, 664);
 
-		renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
+		if (grabbedCard == null) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
 	}
 	
 	public static void main(String[] args) {
