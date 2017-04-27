@@ -69,6 +69,11 @@ public class TileFramework extends SimpleFramework {
 		}
 	}
 
+	public boolean onBoard(Vector2f pos){
+		if (pos.y > (-TILE_SIZE_Y * 2f)) return true;
+		return false;
+	}
+	
 	public void renderSelectedTile(Graphics2D g, TileLocation location){
 		g.setColor(Color.GREEN);
 		g.drawRect(location.getX() * 48, location.getY() * 48, 48, 48);

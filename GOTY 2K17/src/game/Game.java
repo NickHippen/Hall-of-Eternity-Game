@@ -23,9 +23,13 @@ public class Game extends TileFramework {
 
 	private Deck deck;
 	private Card grabbedCard;
+	private Card activatedCard;
+	
 	private int waveNum;
 	private int boneNum;
 	Vector2f centeredMouseVec;
+	
+	boolean selectingTarget;
 	
 	//Used for card movement
 	Vector2f initialLoc = null;
@@ -59,20 +63,32 @@ public class Game extends TileFramework {
 		
 		// Player drops card
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
-			if (grabbedCard.performAction(centeredMouseVec)) {
+			if(onBoard(centeredMouseVec)){
+				if(grabbedCard instanceof MonsterSpawnCard) selectingTarget = true;
 				deck.getHand().remove(grabbedCard);
+				activatedCard = grabbedCard;
 			}
 			grabbedCard = null;
 		}
 		
+		//Player selects target
+		if(mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingTarget){
+			if (activatedCard.performAction(centeredMouseVec)) {
+				selectingTarget = false;
+				grabbedCard = null;
+			}
+		}
+		
 		//Player grabs card
-		if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-			for (Card card : deck.getHand()) {
-				if (card.isPointWithin(centeredMouseVec)) {
-					grabbedCard = card;
-					initialLocCard = grabbedCard.getLocation();
-					initialLoc = centeredMouseVec;
-					break;
+		if(!selectingTarget){
+			if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+				for (Card card : deck.getHand()) {
+					if (card.isPointWithin(centeredMouseVec)) {
+						grabbedCard = card;
+						initialLocCard = grabbedCard.getLocation();
+						initialLoc = centeredMouseVec;
+						break;
+					}
 				}
 			}
 		}
@@ -125,17 +141,7 @@ public class Game extends TileFramework {
 
 		renderTiles(g2d);
 		
-		// Deck
-		for (int i = 0; i < deck.getHand().size(); i++) {
-			Card card = deck.getHand().get(i);
-			card.setView(view);
-			card.draw(g2d);
-			if (displayBounds) {
-				renderBounds(card, g2d);
-			}
-		}
-		
-		if (grabbedCard != null || displayCoordinates) {
+		if (selectingTarget || displayCoordinates) {
 			renderGrid(g2d);
 		}
 		if (displayDirections) {
@@ -155,16 +161,18 @@ public class Game extends TileFramework {
 		g.drawString(String.format("%03d", waveNum), 99, 664);
 		g.drawString(String.format("%03d", boneNum), 1299, 664);
 	
-		//Renders border around selected card
-		g.setColor(Color.GREEN);
-		for (Card card : deck.getHand()) {
-			if (card.isPointWithin(centeredMouseVec)) {
-				card.getOuterBound().render(g);
-			}
-		}
 		
 		//Renders map tile selection
-		if (grabbedCard == null && centeredMouseVec.y > (-TILE_SIZE_Y * 3f)) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
+		if ((selectingTarget || grabbedCard == null) && onBoard(centeredMouseVec)) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
+		
+		// Renders cards
+		for (int i = 0; i < deck.getHand().size(); i++) {
+			Card card = deck.getHand().get(i);
+			card.setView(view);
+			card.draw(g2d);
+			g.setColor(Color.green);
+			if (card.isPointWithin(centeredMouseVec) && !selectingTarget) card.getOuterBound().render(g);
+		}
 	}
 	
 	public static void main(String[] args) {
