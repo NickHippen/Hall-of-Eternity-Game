@@ -12,8 +12,8 @@ public abstract class Card extends BoundingSprite {
 		super(image, 1, 1);
 		setScale(0.95);
 		setOuterBound(new AxisAlignedBoundingBox(
-				new Vector2f(-0.02f, 0.02f),
-				new Vector2f(0.89f, 1.151f)));
+				new Vector2f(-0.024f, 0.026f),
+				new Vector2f(0.895f, 1.175f)));
 	}
 	
 	public abstract boolean performAction(Vector2f pos);

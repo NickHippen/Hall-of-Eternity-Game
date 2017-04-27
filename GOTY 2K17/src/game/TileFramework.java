@@ -7,12 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 
+import game.cards.Card;
+import game.cards.Deck;
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
 import game.units.Unit;
 import game.util.Direction;
 import game.util.Matrix3x3f;
 import game.util.SimpleFramework;
+import game.vectors.Vector2f;
 import game.vectors.VectorObject;
 
 
@@ -66,7 +69,6 @@ public class TileFramework extends SimpleFramework {
 		}
 	}
 
-	
 	public void renderSelectedTile(Graphics2D g, TileLocation location){
 		g.setColor(Color.GREEN);
 		g.drawRect(location.getX() * 48, location.getY() * 48, 48, 48);

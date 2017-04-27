@@ -48,13 +48,14 @@ public class Game extends TileFramework {
 		
 		this.waveNum = 0;
 		this.boneNum = 123;
+
 	}
 	
 	@Override
 	protected void processInput(float delta) {
 		super.processInput(delta);
 		
-		Vector2f centeredMouseVec = getCenteredRelativeWorldMousePosition();
+		centeredMouseVec = getCenteredRelativeWorldMousePosition();
 		
 		// Player drops card
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
@@ -79,8 +80,6 @@ public class Game extends TileFramework {
 		//Moves card that player has grabbed
 		if (mouse.buttonDown(MouseEvent.BUTTON1)) {
 			if (grabbedCard != null) {
-				System.out.println(initialLoc);
-				System.out.println(centeredMouseVec);
 				grabbedCard.setLocation(initialLocCard.sub(initialLoc.sub(centeredMouseVec)));
 			}
 		}
@@ -93,7 +92,6 @@ public class Game extends TileFramework {
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
-		centeredMouseVec = getCenteredRelativeWorldMousePosition();
 
 		// Deck
 		for (int i = 0; i < deck.getHand().size(); i++) {
@@ -147,6 +145,7 @@ public class Game extends TileFramework {
 			renderCoordinates(g2d);
 		}
 		
+		//Renders Wave and Bones text
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Cooper Black", Font.PLAIN, 18));
 		g.drawString("WAVE", 90,640);
@@ -155,8 +154,17 @@ public class Game extends TileFramework {
 		g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
 		g.drawString(String.format("%03d", waveNum), 99, 664);
 		g.drawString(String.format("%03d", boneNum), 1299, 664);
-
-		if (grabbedCard == null) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
+	
+		//Renders border around selected card
+		g.setColor(Color.GREEN);
+		for (Card card : deck.getHand()) {
+			if (card.isPointWithin(centeredMouseVec)) {
+				card.getOuterBound().render(g);
+			}
+		}
+		
+		//Renders map tile selection
+		if (grabbedCard == null && centeredMouseVec.y > (-TILE_SIZE_Y * 3f)) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
 	}
 	
 	public static void main(String[] args) {
