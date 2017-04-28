@@ -40,5 +40,9 @@ public class BlastCard extends ActionCard {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public String getName(){
+		return "Blast";
+	}
 
 }
