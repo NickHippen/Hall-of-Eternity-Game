@@ -3,16 +3,21 @@ package game.maps;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import game.TileLocation;
+import game.util.Direction;
 
 public class Map2 extends GameMap {
 
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
+	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -71,6 +76,8 @@ public class Map2 extends GameMap {
 		
 		GOAL_LOCATIONS.add(new TileLocation(28, 6));
 		GOAL_LOCATIONS.add(new TileLocation(28, 7));
+		
+		
 		
 		// Image
 		try {

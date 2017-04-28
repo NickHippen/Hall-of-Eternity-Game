@@ -53,6 +53,11 @@ public class Hero extends LivingUnit {
 			}
 		} else {
 			Tile tile = getWorld().getTileAtPosition(getLocation());
+			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2)) {
+				if (surroundingTile.hasMonster()) {
+					System.out.println("Near monster!");
+				}
+			}
 			Set<Direction> dirs = tile.getPathfindingDirections();
 			if (dirs.isEmpty()) {
 				System.out.println("WARNING: NO PATHFINDING CONFIGURED.");

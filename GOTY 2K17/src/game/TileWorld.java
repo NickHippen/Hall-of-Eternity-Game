@@ -1,5 +1,8 @@
 package game;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import game.maps.GameMap;
 import game.units.Unit;
 import game.util.Direction;
@@ -30,7 +33,7 @@ public class TileWorld {
 		 for (int i = 0; i < tiles.length; i++) {
 			 tiles[i] = new Tile[tilesY];
 			 for (int j = 0; j < tiles[i].length; j++) {
-				 tiles[i][j] = new Tile();
+				 tiles[i][j] = new Tile(new TileLocation(i, j));
 			 }
 		 }
 	}
@@ -66,7 +69,34 @@ public class TileWorld {
 	
 	public Tile getTileAtPosition(Vector2f pos) {
 		TileLocation tileLoc = getTileLocationAtPosition(pos);
-		return tiles[tileLoc.getX()][tileLoc.getY()];
+		return getTile(tileLoc);
+	}
+	
+	public Tile getTile(TileLocation loc) {
+		return tiles[loc.getX()][loc.getY()];
+	}
+	
+	public Set<Tile> getSurroundingTiles(TileLocation loc, int distance) {
+		Set<Tile> tiles = new HashSet<>();
+		if (distance == 0) {
+			return tiles;
+		}
+		for (TileLocation neighbor : getNeighborLocations(loc)) {
+			tiles.add(getTile(neighbor));
+			tiles.addAll(getSurroundingTiles(neighbor, distance - 1));
+		}
+		return tiles;
+	}
+	
+	public Set<TileLocation> getNeighborLocations(TileLocation loc) {
+		Set<TileLocation> neighbors = new HashSet<>();
+		for (Direction dir : Direction.values()) {
+			TileLocation neighborLoc = new TileLocation(loc.getX() + dir.getDx(), loc.getY() + dir.getDy());
+			if (!isOutOfBounds(neighborLoc.getX(), neighborLoc.getY())) {
+				neighbors.add(neighborLoc);
+			}
+		}
+		return neighbors;
 	}
 	
 	public void policyIteration() {

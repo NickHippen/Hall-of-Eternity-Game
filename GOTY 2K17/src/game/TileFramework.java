@@ -7,8 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 
-import game.cards.Card;
-import game.cards.Deck;
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
 import game.units.Unit;
