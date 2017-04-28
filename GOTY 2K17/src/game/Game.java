@@ -189,7 +189,8 @@ public class Game extends TileFramework {
 			card.draw(g2d);
 			//Shows line around selected cards
 			g.setColor(Color.green);
-			if (card.isPointWithin(centeredMouseVec) && !selectingTarget) card.getOuterBound().render(g);
+			if (card.isPointWithin(centeredMouseVec) && !selectingTarget && grabbedCard == null) card.getOuterBound().render(g);
+			if(grabbedCard != null) grabbedCard.getOuterBound().render(g);
 		}
 	}
 	

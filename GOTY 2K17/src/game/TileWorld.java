@@ -107,7 +107,6 @@ public class TileWorld {
 		boolean changed;
 		do {
 			changed = calculateActionValues(nodeGetter);
-			System.out.println("Calculated...");
 		} while (changed);
 	}
 	
