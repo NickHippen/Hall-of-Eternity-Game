@@ -169,7 +169,7 @@ public class TileFramework extends SimpleFramework {
 			}
 		}
 	}
-	
+		
 	public Point convertTileLocationToPoint(TileLocation loc) {
 		return new Point(loc.getX() * 48, loc.getY() * 48);
 	}

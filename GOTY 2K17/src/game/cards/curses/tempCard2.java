@@ -40,4 +40,7 @@ public class tempCard2 extends ActionCard {
 		return false;
 	}
 
+	public String getName(){
+		return "lol";
+	}
 }

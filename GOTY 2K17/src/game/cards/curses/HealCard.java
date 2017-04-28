@@ -39,5 +39,8 @@ public class HealCard extends ActionCard {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	public String getName(){
+		return "Heal";
+	}
 }

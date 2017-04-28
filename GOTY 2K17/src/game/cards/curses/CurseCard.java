@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import game.cards.Card;
 import game.vectors.Vector2f;
 
-public class CurseCard extends Card {
+public abstract class CurseCard extends Card {
 
 	protected CurseCard(BufferedImage image) {
 		super(image);
@@ -15,5 +15,4 @@ public class CurseCard extends Card {
 	public boolean performAction(Vector2f location) {
 		return false;
 	}
-
 }

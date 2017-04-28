@@ -35,6 +35,7 @@ public class Game extends TileFramework {
 	Vector2f initialLoc = null;
 	Vector2f initialLocCard = null;
 	
+	private String message;
 
 	@Override
 	protected void initialize() {
@@ -52,7 +53,7 @@ public class Game extends TileFramework {
 		
 		this.waveNum = 0;
 		this.boneNum = 123;
-
+		this.message = "AAA";
 	}
 	
 	@Override
@@ -157,6 +158,22 @@ public class Game extends TileFramework {
 		g.drawString("WAVE", 90,640);
 		g.drawString("BONES", 1287, 640);
 		
+		if(selectingTarget){
+			g.setFont(new Font("Cooper Black", Font.PLAIN, 20));
+			message = "";
+			if(activatedCard instanceof MonsterSpawnCard){
+				message = "Activated";
+				g.drawString(message, 581, 645);
+				g.setColor(Color.ORANGE);
+				message = activatedCard.getName();
+				g.drawString(message, 688, 645);
+				g.setColor(Color.WHITE);
+				message = "select summon location";
+				g.drawString(message, 581, 666);
+			}
+			message = "";
+		}
+		
 		g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
 		g.drawString(String.format("%03d", waveNum), 99, 664);
 		g.drawString(String.format("%03d", boneNum), 1299, 664);
@@ -170,6 +187,7 @@ public class Game extends TileFramework {
 			Card card = deck.getHand().get(i);
 			card.setView(view);
 			card.draw(g2d);
+			//Shows line around selected cards
 			g.setColor(Color.green);
 			if (card.isPointWithin(centeredMouseVec) && !selectingTarget) card.getOuterBound().render(g);
 		}

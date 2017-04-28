@@ -32,5 +32,9 @@ public class DragonCard extends MonsterSpawnCard {
 	public MonsterType getType() {
 		return MonsterType.DRAGON;
 	}
+	
+	public String getName(){
+		return "Dragon";
+	}
 
 }
