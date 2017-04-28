@@ -49,7 +49,7 @@ public class Game extends TileFramework {
 		deck.getHand().add(new DragonCard(getWorld()));
 		deck.getHand().add(new tempCard2(getWorld()));
 		
-		getWorld().policyIteration();
+		getWorld().policyIteration(tile -> tile.getStandardPathfinding());
 		
 		this.waveNum = 0;
 		this.boneNum = 123;

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import game.maps.GameMap;
 import game.units.Unit;
+import game.units.monsters.Monster;
 import game.util.Direction;
 import game.vectors.Vector2f;
 
@@ -53,6 +54,9 @@ public class TileWorld {
 		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
 		tiles[location.getX()][location.getY()].getUnits().add(unit);
+		if (unit instanceof Monster) {
+			policyIteration(tile -> tile.getAggroPathfinding());
+		}
 	}
 	
 	public TileLocation getTileLocationAtPosition(Vector2f pos) {
@@ -99,28 +103,30 @@ public class TileWorld {
 		return neighbors;
 	}
 	
-	public void policyIteration() {
+	public void policyIteration(PathfindingNodeGetter nodeGetter) {
 		boolean changed;
 		do {
-			changed = calculateActionValues();
+			changed = calculateActionValues(nodeGetter);
+			System.out.println("Calculated...");
 		} while (changed);
 	}
 	
-	public boolean calculateActionValues() {
+	public boolean calculateActionValues(PathfindingNodeGetter nodeGetter) {
 		boolean changed = false;
 		double newValues[][] = new double[tilesX][tilesY];
 		for (int x = 0; x < tilesX; x++) {
 			for (int y = 0; y < tilesY; y++) {
 				Tile tile = tiles[x][y];
-				tile.getActionQMap().put(Direction.values()[0], calculateValue(x, y, Direction.values()[0]));
-				newValues[x][y] = tile.getActionQMap().get(Direction.values()[0]);
+				PathfindingNode node = nodeGetter.getNode(tile); 
+				node.getActionQMap().put(Direction.values()[0], calculateValue(x, y, Direction.values()[0], nodeGetter));
+				newValues[x][y] = node.getActionQMap().get(Direction.values()[0]);
 				for (int i = 0; i < Direction.values().length; i++) {
 					Direction action = Direction.values()[i];
-					tile.getActionQMap().put(action, calculateValue(x, y, action));
-					if (tile.getActionQMap().get(action) > newValues[x][y]) {
-						newValues[x][y] = tile.getActionQMap().get(action);
+					node.getActionQMap().put(action, calculateValue(x, y, action, nodeGetter));
+					if (node.getActionQMap().get(action) > newValues[x][y]) {
+						newValues[x][y] = node.getActionQMap().get(action);
 					}
-					if (tile.updatePathfindingDirections()) {
+					if (node.updateDirections()) {
 						changed = true;
 					}
 				}
@@ -129,24 +135,24 @@ public class TileWorld {
 		// Apply new values
 		for (int x = 0; x < tilesX; x++) {
 			for (int y = 0; y < tilesY; y++) {
-				tiles[x][y].setQValue(newValues[x][y]);
+				nodeGetter.getNode(tiles[x][y]).setQValue(newValues[x][y]);
 			}
 		}
 		return changed;
 	}
 	
-	public double calculateValue(int x, int y, Direction action) {
+	public double calculateValue(int x, int y, Direction action, PathfindingNodeGetter nodeGetter) {
 		for (TileLocation goalLoc : getMap().getGoalLocations()) {
 			if (new TileLocation(x, y).equals(goalLoc)) {
 				return 100;
 			}
 		}
-//		if (tiles[x][y].hasMonster()) {
-//			return 20;
-//		}
+		if (nodeGetter.getNode(tiles[x][y]).isFocusMonsters() && tiles[x][y].hasMonster()) {
+			return 20;
+		}
 		double newQ = 0;
 		for (Direction dir : Direction.values()) {
-			double contrib = contribution(x, y, dir);
+			double contrib = contribution(x, y, dir, nodeGetter);
 			if (dir == action) {
 				newQ += contrib;
 			}
@@ -158,28 +164,28 @@ public class TileWorld {
 		return newQ;
 	}
 	
-	public double contribution(int x, int y, Direction dir) {
+	public double contribution(int x, int y, Direction dir, PathfindingNodeGetter nodeGetter) {
 		switch (dir) {
 		case DOWN:
 			if (isOutOfBounds(x, y + 1)) {
-				return 0.9 * tiles[x][y].getQValue();
+				return 0.9 * nodeGetter.getNode(tiles[x][y]).getQValue();
 			}
-			return 0.9 * tiles[x][y + 1].getQValue();
+			return 0.9 * nodeGetter.getNode(tiles[x][y + 1]).getQValue();
 		case LEFT:
 			if (isOutOfBounds(x - 1, y)) {
-				return 0.9 * tiles[x][y].getQValue();
+				return 0.9 * nodeGetter.getNode(tiles[x][y]).getQValue();
 			}
-			return 0.9 * tiles[x - 1][y].getQValue();
+			return 0.9 * nodeGetter.getNode(tiles[x - 1][y]).getQValue();
 		case RIGHT:
 			if (isOutOfBounds(x + 1, y)) {
-				return 0.9 * tiles[x][y].getQValue();
+				return 0.9 * nodeGetter.getNode(tiles[x][y]).getQValue();
 			}
-			return 0.9 * tiles[x + 1][y].getQValue();
+			return 0.9 * nodeGetter.getNode(tiles[x + 1][y]).getQValue();
 		case UP:
 			if (isOutOfBounds(x, y - 1)) {
-				return 0.9 * tiles[x][y].getQValue();
+				return 0.9 * nodeGetter.getNode(tiles[x][y]).getQValue();
 			}
-			return 0.9 * tiles[x][y - 1].getQValue();
+			return 0.9 * nodeGetter.getNode(tiles[x][y - 1]).getQValue();
 		}
 		return 0;
 	}
@@ -216,6 +222,11 @@ public class TileWorld {
 
 	public float getWorldHeight() {
 		return worldHeight;
+	}
+	
+	@FunctionalInterface
+	public static interface PathfindingNodeGetter {
+		public PathfindingNode getNode(Tile tile);
 	}
 	
 }

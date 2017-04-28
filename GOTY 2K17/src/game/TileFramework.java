@@ -59,7 +59,6 @@ public class TileFramework extends SimpleFramework {
 			displayBounds = !displayBounds;
 		}
 		if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
-			getWorld().policyIteration();
 			displayDirections = !displayDirections;
 		}
 		if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
@@ -132,7 +131,8 @@ public class TileFramework extends SimpleFramework {
 					continue;
 				}
 				Point p = convertTileLocationToPoint(loc);
-				for (Direction dir : getWorld().getTiles()[x][y].getPathfindingDirections()) {
+//				for (Direction dir : getWorld().getTiles()[x][y].getPathfindingDirections()) {
+				for (Direction dir : getWorld().getTiles()[x][y].getAggroPathfinding().getDirections()) {
 					switch (dir) {
 					case DOWN:
 						g.drawLine(p.x + 18, p.y + 36, p.x + 24, p.y + 48);
