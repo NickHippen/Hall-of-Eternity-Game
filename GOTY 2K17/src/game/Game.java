@@ -64,8 +64,12 @@ public class Game extends TileFramework {
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
 			if(onBoard(centeredMouseVec)){
 				if(grabbedCard instanceof MonsterSpawnCard) selectingTarget = true;
+				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);
 				activatedCard = grabbedCard;
+			}else{ 
+				//Puts card back in its original spot
+				deck.getHand().get(deck.getHand().indexOf(grabbedCard)).setLocation(new Vector2f(-2.95f + ((deck.getHand().indexOf(grabbedCard)) * 1f), -0.87f));
 			}
 			grabbedCard = null;
 		}
@@ -104,6 +108,7 @@ public class Game extends TileFramework {
 			}
 		}
 		
+		//Draw card by clicking on deck
 		if(deck.getCardBack().isPointWithin(centeredMouseVec)){
 			if (mouse.buttonDownOnce(MouseEvent.BUTTON1)){
 				deck.drawCard();
@@ -129,6 +134,7 @@ public class Game extends TileFramework {
 		super.updateObjects(delta);
 		
 		deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
+		
 		deck.drawAnimation(delta);
 		
 		for (Tile[] tileRow : getWorld().getTiles()) {

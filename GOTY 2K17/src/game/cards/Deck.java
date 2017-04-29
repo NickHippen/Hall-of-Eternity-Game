@@ -19,8 +19,8 @@ public class Deck {
 	private List<Card> hand;
 	private Card cardBack;
 	private TileWorld world;
+	private int removed;
 	private boolean drawing;
-	
 	public Deck(TileWorld world) {
 		cards = new ArrayList<>();
 		hand = new ArrayList<>();
@@ -28,6 +28,21 @@ public class Deck {
 		this.world = world;
 		setupDeck();
 		shuffle();
+		this.removed = -1;
+	}
+	
+	//Currently the only way to put cards into deck
+	public void setupDeck(){
+		cards.add(new ZombieCard(this.world));
+		cards.add(new HealCard(this.world));
+		cards.add(new tempCard(this.world));
+		cards.add(new ZombieCard(this.world));
+		cards.add(new DragonCard(this.world));
+		cards.add(new ZombieCard(this.world));
+		cards.add(new ZombieCard(this.world));
+		cards.add(new ZombieCard(this.world));
+		cards.add(new ZombieCard(this.world));
+
 	}
 	
 	public List<Card> getCards() {
@@ -42,6 +57,10 @@ public class Deck {
 		return cardBack;
 	}
 	
+	public void setRemoved(int removed){
+		this.removed = removed;
+	}
+	
 	public void shuffle(){
 		long seed = System.nanoTime();
 		Collections.shuffle(cards, new Random(seed));
@@ -54,24 +73,32 @@ public class Deck {
 			hand.get(hand.size() - 1).setLocation((new Vector2f(-2.95f + 5f, -0.87f)));
 		}
 	}
-	
-	public void setupDeck(){
-		cards.add(new ZombieCard(this.world));
-		cards.add(new HealCard(this.world));
-		cards.add(new tempCard(this.world));
-		cards.add(new ZombieCard(this.world));
-		cards.add(new DragonCard(this.world));
-	}
 
+	//Performs animation for drawing a new card and shifting hand when a card is played
 	public void drawAnimation(float delta) {
-
+		//Animation for drawing a card
 		if (drawing) {
 			Vector2f nextLoc = new Vector2f(-2.95f + (((hand.size()) - 1) * 1f), -0.87f);
 			if (hand.get(hand.size() - 1).getLocation().x > nextLoc.x) {
-				hand.get(hand.size() - 1).setLocation(new Vector2f(hand.get(hand.size() - 1).getLocation().x - delta * 10, -0.87f));
+				hand.get(hand.size() - 1).setLocation(new Vector2f(hand.get(hand.size() - 1).getLocation().x - delta * 15, -0.87f));
 			}else{
 				drawing = false;
 			}
 		}
+		
+		//Animation for shifting hand. Perform until cards aren't moving over anymore
+		int done=0;
+		if(this.removed != -1){
+			for(int i = removed; i < hand.size(); i++){
+				Vector2f nextLoc = new Vector2f(-2.95f + (i * 1f), -0.87f);
+				if (hand.get(i).getLocation().x > nextLoc.x) {
+					done++;
+					hand.get(i).setLocation(new Vector2f(hand.get(i).getLocation().x - delta * 15, -0.87f));
+				}else{
+					drawing = false;
+				}
+			}
+		}
+		if(done == 0) this.removed = -1;
 	}
 }
