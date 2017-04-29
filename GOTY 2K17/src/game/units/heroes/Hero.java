@@ -1,6 +1,7 @@
 package game.units.heroes;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import game.Tile;
 import game.TileWorld;
 import game.units.LivingUnit;
 import game.units.MovementTask;
+import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
 import game.util.Direction;
 
@@ -54,11 +56,31 @@ public abstract class Hero extends LivingUnit {
 		} else {
 			Tile tile = getWorld().getTileAtPosition(getLocation());
 			Set<Direction> dirs = null;
+			boolean nearMonster = false;
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2)) {
-				if (surroundingTile.hasMonster()) {
+				List<Monster> monsters = surroundingTile.getMonsters();
+				if (getHeroType().getRange() == 2) {
+					setMovementTask(new MovementTask(null, 1, 0));
+				}
+				if (!monsters.isEmpty()) {
+					nearMonster = true;
 					dirs = tile.getAggroPathfinding().getDirections();
 					break;
 				}
+			}
+			if (nearMonster && getHeroType().getRange() == 1) {
+				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1)) {
+					List<Monster> monsters = surroundingTile.getMonsters();
+					if (!monsters.isEmpty()) {
+						setMovementTask(new MovementTask(null, 1, 0));
+						break;
+					}
+				}
+			}
+			
+			if (getMovementTask() != null) {
+				// Hero has been stopped
+				return;
 			}
 			if (dirs == null) {
 				dirs = tile.getStandardPathfinding().getDirections();

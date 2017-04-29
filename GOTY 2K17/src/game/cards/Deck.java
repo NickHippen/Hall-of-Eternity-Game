@@ -3,9 +3,7 @@ package game.cards;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.TileWorld;
 import game.cards.curses.CardBack;
-import game.units.monsters.Zombie;
 
 public class Deck {
 

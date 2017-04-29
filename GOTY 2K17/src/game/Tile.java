@@ -43,12 +43,17 @@ public class Tile {
 	}
 
 	public boolean hasMonster() {
+		return !getMonsters().isEmpty();
+	}
+	
+	public List<Monster> getMonsters() {
+		List<Monster> monsters = new ArrayList<>();
 		for (Unit unit : units) {
 			if (unit instanceof Monster) {
-				return true;
+				monsters.add((Monster) unit);
 			}
 		}
-		return false;
+		return monsters;
 	}
 
 }
