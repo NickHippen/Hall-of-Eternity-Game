@@ -59,6 +59,9 @@ public abstract class BoundingSprite extends SpriteObject {
 	}
 	
 	public void move(Direction direction, float speed, float delta) {
+		if (direction == null) {
+			return;
+		}
 		switch (direction) {
 		case DOWN:
 			move(new Vector2f(0f, -speed), null, delta);
