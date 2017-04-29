@@ -114,7 +114,7 @@ public class TileWorld {
 		boolean changed = false;
 		double newValues[][] = new double[tilesX][tilesY];
 		for (int x = 0; x < tilesX; x++) {
-			for (int y = 0; y < tilesY; y++) {
+			for (int y = 0; y < tilesY - 8; y++) {
 				Tile tile = tiles[x][y];
 				PathfindingNode node = nodeGetter.getNode(tile); 
 				node.getActionQMap().put(Direction.values()[0], calculateValue(x, y, Direction.values()[0], nodeGetter));
