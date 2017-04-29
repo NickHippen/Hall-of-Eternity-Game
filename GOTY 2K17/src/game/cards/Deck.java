@@ -66,6 +66,7 @@ public class Deck {
 		Collections.shuffle(cards, new Random(seed));
 	}
 	
+	//Adds card to your hand, triggers draw for draw animation
 	public void drawCard(){
 		if(hand.size() < 5 && !drawing && cards.size() != 0){
 			hand.add(cards.remove(0));

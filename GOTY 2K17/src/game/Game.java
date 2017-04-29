@@ -211,8 +211,13 @@ public class Game extends TileFramework {
 			if(grabbedCard != null) grabbedCard.getOuterBound().render(g);
 		}
 		
+		//Renders the card back
 		deck.getCardBack().setView(view);
 		deck.getCardBack().draw(g2d);
+		
+		//Render grabbed card last so it's on top of everything
+		if(grabbedCard != null) grabbedCard.draw(g2d);
+
 	}
 	
 	public static void main(String[] args) {
