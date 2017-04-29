@@ -43,12 +43,7 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 		
-		deck = new Deck();
-		deck.getHand().add(new ZombieCard(getWorld()));
-		deck.getHand().add(new HealCard(getWorld()));
-		deck.getHand().add(new tempCard(getWorld()));
-		deck.getHand().add(new ZombieCard(getWorld()));
-		deck.getHand().add(new DragonCard(getWorld()));
+		deck = new Deck(getWorld());
 		
 		getWorld().policyIteration(tile -> tile.getStandardPathfinding());
 		
@@ -74,15 +69,7 @@ public class Game extends TileFramework {
 			}
 			grabbedCard = null;
 		}
-		
-		//Player selects target
-		if(mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingTarget){
-			if (activatedCard.performAction(centeredMouseVec)) {
-				selectingTarget = false;
-				grabbedCard = null;
-			}
-		}
-		
+
 		//Player grabs card
 		if(!selectingTarget && !onBoard(centeredMouseVec)){
 			if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
@@ -97,6 +84,7 @@ public class Game extends TileFramework {
 			}
 		}
 		
+		//Initial code for unit selection
 		if(onBoard(centeredMouseVec)){
 			if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
 				selectedUnits.clear();
@@ -116,6 +104,21 @@ public class Game extends TileFramework {
 			}
 		}
 		
+		if(deck.getCardBack().isPointWithin(centeredMouseVec)){
+			if (mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+				deck.drawCard();
+			}
+		}
+	
+		
+		//Player selects target
+		if(mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingTarget){
+			if (activatedCard.performAction(centeredMouseVec)) {
+				selectingTarget = false;
+				grabbedCard = null;
+			}
+		}
+		
 		if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
 			getWorld().addUnitToTile(new TileLocation(0, 6), new Freelancer(getWorld()));
 		}
@@ -124,17 +127,9 @@ public class Game extends TileFramework {
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
-
-		// Deck
-		for (int i = 0; i < deck.getHand().size(); i++) {
-			Card card = deck.getHand().get(i);
-			if (card == grabbedCard) {
-				continue;
-			}
-			card.setLocation(new Vector2f(-2.95f + (i * 1f), -0.87f));
-		}
 		
 		deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
+		deck.drawAnimation(delta);
 		
 		for (Tile[] tileRow : getWorld().getTiles()) {
 			for (Tile tile : tileRow) {
@@ -209,6 +204,7 @@ public class Game extends TileFramework {
 			if (card.isPointWithin(centeredMouseVec) && !selectingTarget && grabbedCard == null) card.getOuterBound().render(g);
 			if(grabbedCard != null) grabbedCard.getOuterBound().render(g);
 		}
+		
 		deck.getCardBack().setView(view);
 		deck.getCardBack().draw(g2d);
 	}
