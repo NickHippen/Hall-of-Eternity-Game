@@ -36,8 +36,4 @@ public abstract class LivingUnit extends Unit {
 	protected void setAttackSpeed(int attackSpeed) {
 		this.attackSpeed = attackSpeed;
 	}
-
-	protected String getName(){
-		return this.name;
-	}
 }

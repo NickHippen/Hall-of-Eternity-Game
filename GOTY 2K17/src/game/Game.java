@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import game.cards.Card;
 import game.cards.Deck;
@@ -31,6 +32,7 @@ public class Game extends TileFramework {
 	
 	boolean selectingTarget;
 	
+	ArrayList<Unit> selectedUnits;
 	//Used for card movement
 	Vector2f initialLoc = null;
 	Vector2f initialLocCard = null;
@@ -47,13 +49,14 @@ public class Game extends TileFramework {
 		deck.getHand().add(new tempCard(getWorld()));
 		deck.getHand().add(new ZombieCard(getWorld()));
 		deck.getHand().add(new DragonCard(getWorld()));
-		deck.getHand().add(new tempCard2(getWorld()));
 		
 		getWorld().policyIteration(tile -> tile.getStandardPathfinding());
 		
 		this.waveNum = 0;
 		this.boneNum = 123;
-		this.message = "AAA";
+		this.message = "";
+		
+		selectedUnits = new ArrayList<Unit>();
 	}
 	
 	@Override
@@ -81,7 +84,7 @@ public class Game extends TileFramework {
 		}
 		
 		//Player grabs card
-		if(!selectingTarget){
+		if(!selectingTarget && !onBoard(centeredMouseVec)){
 			if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 				for (Card card : deck.getHand()) {
 					if (card.isPointWithin(centeredMouseVec)) {
@@ -90,6 +93,18 @@ public class Game extends TileFramework {
 						initialLoc = centeredMouseVec;
 						break;
 					}
+				}
+			}
+		}
+		
+		if(onBoard(centeredMouseVec)){
+			if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+				selectedUnits.clear();
+				int xPos = getWorld().getTileLocationAtPosition(centeredMouseVec).getX();
+				int yPos = getWorld().getTileLocationAtPosition(centeredMouseVec).getY();
+				selectedUnits.addAll((getWorld().getTiles()[xPos][yPos].getUnits()));
+				for(int i = 0; i < selectedUnits.size(); i++){
+					System.out.println(selectedUnits.get(i).getName());
 				}
 			}
 		}
@@ -118,6 +133,8 @@ public class Game extends TileFramework {
 			}
 			card.setLocation(new Vector2f(-2.95f + (i * 1f), -0.87f));
 		}
+		
+		deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
 		
 		for (Tile[] tileRow : getWorld().getTiles()) {
 			for (Tile tile : tileRow) {
@@ -192,6 +209,8 @@ public class Game extends TileFramework {
 			if (card.isPointWithin(centeredMouseVec) && !selectingTarget && grabbedCard == null) card.getOuterBound().render(g);
 			if(grabbedCard != null) grabbedCard.getOuterBound().render(g);
 		}
+		deck.getCardBack().setView(view);
+		deck.getCardBack().draw(g2d);
 	}
 	
 	public static void main(String[] args) {

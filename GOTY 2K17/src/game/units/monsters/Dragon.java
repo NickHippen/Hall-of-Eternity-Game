@@ -38,4 +38,8 @@ public class Dragon extends Monster {
 		
 		this.setDamagePerHit(DAMAGE);
 	}
+	
+	public String getName(){
+		return "Dragon";
+	}
 }

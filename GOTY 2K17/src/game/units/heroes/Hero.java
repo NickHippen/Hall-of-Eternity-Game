@@ -11,7 +11,7 @@ import game.units.MovementTask;
 import game.units.status.StatusEffects;
 import game.util.Direction;
 
-public class Hero extends LivingUnit {
+public abstract class Hero extends LivingUnit {
 	
 	private static final Random RANDOM = new Random();
 	
@@ -56,7 +56,6 @@ public class Hero extends LivingUnit {
 			Set<Direction> dirs = null;
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2)) {
 				if (surroundingTile.hasMonster()) {
-					System.out.println("Near monster!");
 					dirs = tile.getAggroPathfinding().getDirections();
 					break;
 				}

@@ -9,7 +9,7 @@ import game.TileWorld;
 import game.units.monsters.Zombie;
 import game.vectors.Vector2f;
 
-public class tempCard2 extends ActionCard {
+public class CardBack extends ActionCard {
 
 	private static BufferedImage BASE_IMAGE;
 
@@ -24,7 +24,7 @@ public class tempCard2 extends ActionCard {
 		}
 	}
 
-	public tempCard2(TileWorld world) {
+	public CardBack() {
 		super(BASE_IMAGE);
 	}
 	
@@ -41,6 +41,6 @@ public class tempCard2 extends ActionCard {
 	}
 
 	public String getName(){
-		return "lol";
+		return "Card Back";
 	}
 }

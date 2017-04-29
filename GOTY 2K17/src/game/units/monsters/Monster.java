@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import game.TileWorld;
 import game.units.LivingUnit;
 
-public class Monster extends LivingUnit {
+public abstract class Monster extends LivingUnit {
 
 	private boolean attacking = true;
 	private float animationTime = 0;

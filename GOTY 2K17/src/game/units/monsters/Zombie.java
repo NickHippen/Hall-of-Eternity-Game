@@ -29,4 +29,8 @@ public class Zombie extends Monster {
 		this.maxFrameNum = 14;
 		this.setDamagePerHit(DAMAGE);
 	}
+	
+	public String getName(){
+		return "Zombie";
+	}
 }

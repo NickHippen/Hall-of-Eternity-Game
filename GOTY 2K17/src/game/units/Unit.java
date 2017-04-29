@@ -63,4 +63,6 @@ public abstract class Unit extends BoundingSprite {
 	public ArrayList<BufferedImage> getAttackAnimation(){
 		return attackAnimation;
 	}
+	
+	public abstract String getName();
 }

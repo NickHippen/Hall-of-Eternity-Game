@@ -29,4 +29,8 @@ public class Freelancer extends Hero {
 		this.name="Freelancer";		
 		this.setDamagePerHit(DAMAGE);
 	}
+	
+	public String getName(){
+		return "Freelancer";
+	}
 }
