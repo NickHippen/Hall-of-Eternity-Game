@@ -207,15 +207,15 @@ public class Game extends TileFramework {
 			//Shows line around selected cards
 			g.setColor(Color.green);
 			if (card.isPointWithin(centeredMouseVec) && !selectingTarget && grabbedCard == null) card.getOuterBound().render(g);
-			if(grabbedCard != null) grabbedCard.getOuterBound().render(g);
 		}
 		
 		//Renders the card back
 		deck.getCardBack().setView(view);
-		deck.getCardBack().draw(g2d);
+		if(deck.getCardsRemaining() > 0) deck.getCardBack().draw(g2d);
 		
 		//Render grabbed card last so it's on top of everything
 		if(grabbedCard != null) grabbedCard.draw(g2d);
+		if(grabbedCard != null) grabbedCard.getOuterBound().render(g);
 
 	}
 	

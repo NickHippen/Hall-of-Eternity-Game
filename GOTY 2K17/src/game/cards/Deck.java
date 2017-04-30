@@ -61,6 +61,10 @@ public class Deck {
 		this.removed = removed;
 	}
 	
+	public int getCardsRemaining(){
+		return cards.size();
+	}
+	
 	public void shuffle(){
 		long seed = System.nanoTime();
 		Collections.shuffle(cards, new Random(seed));
