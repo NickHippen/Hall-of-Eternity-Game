@@ -83,7 +83,7 @@ public abstract class Hero extends LivingUnit {
 				return;
 			}
 			if (dirs == null) {
-				dirs = tile.getStandardPathfinding().getDirections();
+				dirs = tile.getStandardDirections();
 			}
 			if (dirs.isEmpty()) {
 				System.out.println("WARNING: NO PATHFINDING CONFIGURED.");

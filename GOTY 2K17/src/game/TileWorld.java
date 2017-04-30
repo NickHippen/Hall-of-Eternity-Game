@@ -34,7 +34,7 @@ public class TileWorld {
 		 for (int i = 0; i < tiles.length; i++) {
 			 tiles[i] = new Tile[tilesY];
 			 for (int j = 0; j < tiles[i].length; j++) {
-				 tiles[i][j] = new Tile(new TileLocation(i, j));
+				 tiles[i][j] = new Tile(new TileLocation(i, j), map);
 			 }
 		 }
 	}

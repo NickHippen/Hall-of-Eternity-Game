@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.Set;
 
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
@@ -29,7 +30,7 @@ public class TileFramework extends SimpleFramework {
 	public static final float TILE_SIZE_Y = APP_WORLD_HEIGHT / (float) TILES_Y;
 	
 	protected boolean displayBounds;
-	protected boolean displayDirections;
+	protected int displayDirections;
 	protected boolean displayCoordinates;
 	
 	private TileWorld tileWorld;
@@ -59,7 +60,10 @@ public class TileFramework extends SimpleFramework {
 			displayBounds = !displayBounds;
 		}
 		if (keyboard.keyDownOnce(KeyEvent.VK_D)) {
-			displayDirections = !displayDirections;
+			displayDirections++;
+			if (displayDirections > 2) {
+				displayDirections = 0;
+			}
 		}
 		if (keyboard.keyDownOnce(KeyEvent.VK_C)) {
 			displayCoordinates = !displayCoordinates;
@@ -131,8 +135,9 @@ public class TileFramework extends SimpleFramework {
 					continue;
 				}
 				Point p = convertTileLocationToPoint(loc);
-//				for (Direction dir : getWorld().getTiles()[x][y].getPathfindingDirections()) {
-				for (Direction dir : getWorld().getTiles()[x][y].getAggroPathfinding().getDirections()) {
+				Tile tile = getWorld().getTiles()[x][y];
+				Set<Direction> pathfindingDirs = displayDirections == 1 ? tile.getStandardDirections() : tile.getAggroPathfinding().getDirections();
+				for (Direction dir : pathfindingDirs) {
 					switch (dir) {
 					case DOWN:
 						g.drawLine(p.x + 18, p.y + 36, p.x + 24, p.y + 48);

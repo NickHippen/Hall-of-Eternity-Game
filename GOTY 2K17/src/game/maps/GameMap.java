@@ -2,9 +2,11 @@ package game.maps;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Set;
 
 import game.TileLocation;
 import game.sprites.SpriteObject;
+import game.util.Direction;
 
 public abstract class GameMap extends SpriteObject {
 	
@@ -19,5 +21,7 @@ public abstract class GameMap extends SpriteObject {
 	public abstract List<TileLocation> getInvalidTileLocations();
 	
 	public abstract List<TileLocation> getGoalLocations();
+	
+	public abstract Set<Direction> getHardcodedDirections(TileLocation loc);
 	
 }

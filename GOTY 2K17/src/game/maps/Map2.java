@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -77,7 +78,23 @@ public class Map2 extends GameMap {
 		GOAL_LOCATIONS.add(new TileLocation(28, 6));
 		GOAL_LOCATIONS.add(new TileLocation(28, 7));
 		
-		
+		// Hardcoded Pathfinding
+		for (int x = 10; x < 15; x++) {
+			addPathfindingDirection(new TileLocation(x, 8), Direction.RIGHT);
+			addPathfindingDirection(new TileLocation(x, 5), Direction.RIGHT);
+		}
+		for (int x = 14; x < 16; x++) {
+			for (int y = 8; y < 10; y++) {
+				addPathfindingDirection(new TileLocation(x, y), Direction.DOWN);
+			}
+			for (int y = 4; y < 6; y++) {
+				addPathfindingDirection(new TileLocation(x, y), Direction.UP);
+			}
+		}
+		for (int x = 14; x < 16; x++) {
+			addPathfindingDirection(new TileLocation(x, 10), Direction.RIGHT);
+			addPathfindingDirection(new TileLocation(x, 3), Direction.RIGHT);
+		}
 		
 		// Image
 		try {
@@ -102,6 +119,20 @@ public class Map2 extends GameMap {
 	@Override
 	public List<TileLocation> getGoalLocations() {
 		return GOAL_LOCATIONS;
+	}
+	
+	private static void addPathfindingDirection(TileLocation loc, Direction dir) {
+		Set<Direction> directions = PATHFINDING_DIRECTIONS.get(loc);
+		if (directions == null) {
+			directions = new HashSet<>();
+		}
+		directions.add(dir);
+		PATHFINDING_DIRECTIONS.put(loc, directions);
+	}
+
+	@Override
+	public Set<Direction> getHardcodedDirections(TileLocation loc) {
+		return PATHFINDING_DIRECTIONS.get(loc);
 	}
 
 }

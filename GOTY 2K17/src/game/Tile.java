@@ -2,24 +2,29 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import game.maps.GameMap;
 import game.units.Unit;
 import game.units.monsters.Monster;
+import game.util.Direction;
 
 public class Tile {
 
-	
 	private TileLocation location;
 	private List<Unit> units;
 	
 	private PathfindingNode standardPathfinding;
 	private PathfindingNode aggroPathfinding;
+	
+	private GameMap map;
 
-	public Tile(TileLocation location) {
+	public Tile(TileLocation location, GameMap map) {
 		this.location = location;
 		units = new ArrayList<>();
 		standardPathfinding = new PathfindingNode(false);
 		aggroPathfinding = new PathfindingNode(true);
+		this.map = map;
 	}
 	
 	public TileLocation getLocation() {
@@ -36,6 +41,14 @@ public class Tile {
 	
 	public PathfindingNode getStandardPathfinding() {
 		return standardPathfinding;
+	}
+	
+	public Set<Direction> getStandardDirections() {
+		Set<Direction> directions = map.getHardcodedDirections(location);
+		if (directions == null) {
+			return getStandardPathfinding().getDirections();
+		}
+		return directions;
 	}
 
 	public PathfindingNode getAggroPathfinding() {

@@ -7,14 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 import game.cards.Card;
 import game.cards.Deck;
-
-import game.cards.monsters.*;
-
-import game.cards.curses.*;
-
+import game.cards.monsters.MonsterSpawnCard;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.util.Matrix3x3f;
@@ -22,6 +19,8 @@ import game.vectors.Vector2f;
 
 public class Game extends TileFramework {
 
+	private static final Random RANDOM = new Random();
+	
 	private Deck deck;
 	private Card grabbedCard;
 	private Card activatedCard;
@@ -125,7 +124,7 @@ public class Game extends TileFramework {
 		}
 		
 		if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-			getWorld().addUnitToTile(new TileLocation(0, 6), new Freelancer(getWorld()));
+			getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
 		}
 	}
 	
@@ -163,7 +162,7 @@ public class Game extends TileFramework {
 		if (selectingTarget || displayCoordinates) {
 			renderGrid(g2d);
 		}
-		if (displayDirections) {
+		if (displayDirections != 0) {
 			renderDirections(g2d);
 		}
 		if (displayCoordinates) {
