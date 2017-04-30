@@ -154,7 +154,7 @@ public class TileWorld {
 			}
 		}
 		if (nodeGetter.getNode(tiles[x][y]).isFocusMonsters() && tiles[x][y].hasMonster()) {
-			return 20;
+			return 100;
 		}
 		double newQ = 0;
 		for (Direction dir : Direction.values()) {
@@ -165,7 +165,7 @@ public class TileWorld {
 		}
 		
 		if (!getMap().isTileLocationValid(new TileLocation(x, y))) {
-			newQ += -100;
+			newQ += -1000;
 		}
 		return newQ;
 	}
