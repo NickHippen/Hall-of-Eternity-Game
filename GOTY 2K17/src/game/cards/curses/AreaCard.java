@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import game.Tile;
 import game.TileWorld;
-import game.units.LivingUnit;
 import game.units.Unit;
 import game.vectors.Vector2f;
 

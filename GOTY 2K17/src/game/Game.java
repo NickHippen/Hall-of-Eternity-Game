@@ -12,6 +12,7 @@ import java.util.Random;
 import game.cards.Card;
 import game.cards.Deck;
 import game.cards.curses.AreaCard;
+import game.cards.curses.CurseCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.units.LivingUnit;
 import game.units.Unit;
@@ -184,16 +185,15 @@ public class Game extends TileFramework {
 		if(selectingTarget || selectingArea){
 			g.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 			message = "";
-			if(activatedCard instanceof MonsterSpawnCard){
-				message = "Activated";
-				g.drawString(message, 581, 645);
-				g.setColor(Color.ORANGE);
-				message = activatedCard.getName();
-				g.drawString(message, 688, 645);
-				g.setColor(Color.WHITE);
-				message = "select summon location";
-				g.drawString(message, 581, 666);
-			}
+			message = "Activated";
+			g.drawString(message, 581, 645);
+			g.setColor(Color.ORANGE);
+			message = activatedCard.getName();
+			g.drawString(message, 688, 645);
+			g.setColor(Color.WHITE);
+			if(activatedCard instanceof CurseCard) message = "select target location";
+			if(activatedCard instanceof MonsterSpawnCard) message = "select summon location";
+			g.drawString(message, 581, 666);
 			message = "";
 		}
 		

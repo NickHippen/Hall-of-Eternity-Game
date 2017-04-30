@@ -29,6 +29,7 @@ public abstract class MonsterSpawnCard extends Card {
 			return false;
 		}
 		getWorld().addUnitToTile(location, monster);
+		getWorld().getMap().addInvalidTileLocation(location);
 		return true;
 	}
 	

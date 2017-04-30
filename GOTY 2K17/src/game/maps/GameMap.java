@@ -31,11 +31,11 @@ public abstract class GameMap extends SpriteObject {
 	public abstract void addBoss(TileWorld world, Boss boss);
 	
 	
-	public void addInvalidTileLocation(int x, int y) {
-		INVALID_TILE_LOCATIONS.add(new TileLocation(x,y));
+	public void addInvalidTileLocation(TileLocation location) {
+		INVALID_TILE_LOCATIONS.add(location);
 	}
 	
-	public void removeInvalidTileLocation(int x, int y) {
-		INVALID_TILE_LOCATIONS.remove(new TileLocation(x,y));
+	public void removeInvalidTileLocation(TileLocation location) {
+		INVALID_TILE_LOCATIONS.remove(location);
 	}
 }

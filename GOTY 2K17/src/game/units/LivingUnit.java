@@ -4,7 +4,9 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import game.Tile;
+import game.TileLocation;
 import game.TileWorld;
+import game.units.monsters.Monster;
 
 
 public abstract class LivingUnit extends Unit {
@@ -86,8 +88,10 @@ public abstract class LivingUnit extends Unit {
 
 		if(!isAlive()){
 			for(Tile[] tileRow : getWorld().getTiles()){
-				for(Tile tile : tileRow)
+				for(Tile tile : tileRow){
 					tile.removeUnit(this);
+					getWorld().getMap().removeInvalidTileLocation(tile.getLocation());
+				}
 			}
 		}
 		

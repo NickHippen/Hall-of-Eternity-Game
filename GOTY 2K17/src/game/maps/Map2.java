@@ -78,9 +78,13 @@ public class Map2 extends GameMap {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
+
+		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 6));
+		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 7));
+
+		GOAL_LOCATIONS.add(new TileLocation(27, 6));
+		GOAL_LOCATIONS.add(new TileLocation(27, 7));
 		
-		GOAL_LOCATIONS.add(new TileLocation(28, 6));
-		GOAL_LOCATIONS.add(new TileLocation(28, 7));
 		
 		// Hardcoded Pathfinding
 		for (int x = 10; x < 15; x++) {
