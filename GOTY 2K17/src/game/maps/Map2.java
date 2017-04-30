@@ -12,7 +12,12 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import game.TileLocation;
+import game.TileWorld;
+import game.units.Unit;
+import game.units.monsters.Boss;
+import game.units.monsters.Monster;
 import game.util.Direction;
+import game.vectors.Vector2f;
 
 public class Map2 extends GameMap {
 
@@ -133,6 +138,15 @@ public class Map2 extends GameMap {
 	@Override
 	public Set<Direction> getHardcodedDirections(TileLocation loc) {
 		return PATHFINDING_DIRECTIONS.get(loc);
+	}
+	
+	public void addBoss(TileWorld world, Boss unit ){
+			unit.setLocation(new Vector2f(2.6f,.75f));
+			world.getTiles()[27][6].getUnits().add(unit);
+			if (unit instanceof Monster) {
+				world.policyIteration(tile -> tile.getAggroPathfinding());
+			
+		}
 	}
 
 }

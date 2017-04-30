@@ -16,6 +16,7 @@ import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
+import game.units.monsters.*;
 
 public class Game extends TileFramework {
 
@@ -66,6 +67,8 @@ public class Game extends TileFramework {
 				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);
 				activatedCard = grabbedCard;
+				System.out.println(getWorld().getAllUnits().get(0).getName());
+				((Monster) getWorld().getAllUnits().get(getWorld().getAllUnits().size()-1)).setAttacking(true);
 			}else{ 
 				//Puts card back in its original spot
 				deck.getHand().get(deck.getHand().indexOf(grabbedCard)).setLocation(new Vector2f(-2.95f + ((deck.getHand().indexOf(grabbedCard)) * 1f), -0.87f));
@@ -135,21 +138,15 @@ public class Game extends TileFramework {
 		deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
 		
 		deck.drawAnimation(delta);
+	
+		for (Unit unit : getWorld().getAllUnits()) unit.update(delta);
 		
-		for (Tile[] tileRow : getWorld().getTiles()) {
-			for (Tile tile : tileRow) {
-				for (Unit unit : tile.getUnits()) {
-					unit.update(delta);
-				}
-			}
-		}
 		
 	}
 	
 	@Override
 	protected void render(Graphics g) {
 		super.render(g);		
-
 
 		Matrix3x3f view = getViewportTransform();
 		Graphics2D g2d = (Graphics2D) g;

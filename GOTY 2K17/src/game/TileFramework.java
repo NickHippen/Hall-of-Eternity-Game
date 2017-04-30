@@ -11,6 +11,7 @@ import java.util.Set;
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
 import game.units.Unit;
+import game.units.monsters.Boss;
 import game.util.Direction;
 import game.util.Matrix3x3f;
 import game.util.SimpleFramework;
@@ -50,6 +51,7 @@ public class TileFramework extends SimpleFramework {
 	protected void initialize() {
 		super.initialize();
 		tileWorld = new TileWorld(new Map2(), TILES_X, TILES_Y, TILE_SIZE_X, TILE_SIZE_Y, APP_WORLD_WIDTH, APP_WORLD_HEIGHT);
+		tileWorld.getMap().addBoss(getWorld(), new Boss(getWorld()));
 	}
 	
 	@Override

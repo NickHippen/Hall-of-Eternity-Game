@@ -8,7 +8,7 @@ import game.units.LivingUnit;
 
 public abstract class Monster extends LivingUnit {
 
-	private boolean attacking = true;
+	private boolean attacking;
 	private float animationTime = 0;
 	protected int maxFrameNum = 1;
 	protected int frameNum=-1;
@@ -28,11 +28,16 @@ public abstract class Monster extends LivingUnit {
 				frameNum++;
 				if (frameNum > maxFrameNum) {
 					frameNum = 0;
+					attacking = false;
 				}
 				this.setRenderedImage(this.getAttackAnimation().get(frameNum));
 			}
 		} else {
 			this.setRenderedImage(this.getAttackAnimation().get(0));
 		}
+	}
+	
+	public void setAttacking(boolean attacking){
+		this.attacking = attacking;
 	}
 }

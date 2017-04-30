@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,6 +46,18 @@ public class TileWorld {
 	
 	public GameMap getMap() {
 		return map;
+	}
+	
+	public ArrayList<Unit> getAllUnits(){
+		ArrayList<Unit> allUnits = new ArrayList<>();
+		for (Tile[] tileRow : getTiles()) {
+			for (Tile tile : tileRow) {
+				for (Unit unit : tile.getUnits()) {
+					allUnits.add(unit);
+				}
+			}
+		}
+		return allUnits;
 	}
 	
 	public void addUnitToTile(TileLocation location, Unit unit) {
