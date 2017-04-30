@@ -6,7 +6,6 @@ import java.util.Set;
 
 import game.maps.GameMap;
 import game.units.Unit;
-import game.units.monsters.Boss;
 import game.units.monsters.Dragon;
 import game.units.monsters.Monster;
 import game.util.Direction;
@@ -125,7 +124,7 @@ public class TileWorld {
 		}
 		for (TileLocation neighbor : getNeighborLocations(loc, exclude)) {
 			tiles.add(getTile(neighbor));
-			tiles.addAll(getSurroundingTiles(neighbor, distance - 1));
+			tiles.addAll(getSurroundingTiles(neighbor, distance - 1, exclude));
 		}
 		return tiles;
 	}
@@ -151,7 +150,7 @@ public class TileWorld {
 		} while (changed);
 	}
 	
-	public boolean calculateActionValues(PathfindingNodeGetter nodeGetter) {
+	private boolean calculateActionValues(PathfindingNodeGetter nodeGetter) {
 		boolean changed = false;
 		double newValues[][] = new double[tilesX][tilesY];
 		for (int x = 0; x < tilesX; x++) {
@@ -181,7 +180,7 @@ public class TileWorld {
 		return changed;
 	}
 	
-	public double calculateValue(int x, int y, Direction action, PathfindingNodeGetter nodeGetter) {
+	private double calculateValue(int x, int y, Direction action, PathfindingNodeGetter nodeGetter) {
 		for (TileLocation goalLoc : getMap().getGoalLocations()) {
 			if (new TileLocation(x, y).equals(goalLoc)) {
 				return 100;
@@ -204,7 +203,7 @@ public class TileWorld {
 		return newQ;
 	}
 	
-	public double contribution(int x, int y, Direction dir, PathfindingNodeGetter nodeGetter) {
+	private double contribution(int x, int y, Direction dir, PathfindingNodeGetter nodeGetter) {
 		switch (dir) {
 		case DOWN:
 			if (isOutOfBounds(x, y + 1)) {
