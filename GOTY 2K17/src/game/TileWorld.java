@@ -81,20 +81,27 @@ public class TileWorld {
 	}
 	
 	public Set<Tile> getSurroundingTiles(TileLocation loc, int distance) {
+		return getSurroundingTiles(loc, distance, null);
+	}
+	
+	public Set<Tile> getSurroundingTiles(TileLocation loc, int distance, Direction exclude) {
 		Set<Tile> tiles = new HashSet<>();
 		if (distance == 0) {
 			return tiles;
 		}
-		for (TileLocation neighbor : getNeighborLocations(loc)) {
+		for (TileLocation neighbor : getNeighborLocations(loc, exclude)) {
 			tiles.add(getTile(neighbor));
 			tiles.addAll(getSurroundingTiles(neighbor, distance - 1));
 		}
 		return tiles;
 	}
 	
-	public Set<TileLocation> getNeighborLocations(TileLocation loc) {
+	public Set<TileLocation> getNeighborLocations(TileLocation loc, Direction exclude) {
 		Set<TileLocation> neighbors = new HashSet<>();
 		for (Direction dir : Direction.values()) {
+			if (dir == exclude) {
+				continue;
+			}
 			TileLocation neighborLoc = new TileLocation(loc.getX() + dir.getDx(), loc.getY() + dir.getDy());
 			if (!isOutOfBounds(neighborLoc.getX(), neighborLoc.getY())) {
 				neighbors.add(neighborLoc);
