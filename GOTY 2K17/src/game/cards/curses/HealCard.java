@@ -25,7 +25,7 @@ public class HealCard extends ActionCard {
 	}
 
 	public HealCard(TileWorld world) {
-		super(BASE_IMAGE);
+		super(BASE_IMAGE, world);
 	}
 	
 	@Override

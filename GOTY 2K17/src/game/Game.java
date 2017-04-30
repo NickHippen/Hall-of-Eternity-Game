@@ -11,6 +11,7 @@ import java.util.Random;
 
 import game.cards.Card;
 import game.cards.Deck;
+import game.cards.curses.AreaCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
@@ -31,6 +32,7 @@ public class Game extends TileFramework {
 	Vector2f centeredMouseVec;
 	
 	boolean selectingTarget;
+	boolean selectingArea;
 	
 	ArrayList<Unit> selectedUnits;
 	//Used for card movement
@@ -64,6 +66,7 @@ public class Game extends TileFramework {
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
 			if(onBoard(centeredMouseVec)){
 				if(grabbedCard instanceof MonsterSpawnCard) selectingTarget = true;
+				if(grabbedCard instanceof AreaCard) selectingArea = true;
 				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);
 				activatedCard = grabbedCard;
@@ -118,10 +121,18 @@ public class Game extends TileFramework {
 		}
 	
 		
-		//Player selects target
+		//Player selects single tile
 		if(mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingTarget){
 			if (activatedCard.performAction(centeredMouseVec)) {
 				selectingTarget = false;
+				grabbedCard = null;
+			}
+		}
+		
+		//Player selects 3x3 area tile
+		if(mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingArea){
+			if (activatedCard.performAction(centeredMouseVec)) {
+				selectingArea = false;
 				grabbedCard = null;
 			}
 		}
@@ -156,7 +167,7 @@ public class Game extends TileFramework {
 
 		renderTiles(g2d);
 		
-		if (selectingTarget || displayCoordinates) {
+		if (selectingTarget || selectingArea || displayCoordinates) {
 			renderGrid(g2d);
 		}
 		if (displayDirections != 0) {
@@ -172,7 +183,7 @@ public class Game extends TileFramework {
 		g.drawString("WAVE", 90,640);
 		g.drawString("BONES", 1287, 640);
 		
-		if(selectingTarget){
+		if(selectingTarget || selectingArea){
 			g.setFont(new Font("Cooper Black", Font.PLAIN, 20));
 			message = "";
 			if(activatedCard instanceof MonsterSpawnCard){
@@ -188,14 +199,16 @@ public class Game extends TileFramework {
 			message = "";
 		}
 		
+		
 		g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
 		g.drawString(String.format("%03d", waveNum), 99, 664);
 		g.drawString(String.format("%03d", boneNum), 1299, 664);
 	
 		
-		//Renders map tile selection
-		if ((selectingTarget || grabbedCard == null) && onBoard(centeredMouseVec)) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
-		
+		//Renders map tile selection or area selection
+		if ((selectingArea && grabbedCard == null) && onBoard(centeredMouseVec)) renderSelectedArea(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
+		else if ((selectingTarget || grabbedCard == null) && onBoard(centeredMouseVec)) renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(centeredMouseVec));
+
 		// Renders cards
 		for (int i = 0; i < deck.getHand().size(); i++) {
 			Card card = deck.getHand().get(i);

@@ -14,27 +14,21 @@ public abstract class MonsterSpawnCard extends Card {
 	
 	private static final MonsterFactory MONSTER_FACTORY = new MonsterFactory();
 	
-	private TileWorld world;
-
 	protected MonsterSpawnCard(BufferedImage image, TileWorld world) {
-		super(image);
-		this.world = world;
+		super(image, world);
 	}
 	
-	public TileWorld getWorld() {
-		return world;
-	}
-	
+
 	public abstract MonsterType getType();
 	
 	@Override
 	public boolean performAction(Vector2f pos) {
 		Monster monster = MONSTER_FACTORY.getMonster(getType(), getWorld());
-		TileLocation location = world.getTileLocationAtPosition(pos);
-		if (world.getMap().getInvalidTileLocations().contains(location)) {
+		TileLocation location = getWorld().getTileLocationAtPosition(pos);
+		if (getWorld().getMap().getInvalidTileLocations().contains(location)) {
 			return false;
 		}
-		world.addUnitToTile(location, monster);
+		getWorld().addUnitToTile(location, monster);
 		return true;
 	}
 	

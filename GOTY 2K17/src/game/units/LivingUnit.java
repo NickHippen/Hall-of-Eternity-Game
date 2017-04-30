@@ -26,7 +26,7 @@ public abstract class LivingUnit extends Unit {
 		return health;
 	}
 
-	protected void setHealth(int health) {
+	public void setHealth(int health) {
 		this.health = health;
 	}
 	

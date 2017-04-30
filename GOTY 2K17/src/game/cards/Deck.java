@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 import game.TileWorld;
+import game.cards.curses.BlastCard;
 import game.cards.curses.CardBack;
 import game.cards.curses.HealCard;
-import game.cards.curses.tempCard;
 import game.cards.monsters.DragonCard;
 import game.cards.monsters.ZombieCard;
 import game.vectors.Vector2f;
@@ -24,8 +24,9 @@ public class Deck {
 	public Deck(TileWorld world) {
 		cards = new ArrayList<>();
 		hand = new ArrayList<>();
-		cardBack = new CardBack();
 		this.world = world;
+		
+		cardBack = new CardBack(world);
 		setupDeck();
 		shuffle();
 		this.removed = -1;
@@ -34,15 +35,16 @@ public class Deck {
 	//Currently the only way to put cards into deck
 	public void setupDeck(){
 		cards.add(new ZombieCard(this.world));
-		cards.add(new HealCard(this.world));
-		cards.add(new tempCard(this.world));
-		cards.add(new ZombieCard(this.world));
-		cards.add(new DragonCard(this.world));
 		cards.add(new ZombieCard(this.world));
 		cards.add(new ZombieCard(this.world));
 		cards.add(new ZombieCard(this.world));
 		cards.add(new ZombieCard(this.world));
-
+		cards.add(new BlastCard(this.world));
+		cards.add(new BlastCard(this.world));
+		cards.add(new BlastCard(this.world));
+		cards.add(new BlastCard(this.world));
+		cards.add(new BlastCard(this.world));
+		cards.add(new BlastCard(this.world));
 	}
 	
 	public List<Card> getCards() {

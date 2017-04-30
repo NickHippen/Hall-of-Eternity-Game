@@ -24,8 +24,8 @@ public class CardBack extends ActionCard {
 		}
 	}
 
-	public CardBack() {
-		super(BASE_IMAGE);
+	public CardBack(TileWorld world) {
+		super(BASE_IMAGE, world);
 	}
 	
 	@Override

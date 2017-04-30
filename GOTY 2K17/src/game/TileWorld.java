@@ -93,6 +93,18 @@ public class TileWorld {
 		return tiles[loc.getX()][loc.getY()];
 	}
 	
+	public ArrayList<Tile> getSurroundingTilesDiag(TileLocation loc, int distance){
+		ArrayList<Tile> tiles = new ArrayList<>();
+		int thisX = loc.getX();
+		int thisY = loc.getY();
+		for(int i = thisX - distance; i <= thisX + distance; i++){
+			for(int j = thisY - distance; j <= thisY + distance; j++){
+				tiles.add(getTile(new TileLocation(i,j)));
+			}
+		}
+		return tiles;
+	}
+	
 	public Set<Tile> getSurroundingTiles(TileLocation loc, int distance) {
 		return getSurroundingTiles(loc, distance, null);
 	}
