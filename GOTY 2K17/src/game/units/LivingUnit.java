@@ -16,8 +16,9 @@ public abstract class LivingUnit extends Unit {
 	
 	protected LivingUnit(BufferedImage image, TileWorld world, int maxHealth, int horizontalFrameNum, int verticalFrameNum) {
 		super(image, world, horizontalFrameNum, verticalFrameNum);
-		this.maxHealth = maxHealth;
-		this.health = maxHealth;
+		
+		this.setMaxHealth(maxHealth);
+		this.setHealth(maxHealth);
 		this.setAttackSpeed(ATTACK_SPEED);
 	}
 
@@ -35,5 +36,13 @@ public abstract class LivingUnit extends Unit {
 	
 	protected void setAttackSpeed(int attackSpeed) {
 		this.attackSpeed = attackSpeed;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 }

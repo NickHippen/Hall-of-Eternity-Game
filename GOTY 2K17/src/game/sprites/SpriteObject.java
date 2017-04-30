@@ -122,4 +122,12 @@ public class SpriteObject {
 	public BufferedImage getSpriteSheet(){
 		return this.spriteSheet;
 	}
+	
+	public Vector2f adjustPoint(Vector2f point) {
+		if (getView() != null) {
+			point = getView().mul(point);
+		}
+		return point;
+	}
+	
 }

@@ -1,11 +1,15 @@
 package game.units.monsters;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.vectors.Vector2f;
 
 public class Zombie extends Monster {
 
@@ -33,4 +37,5 @@ public class Zombie extends Monster {
 	public String getName(){
 		return "Zombie";
 	}
+	
 }
