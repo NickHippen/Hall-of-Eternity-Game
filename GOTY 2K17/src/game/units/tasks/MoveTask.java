@@ -1,15 +1,16 @@
-package game.units;
+package game.units.tasks;
 
+import game.units.LivingUnit;
 import game.util.Direction;
 
-public class MovementTask {
+public class MoveTask implements Task {
 
 	private Direction direction;
 	private float distance;
 	private float speed;
 	private float distanceCovered;
 	
-	public MovementTask(Direction direction, float distance, float speed) {
+	public MoveTask(Direction direction, float distance, float speed) {
 		this.direction = direction;
 		this.distance = distance;
 		this.speed = speed;
@@ -44,7 +45,8 @@ public class MovementTask {
 		this.distanceCovered += getSpeed() * delta;
 	}
 
-	public boolean contributeTask(Unit unit, float delta) {
+	@Override
+	public boolean contributeTask(LivingUnit unit, float delta) {
 		increaseDistanceCovered(delta);
 		float speed;
 		boolean taskComplete;

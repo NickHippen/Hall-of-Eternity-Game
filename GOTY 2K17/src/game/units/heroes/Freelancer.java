@@ -27,7 +27,7 @@ public class Freelancer extends Hero {
 	public Freelancer(TileWorld world) {
 		super(BASE_IMAGE, world, MAX_HEALTH, HeroDamageType.MELEE);
 		this.name="Freelancer";		
-		this.setDamagePerHit(DAMAGE);
+		this.setDamage(DAMAGE);
 	}
 	
 	public String getName(){

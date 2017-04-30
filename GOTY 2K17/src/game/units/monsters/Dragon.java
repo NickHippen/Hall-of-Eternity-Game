@@ -36,7 +36,7 @@ public class Dragon extends Monster {
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
 		
-		this.setDamagePerHit(DAMAGE);
+		this.setDamage(DAMAGE);
 	}
 	
 	public String getName(){

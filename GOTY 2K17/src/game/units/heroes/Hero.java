@@ -8,9 +8,10 @@ import java.util.Set;
 import game.Tile;
 import game.TileWorld;
 import game.units.LivingUnit;
-import game.units.MovementTask;
 import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
+import game.units.tasks.AttackTask;
+import game.units.tasks.MoveTask;
 import game.util.Direction;
 
 public abstract class Hero extends LivingUnit {
@@ -48,10 +49,10 @@ public abstract class Hero extends LivingUnit {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		if (getMovementTask() != null) {
-			boolean taskComplete = getMovementTask().contributeTask(this, delta);
+		if (getTask() != null) {
+			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
-				setMovementTask(null);
+				setTask(null);
 			}
 		} else {
 			Tile tile = getWorld().getTileAtPosition(getLocation());
@@ -59,10 +60,10 @@ public abstract class Hero extends LivingUnit {
 			boolean nearMonster = false;
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2, Direction.LEFT)) {
 				List<Monster> monsters = surroundingTile.getMonsters();
-				if (getHeroType().getRange() == 2) {
-					setMovementTask(new MovementTask(null, 1, 0));
-				}
 				if (!monsters.isEmpty()) {
+					if (getHeroType().getRange() == 2) {
+						setTask(new AttackTask(surroundingTile));
+					}
 					nearMonster = true;
 					dirs = tile.getAggroPathfinding().getDirections();
 					break;
@@ -72,13 +73,13 @@ public abstract class Hero extends LivingUnit {
 				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1, Direction.LEFT)) {
 					List<Monster> monsters = surroundingTile.getMonsters();
 					if (!monsters.isEmpty()) {
-						setMovementTask(new MovementTask(null, 1, 0));
+						setTask(new AttackTask(surroundingTile));
 						break;
 					}
 				}
 			}
 			
-			if (getMovementTask() != null) {
+			if (getTask() != null) {
 				// Hero has been stopped
 				return;
 			}
@@ -93,11 +94,11 @@ public abstract class Hero extends LivingUnit {
 			switch (dir) {
 			case UP:
 			case DOWN:
-				setMovementTask(new MovementTask(dir, getWorld().getTileSizeY(), 0.25f));
+				setTask(new MoveTask(dir, getWorld().getTileSizeY(), 0.25f));
 				break;
 			case LEFT:
 			case RIGHT:
-				setMovementTask(new MovementTask(dir, getWorld().getTileSizeX(), 0.25f));
+				setTask(new MoveTask(dir, getWorld().getTileSizeX(), 0.25f));
 				break;
 			}
 		}

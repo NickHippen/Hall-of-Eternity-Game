@@ -53,8 +53,10 @@ public abstract class Monster extends LivingUnit {
 		double width = 35;
 		g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
 		width *= (double) getHealth() / (double) getMaxHealth();
-		g.setColor(Color.GREEN);
-		g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
+		if (width > 0) {
+			g.setColor(Color.GREEN);
+			g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
+		}
 	}
 	
 }

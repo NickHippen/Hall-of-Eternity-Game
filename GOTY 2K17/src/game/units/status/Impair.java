@@ -20,10 +20,10 @@ public class Impair {
 	
 	public void updateImpair(Hero hero, float delta) {
 		if(isImpaired) {
-			hero.setDamagePerHit(0);
+			hero.setDamage(0);
 			impairTimer -= delta;
 			if(impairTimer < 0) {
-				hero.setDamagePerHit(heroDamage);
+				hero.setDamage(heroDamage);
 				impairTimer = impairDuration;
 				isImpaired = false;
 			}

@@ -31,7 +31,7 @@ public class Zombie extends Monster {
 	public Zombie(TileWorld world) {
 		super(spriteSheet, world, MAX_HEALTH);
 		this.maxFrameNum = 14;
-		this.setDamagePerHit(DAMAGE);
+		this.setDamage(DAMAGE);
 	}
 	
 	public String getName(){

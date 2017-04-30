@@ -1,7 +1,9 @@
 package game.units;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
+import game.Tile;
 import game.TileWorld;
 
 
@@ -10,7 +12,9 @@ public abstract class LivingUnit extends Unit {
 	
 	private int maxHealth;
 	private int health;
-	private int attackSpeed;
+	private float attackSpeed;
+	private float timeSinceLastAttack;
+	private int damage;
 
 	protected String name;
 	
@@ -30,11 +34,11 @@ public abstract class LivingUnit extends Unit {
 		this.health = health;
 	}
 	
-	protected int getAttackSpeed() {
+	public float getAttackSpeed() {
 		return attackSpeed;
 	}
 	
-	protected void setAttackSpeed(int attackSpeed) {
+	public void setAttackSpeed(float attackSpeed) {
 		this.attackSpeed = attackSpeed;
 	}
 
@@ -45,4 +49,46 @@ public abstract class LivingUnit extends Unit {
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public boolean isReadyToAttack() {
+		if (timeSinceLastAttack >= attackSpeed) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void attack(List<? extends LivingUnit> targets) {
+		for (LivingUnit target : targets) {
+			target.applyDamage(getDamage());
+		}
+	}
+	
+	public void applyDamage(int amount) {
+		setHealth(getHealth() - amount);
+	}
+	
+	public boolean isAlive() {
+		return getHealth() > 0;
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		if (!isAlive()) {
+			Tile tile = getWorld().getTileAtPosition(getLocation());
+			tile.getUnits().remove(this);
+			return;
+		}
+		
+		timeSinceLastAttack += delta;
+	}
+	
 }

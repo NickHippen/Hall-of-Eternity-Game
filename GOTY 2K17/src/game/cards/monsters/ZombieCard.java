@@ -36,4 +36,5 @@ public class ZombieCard extends MonsterSpawnCard {
 	public String getName(){
 		return "Zombie";
 	}
+	
 }

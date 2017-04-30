@@ -25,7 +25,7 @@ public class StatusEffects {
 		burn = new Burn(BURN_DURATION);
 		chill = new Chill(CHILL_DURATION);
 		stun = new Stun(STUN_DURATION);
-		impair = new Impair(hero.getDamagePerHit(), IMPAIR_DURATION);
+		impair = new Impair(hero.getDamage(), IMPAIR_DURATION);
 		vuln = new Vulnerability(VULN_DURATION);
 	}
 	
