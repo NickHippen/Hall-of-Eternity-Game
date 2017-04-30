@@ -89,8 +89,10 @@ public abstract class LivingUnit extends Unit {
 		if(!isAlive()){
 			for(Tile[] tileRow : getWorld().getTiles()){
 				for(Tile tile : tileRow){
-					tile.removeUnit(this);
-					getWorld().getMap().removeInvalidTileLocation(tile.getLocation());
+					if (tile.getUnits().contains(this)){
+						tile.removeUnit(this);
+						getWorld().getMap().removeInvalidTileLocation(tile.getLocation());
+					}
 				}
 			}
 		}
