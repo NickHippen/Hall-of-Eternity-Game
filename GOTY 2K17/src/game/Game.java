@@ -13,6 +13,7 @@ import game.cards.Card;
 import game.cards.Deck;
 import game.cards.curses.AreaCard;
 import game.cards.monsters.MonsterSpawnCard;
+import game.units.LivingUnit;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.util.Matrix3x3f;
@@ -70,7 +71,6 @@ public class Game extends TileFramework {
 				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);
 				activatedCard = grabbedCard;
-				System.out.println(getWorld().getAllUnits().get(0).getName());
 				((Monster) getWorld().getAllUnits().get(getWorld().getAllUnits().size()-1)).setAttacking(true);
 			}else{ 
 				//Puts card back in its original spot
@@ -101,7 +101,7 @@ public class Game extends TileFramework {
 				int yPos = getWorld().getTileLocationAtPosition(centeredMouseVec).getY();
 				selectedUnits.addAll((getWorld().getTiles()[xPos][yPos].getUnits()));
 				for(int i = 0; i < selectedUnits.size(); i++){
-					System.out.println(selectedUnits.get(i).getName());
+					System.out.println(((LivingUnit) selectedUnits.get(i)).getHealth());
 				}
 			}
 		}
@@ -147,12 +147,10 @@ public class Game extends TileFramework {
 		super.updateObjects(delta);
 		
 		deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
-		
+
 		deck.drawAnimation(delta);
 	
 		for (Unit unit : getWorld().getAllUnits()) unit.update(delta);
-		
-		
 	}
 	
 	@Override

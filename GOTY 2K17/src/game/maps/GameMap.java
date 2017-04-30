@@ -1,6 +1,7 @@
 package game.maps;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,8 @@ import game.units.monsters.Boss;
 import game.util.Direction;
 
 public abstract class GameMap extends SpriteObject {
-	
+	protected static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
+
 	public GameMap(BufferedImage image) {
 		super(image, 1, 1);
 	}
@@ -27,4 +29,13 @@ public abstract class GameMap extends SpriteObject {
 	public abstract Set<Direction> getHardcodedDirections(TileLocation loc);
 
 	public abstract void addBoss(TileWorld world, Boss boss);
+	
+	
+	public void addInvalidTileLocation(int x, int y) {
+		INVALID_TILE_LOCATIONS.add(new TileLocation(x,y));
+	}
+	
+	public void removeInvalidTileLocation(int x, int y) {
+		INVALID_TILE_LOCATIONS.remove(new TileLocation(x,y));
+	}
 }

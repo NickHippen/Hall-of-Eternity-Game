@@ -6,6 +6,8 @@ import java.util.Set;
 
 import game.maps.GameMap;
 import game.units.Unit;
+import game.units.monsters.Boss;
+import game.units.monsters.Dragon;
 import game.units.monsters.Monster;
 import game.util.Direction;
 import game.vectors.Vector2f;
@@ -53,7 +55,7 @@ public class TileWorld {
 		for (Tile[] tileRow : getTiles()) {
 			for (Tile tile : tileRow) {
 				for (Unit unit : tile.getUnits()) {
-					allUnits.add(unit);
+					if(!allUnits.contains(unit)) allUnits.add(unit);
 				}
 			}
 		}
@@ -67,6 +69,12 @@ public class TileWorld {
 		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
 		tiles[location.getX()][location.getY()].getUnits().add(unit);
+
+		//Hard code dragon to take up 1x3 tiles
+		if(unit instanceof Dragon){
+			tiles[location.getX()-1][location.getY()].getUnits().add(unit);
+		}
+	
 		if (unit instanceof Monster) {
 			policyIteration(tile -> tile.getAggroPathfinding());
 		}
@@ -93,13 +101,14 @@ public class TileWorld {
 		return tiles[loc.getX()][loc.getY()];
 	}
 	
+	//Returns a list of the 9 tiles in a square
 	public ArrayList<Tile> getSurroundingTilesDiag(TileLocation loc, int distance){
 		ArrayList<Tile> tiles = new ArrayList<>();
 		int thisX = loc.getX();
 		int thisY = loc.getY();
 		for(int i = thisX - distance; i <= thisX + distance; i++){
 			for(int j = thisY - distance; j <= thisY + distance; j++){
-				tiles.add(getTile(new TileLocation(i,j)));
+				if(i >= 0 && i <= 29 && j >= 0 && i <= 19) tiles.add(getTile(new TileLocation(i,j))); //Don't add out of bounds tiles to selection
 			}
 		}
 		return tiles;

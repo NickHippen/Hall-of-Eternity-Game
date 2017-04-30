@@ -82,10 +82,13 @@ public abstract class LivingUnit extends Unit {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		if (!isAlive()) {
-			Tile tile = getWorld().getTileAtPosition(getLocation());
-			tile.getUnits().remove(this);
-			return;
+	//	System.out.println(getWorld().getAllUnits().size());
+
+		if(!isAlive()){
+			for(Tile[] tileRow : getWorld().getTiles()){
+				for(Tile tile : tileRow)
+					tile.removeUnit(this);
+			}
 		}
 		
 		timeSinceLastAttack += delta;

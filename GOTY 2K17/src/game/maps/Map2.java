@@ -21,7 +21,6 @@ import game.vectors.Vector2f;
 
 public class Map2 extends GameMap {
 
-	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
 	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
 	
@@ -121,6 +120,7 @@ public class Map2 extends GameMap {
 		return INVALID_TILE_LOCATIONS;
 	}
 
+
 	@Override
 	public List<TileLocation> getGoalLocations() {
 		return GOAL_LOCATIONS;
@@ -143,9 +143,12 @@ public class Map2 extends GameMap {
 	public void addBoss(TileWorld world, Boss unit ){
 			unit.setLocation(new Vector2f(2.6f,.75f));
 			world.getTiles()[27][6].getUnits().add(unit);
-			if (unit instanceof Monster) {
-				world.policyIteration(tile -> tile.getAggroPathfinding());
+			world.getTiles()[28][6].getUnits().add(unit);
+			world.getTiles()[27][7].getUnits().add(unit);
+			world.getTiles()[28][7].getUnits().add(unit);
 			
+			if (unit instanceof Monster) {
+				world.policyIteration(tile -> tile.getAggroPathfinding());		
 		}
 	}
 

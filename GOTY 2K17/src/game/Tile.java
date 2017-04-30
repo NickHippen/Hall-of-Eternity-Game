@@ -34,6 +34,10 @@ public class Tile {
 	public List<Unit> getUnits() {
 		return units;
 	}
+	
+	public void removeUnit(Unit removedUnit){
+		this.units.remove(removedUnit);
+	}
 
 	public void setUnits(List<Unit> units) {
 		this.units = units;

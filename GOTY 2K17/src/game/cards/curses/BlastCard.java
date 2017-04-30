@@ -35,24 +35,12 @@ public class BlastCard extends AreaCard {
 		super(BASE_IMAGE, world);
 	}
 	
-	@Override
-	public void performAction() {
-		
-	}
-	
 	public String getName(){
 		return "Blast";
 	}
 
-	@Override
-	public boolean performAction(Vector2f pos) {
-		ArrayList<Tile> blastedTiles = getWorld().getSurroundingTilesDiag(getWorld().getTileAtPosition(pos).getLocation(),1);
-		for(int i = 0; i < blastedTiles.size(); i++){
-			for(Unit unit : blastedTiles.get(i).getUnits()){
-				if (unit instanceof LivingUnit) ((LivingUnit) unit).setHealth(((LivingUnit) unit).getHealth() - 50);
-			}
-		}
-		return true;
+	public void affectUnit(Unit unit) {
+		if(unit instanceof LivingUnit) ((LivingUnit) unit).setHealth(((LivingUnit) unit).getHealth() - 50);
 	}
 
 }
