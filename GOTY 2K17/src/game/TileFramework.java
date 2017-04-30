@@ -115,6 +115,7 @@ public class TileFramework extends SimpleFramework {
 	public void renderGrid(Graphics2D g) {
 		int stopY = 13;
 		g.setColor(Color.RED);
+		g.setStroke(new BasicStroke(1));
 		for (int y = 0; y < (48 * stopY); y += 48) {
 			g.drawLine(0, y, appWidth, y);
 		}
