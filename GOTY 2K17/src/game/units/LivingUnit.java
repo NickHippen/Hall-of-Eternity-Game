@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import game.Tile;
+import game.TileLocation;
 import game.TileWorld;
 import game.units.heroes.Hero;
 import game.units.status.StatusEffects;
@@ -117,6 +118,8 @@ public abstract class LivingUnit extends Unit {
 	public void kill() {
 		setHealth(0);
 		getWorld().getUnits().remove(this);
+		TileLocation loc = getWorld().getTileLocationAtPosition(getLocation());
+		getWorld().getMap().removeInvalidTileLocation(loc);
 		getWorld().policyIteration(Tile::getAggroPathfinding);
 	}
 	
