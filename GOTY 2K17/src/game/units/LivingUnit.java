@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import game.Tile;
 import game.TileWorld;
+import game.units.heroes.Hero;
 import game.units.status.StatusEffects;
 import game.units.tasks.Task;
 import game.vectors.Vector2f;
@@ -147,11 +148,14 @@ public abstract class LivingUnit extends Unit {
 		g.setStroke(new BasicStroke(2));
 		g.setColor(Color.RED);
 		double width = 35;
-		g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
+		if (this instanceof Hero) g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 18, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 18);
+		else g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
+
 		width *= (double) getHealth() / (double) getMaxHealth();
 		if (width > 0) {
 			g.setColor(Color.GREEN);
-			g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
+			if (this instanceof Hero) g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 18, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 18);
+			else g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
 		}
 	}
 	
