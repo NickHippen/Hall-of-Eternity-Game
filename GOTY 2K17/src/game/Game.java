@@ -103,7 +103,7 @@ public class Game extends TileFramework {
 				int yPos = getWorld().getTileLocationAtPosition(centeredMouseVec).getY();
 				selectedUnits.addAll((getWorld().getTiles()[xPos][yPos].getUnits()));
 				for(int i = 0; i < selectedUnits.size(); i++){
-					System.out.println(((LivingUnit) selectedUnits.get(i)).getHealth());
+					//Do something here on unit select
 				}
 			}
 		}
