@@ -50,6 +50,7 @@ public class Game extends TileFramework {
 		deck = new Deck(getWorld());
 		
 		getWorld().policyIteration(tile -> tile.getStandardPathfinding());
+		getWorld().policyIteration(tile -> tile.getAggroPathfinding());
 		
 		this.waveNum = 0;
 		this.boneNum = 123;

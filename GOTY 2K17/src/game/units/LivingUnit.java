@@ -9,7 +9,7 @@ import game.TileWorld;
 
 public abstract class LivingUnit extends Unit {
 	
-	private static final int ATTACK_SPEED = 1; // attack rate adjustments to all living units
+	private static final int ATTACK_SPEED = 2; // attack rate adjustments to all living units
 	
 	private int maxHealth;
 	private int health;

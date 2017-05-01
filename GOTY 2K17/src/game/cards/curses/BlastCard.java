@@ -2,19 +2,13 @@ package game.cards.curses;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import game.Tile;
-import game.TileLocation;
 import game.TileWorld;
 import game.units.LivingUnit;
 import game.units.Unit;
-import game.units.monsters.Monster;
-import game.units.monsters.MonsterType;
 import game.units.monsters.Zombie;
-import game.vectors.Vector2f;
 
 public class BlastCard extends AreaCard {
 
