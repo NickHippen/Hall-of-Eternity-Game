@@ -24,7 +24,7 @@ public class Freelancer extends Hero {
 	}
 	
 	public Freelancer(TileWorld world) {
-		super(spriteSheet, world, MAX_HEALTH, HeroDamageType.MELEE);
+		super(spriteSheet, world, MAX_HEALTH, HeroClassType.FREELANCER);
 		this.name="Freelancer";		
 		this.setDamage(DAMAGE);
 	}

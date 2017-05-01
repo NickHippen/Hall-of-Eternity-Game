@@ -1,5 +1,6 @@
 package game.units.status;
 
+import game.units.LivingUnit;
 import game.units.heroes.Hero;
 
 public class Burn {
@@ -16,14 +17,14 @@ public class Burn {
 		isBurned = true;
 	}
 	
-	public void updateBurn(Hero hero, float delta) {
+	public void updateBurn(LivingUnit livingUnit, float delta) {
 		if(isBurned) {
 			burnTimer -= delta;
 			if(burnTimer < 0) {
 				burnTimer = burnDuration;
 				isBurned = false;
 			}
-			hero.applyDamage(3);
+			livingUnit.applyDamage(3);
 		}
 	}
 }

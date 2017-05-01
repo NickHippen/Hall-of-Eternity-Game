@@ -5,6 +5,7 @@ import java.util.List;
 
 import game.Tile;
 import game.TileWorld;
+import game.units.status.StatusEffects;
 
 
 public abstract class LivingUnit extends Unit {
@@ -16,12 +17,14 @@ public abstract class LivingUnit extends Unit {
 	private float attackSpeed;
 	private float timeSinceLastAttack;
 	private int damage;
+	private StatusEffects status;
 
 	protected String name;
 	
 	protected LivingUnit(BufferedImage image, TileWorld world, int maxHealth, int horizontalFrameNum, int verticalFrameNum) {
 		super(image, world, horizontalFrameNum, verticalFrameNum);
 		
+		status = new StatusEffects(this);
 		this.setMaxHealth(maxHealth);
 		this.setHealth(maxHealth);
 		this.setAttackSpeed(ATTACK_SPEED);
@@ -58,6 +61,12 @@ public abstract class LivingUnit extends Unit {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
+	
+	// can use this to apply status effects
+	// Ex. hero.getStatusEffects().applyPoison();
+	public StatusEffects getStatusEffects() {
+		return status;
+	}
 
 	public boolean isReadyToAttack() {
 		if (timeSinceLastAttack >= attackSpeed) {
@@ -74,6 +83,9 @@ public abstract class LivingUnit extends Unit {
 	}
 	
 	public void applyDamage(int amount) {
+		if (getStatusEffects().isVulnerable()) {
+			amount /= 2;
+		}
 		setHealth(getHealth() - amount);
 	}
 	
@@ -91,13 +103,13 @@ public abstract class LivingUnit extends Unit {
 				}
 			}
 		}
-		getWorld().policyIteration((tile) -> tile.getAggroPathfinding());
+		getWorld().policyIteration(Tile::getAggroPathfinding);
 	}
 	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-
+		getStatusEffects().processStatus(delta);
 		if(!isAlive()){
 			kill();
 		}

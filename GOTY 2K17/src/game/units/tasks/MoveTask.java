@@ -41,20 +41,22 @@ public class MoveTask implements Task {
 		this.speed = speed;
 	}
 	
-	public void increaseDistanceCovered(float delta) {
-		this.distanceCovered += getSpeed() * delta;
+	public void increaseDistanceCovered(float speed, float delta) {
+		this.distanceCovered += speed * delta;
 	}
 
 	@Override
 	public boolean contributeTask(LivingUnit unit, float delta) {
-		increaseDistanceCovered(delta);
-		float speed;
+		float speed = getSpeed();
+		if (unit.getStatusEffects().isChilled()) {
+			speed /= 2;
+		}
+		increaseDistanceCovered(speed, delta);
 		boolean taskComplete;
 		if (distanceCovered >= distance) {
 			speed = (distanceCovered - distance) / delta; // Only move to the goal distance
 			taskComplete = true;
 		} else {
-			speed = getSpeed();
 			taskComplete = false;
 		}
 		unit.move(getDirection(), speed, delta);

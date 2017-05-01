@@ -1,10 +1,7 @@
 package game.units.heroes;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -13,7 +10,6 @@ import game.TileLocation;
 import game.TileWorld;
 import game.units.LivingUnit;
 import game.units.monsters.Monster;
-import game.units.status.StatusEffects;
 import game.units.tasks.AttackTask;
 import game.units.tasks.MoveTask;
 import game.util.Direction;
@@ -25,13 +21,12 @@ public abstract class Hero extends LivingUnit {
 	private final float MOVE_TIMER = 5; // Time before moving to next tile
 	
 	private int dropAmount;
-	private StatusEffects status;
-	private HeroDamageType heroDamageType;
-		
+	
+	private HeroClassType classType;
 	private boolean attacking;
 	private float animationTime = 0;
 	protected int maxFrameNum = 1;
-	protected int frameNum=0;
+	protected int frameNum = 0;
 	protected int frameSize;
 	protected float animationSpeed = .1f;
 	private int selectedAnimation;
@@ -40,27 +35,13 @@ public abstract class Hero extends LivingUnit {
 	private BufferedImage[][] animations;
 	
 	
-	protected Hero(BufferedImage image, TileWorld world, int maxHealth, HeroDamageType type) {
+	protected Hero(BufferedImage image, TileWorld world, int maxHealth, HeroClassType classType) {
 		super(image, world, maxHealth, 13, 21);
-		heroDamageType = type;
-		status = new StatusEffects(this, heroDamageType);
+		this.classType = classType;
 		this.setHorizontalFrameNum(13);
 		this.setVerticalFrameNum(21);
 		this.animations = new BufferedImage[8][9];
 		this.createHeroAnimations();
-	}
-	
-	protected void updateHero(float delta) {
-		// status effects determine update speed
-		delta = status.processStatus(delta);
-	}
-
-	
-	public void applyDamage(int damage) {
-		if(status.isVulnerable()) {
-			this.setHealth(this.getHealth() - damage*2);
-		}
-		else this.setHealth(this.getHealth() - damage);
 	}
 	
 	@Override
@@ -70,7 +51,6 @@ public abstract class Hero extends LivingUnit {
 		if (getTask() != null) {
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
-			
 				setTask(null);
 			}
 		} 
@@ -83,7 +63,7 @@ public abstract class Hero extends LivingUnit {
 				if (!monsters.isEmpty()) {
 					this.attacking = true;
 					attackingDir = surroundingTile.getLocation();
-					if (getHeroType().getRange() == 2) {
+					if (classType.getDamageType().getRange() == 2) {
 						setTask(new AttackTask(surroundingTile));
 					}
 					nearMonster = true;
@@ -92,7 +72,7 @@ public abstract class Hero extends LivingUnit {
 				}
 			}
 			
-			if (nearMonster && getHeroType().getRange() == 1) {
+			if (nearMonster && classType.getDamageType().getRange() == 1) {
 				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1, Direction.LEFT)) {
 					List<Monster> monsters = surroundingTile.getMonsters();
 					if (!monsters.isEmpty()) {
@@ -140,16 +120,6 @@ public abstract class Hero extends LivingUnit {
 	
 	public void setDropAmount(int amount) {
 		dropAmount = amount;
-	}
-	
-	// can use this to apply status effects
-	// Ex. hero.getStatusEffects().applyPoison();
-	public StatusEffects getStatusEffects() {
-		return status;
-	}
-	
-	public HeroDamageType getHeroType() {
-		return heroDamageType;
 	}
 	
 	public void createHeroAnimations(){

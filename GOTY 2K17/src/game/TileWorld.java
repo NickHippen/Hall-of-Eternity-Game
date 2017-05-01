@@ -75,7 +75,7 @@ public class TileWorld {
 		}
 	
 		if (unit instanceof Monster) {
-			policyIteration(tile -> tile.getAggroPathfinding());
+			policyIteration(Tile::getAggroPathfinding);
 		}
 	}
 	
