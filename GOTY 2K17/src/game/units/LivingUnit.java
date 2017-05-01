@@ -4,13 +4,12 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import game.Tile;
-import game.TileLocation;
 import game.TileWorld;
-import game.units.monsters.Monster;
 
 
 public abstract class LivingUnit extends Unit {
-	private final int ATTACK_SPEED = 1; // attack rate adjustments to all living units
+	
+	private static final int ATTACK_SPEED = 1; // attack rate adjustments to all living units
 	
 	private int maxHealth;
 	private int health;
@@ -71,6 +70,7 @@ public abstract class LivingUnit extends Unit {
 		for (LivingUnit target : targets) {
 			target.applyDamage(getDamage());
 		}
+		timeSinceLastAttack = 0;
 	}
 	
 	public void applyDamage(int amount) {
@@ -81,19 +81,25 @@ public abstract class LivingUnit extends Unit {
 		return getHealth() > 0;
 	}
 	
+	public void kill() {
+		setHealth(0);
+		for(Tile[] tileRow : getWorld().getTiles()){
+			for(Tile tile : tileRow){
+				if (tile.getUnits().contains(this)){
+					tile.removeUnit(this);
+					getWorld().getMap().removeInvalidTileLocation(tile.getLocation());
+				}
+			}
+		}
+		getWorld().policyIteration((tile) -> tile.getAggroPathfinding());
+	}
+	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
 
 		if(!isAlive()){
-			for(Tile[] tileRow : getWorld().getTiles()){
-				for(Tile tile : tileRow){
-					if (tile.getUnits().contains(this)){
-						tile.removeUnit(this);
-						getWorld().getMap().removeInvalidTileLocation(tile.getLocation());
-					}
-				}
-			}
+			kill();
 		}
 		
 		timeSinceLastAttack += delta;
