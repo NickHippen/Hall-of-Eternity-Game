@@ -36,7 +36,7 @@ public abstract class Hero extends LivingUnit {
 	protected float animationSpeed = .1f;
 	private int selectedAnimation;
 	private Direction dir;
-
+	private TileLocation attackingDir; //Used to turn the unit based on location of monster
 	private BufferedImage[][] animations;
 	
 	
@@ -73,7 +73,8 @@ public abstract class Hero extends LivingUnit {
 			
 				setTask(null);
 			}
-		} else {
+		} 
+		else {
 			Tile tile = getWorld().getTileAtPosition(getLocation());
 			Set<Direction> dirs = null;
 			boolean nearMonster = false;
@@ -81,6 +82,7 @@ public abstract class Hero extends LivingUnit {
 				List<Monster> monsters = surroundingTile.getMonsters();
 				if (!monsters.isEmpty()) {
 					this.attacking = true;
+					attackingDir = surroundingTile.getLocation();
 					if (getHeroType().getRange() == 2) {
 						setTask(new AttackTask(surroundingTile));
 					}
@@ -89,17 +91,22 @@ public abstract class Hero extends LivingUnit {
 					break;
 				}
 			}
+			
 			if (nearMonster && getHeroType().getRange() == 1) {
 				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1, Direction.LEFT)) {
 					List<Monster> monsters = surroundingTile.getMonsters();
 					if (!monsters.isEmpty()) {
 						this.attacking = true;
+						attackingDir = surroundingTile.getLocation();
 						setTask(new AttackTask(surroundingTile));
 						break;
 					}
 				}
 			}
-			else this.attacking = false;
+			else{
+				this.attacking = false;
+				attackingDir = null;
+			}
 			
 			if (getTask() != null) {
 				// Hero has been stopped
@@ -176,8 +183,18 @@ public abstract class Hero extends LivingUnit {
 				break;
 		}
 		
+		if(attackingDir != null){
+			int dirX = attackingDir.getX() - getWorld().getTileAtPosition(getLocation()).getLocation().getX();
+			int dirY = attackingDir.getY() - getWorld().getTileAtPosition(getLocation()).getLocation().getY();
+		
+		
+			if (dirX == 0 && dirY == -1) this.selectedAnimation = 0;
+			if (dirX == -1 && dirY == 0) this.selectedAnimation = 1;
+			if (dirX == 0 && dirY == 1) this.selectedAnimation = 2;
+			if (dirX == 1 && dirY == 0) this.selectedAnimation = 3;
+		}
+		
 		if(!attacking) this.selectedAnimation += 4;
-		System.out.println(animationTime);
 		animationTime += delta;
 		if (animationTime > animationSpeed) {
 			animationTime = 0;

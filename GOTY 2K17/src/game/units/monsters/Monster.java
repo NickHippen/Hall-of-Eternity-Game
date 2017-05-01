@@ -4,10 +4,12 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import game.TileWorld;
 import game.units.LivingUnit;
 import game.vectors.Vector2f;
+import game.units.heroes.Hero;
 
 public abstract class Monster extends LivingUnit {
 
@@ -17,6 +19,8 @@ public abstract class Monster extends LivingUnit {
 	protected int frameNum=-1;
 	protected int frameSize;
 	protected double animationSpeed = 1.4;
+	
+	protected ArrayList<Hero> target;
 	
 	protected Monster(BufferedImage image, TileWorld world, int maxHealth) {
 		super(image, world, maxHealth, 4, 4);
