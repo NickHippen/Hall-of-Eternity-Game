@@ -17,6 +17,7 @@ import game.cards.curses.CurseCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
+import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 
@@ -72,7 +73,12 @@ public class Game extends TileFramework {
 				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);
 				activatedCard = grabbedCard;
-//				((Monster) getWorld().getUnits().get(getWorld().getUnits().size()-1)).setAttacking(true);
+				for (Unit unit : getWorld().getUnits()) {
+					if (unit instanceof Boss) {
+						((Boss) unit).setAttacking(true);
+						break;
+					}
+				}
 			}else{ 
 				//Puts card back in its original spot
 				deck.getHand().get(deck.getHand().indexOf(grabbedCard)).setLocation(new Vector2f(-2.95f + ((deck.getHand().indexOf(grabbedCard)) * 1f), -0.87f));
