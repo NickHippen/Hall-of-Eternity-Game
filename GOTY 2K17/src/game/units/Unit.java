@@ -5,12 +5,10 @@ import java.util.ArrayList;
 
 import game.TileWorld;
 import game.sprites.BoundingSprite;
-import game.units.tasks.Task;
 
 public abstract class Unit extends BoundingSprite {
 	
 	private TileWorld world;
-	private Task task;
 	
 	private ArrayList<BufferedImage> attackAnimation;
 	
@@ -27,14 +25,6 @@ public abstract class Unit extends BoundingSprite {
 	
 	public void setWorld(TileWorld world) {
 		this.world = world;
-	}
-
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
 	}
 
 	public void createAttackAnimation(){

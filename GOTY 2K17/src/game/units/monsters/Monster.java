@@ -2,10 +2,14 @@ package game.units.monsters;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Set;
 
+import game.Tile;
 import game.TileWorld;
 import game.units.LivingUnit;
+import game.units.Unit;
 import game.units.heroes.Hero;
+import game.units.tasks.AttackTask;
 
 public abstract class Monster extends LivingUnit {
 
@@ -42,6 +46,26 @@ public abstract class Monster extends LivingUnit {
 	
 	public void setAttacking(boolean attacking){
 		this.attacking = attacking;
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		if (getTask() == null) {
+			Tile tile = getWorld().getTileAtPosition(getLocation());
+			Set<Tile> affectedTiles = getWorld().getSurroundingTiles(tile.getLocation(), 1);
+			for (Unit unit : getWorld().getUnits()) {
+				if (!(unit instanceof Hero)) {
+					continue;
+				}
+				Tile unitTile = unit.getWorld().getTileAtPosition(unit.getLocation());
+				if (affectedTiles.contains(unitTile)) {
+					setAttacking(true);
+					setTask(new AttackTask(unitTile, Hero.class));
+					break;
+				}
+			}
+		}
 	}
 	
 }

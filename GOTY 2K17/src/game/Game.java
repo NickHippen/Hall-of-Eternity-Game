@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import game.cards.Card;
@@ -14,12 +15,10 @@ import game.cards.Deck;
 import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.monsters.MonsterSpawnCard;
-import game.units.LivingUnit;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
-import game.units.monsters.*;
 
 public class Game extends TileFramework {
 
@@ -73,7 +72,7 @@ public class Game extends TileFramework {
 				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);
 				activatedCard = grabbedCard;
-				((Monster) getWorld().getAllUnits().get(getWorld().getAllUnits().size()-1)).setAttacking(true);
+//				((Monster) getWorld().getUnits().get(getWorld().getUnits().size()-1)).setAttacking(true);
 			}else{ 
 				//Puts card back in its original spot
 				deck.getHand().get(deck.getHand().indexOf(grabbedCard)).setLocation(new Vector2f(-2.95f + ((deck.getHand().indexOf(grabbedCard)) * 1f), -0.87f));
@@ -152,7 +151,11 @@ public class Game extends TileFramework {
 
 		deck.drawAnimation(delta);
 	
-		for (Unit unit : getWorld().getAllUnits()) unit.update(delta);
+		List<Unit> units = getWorld().getUnits();
+		for (int i = units.size() - 1; i >= 0; i--) {
+			Unit unit = units.get(i);
+			unit.update(delta);
+		}
 	}
 	
 	@Override

@@ -23,7 +23,6 @@ public abstract class Hero extends LivingUnit {
 	private int dropAmount;
 	
 	private HeroClassType classType;
-	private boolean attacking;
 	private float animationTime = 0;
 	protected int maxFrameNum = 1;
 	protected int frameNum = 0;
@@ -47,24 +46,17 @@ public abstract class Hero extends LivingUnit {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		
-		if (getTask() != null) {
-			boolean taskComplete = getTask().contributeTask(this, delta);
-			if (taskComplete) {
-				setTask(null);
-			}
-		} 
-		else {
+		if (getTask() == null) {
 			Tile tile = getWorld().getTileAtPosition(getLocation());
 			Set<Direction> dirs = null;
 			boolean nearMonster = false;
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2, Direction.LEFT)) {
 				List<Monster> monsters = surroundingTile.getMonsters();
 				if (!monsters.isEmpty()) {
-					this.attacking = true;
+					setAttacking(true);
 					attackingDir = surroundingTile.getLocation();
 					if (classType.getDamageType().getRange() == 2) {
-						setTask(new AttackTask(surroundingTile));
+						setTask(new AttackTask(surroundingTile, Monster.class));
 					}
 					nearMonster = true;
 					dirs = tile.getAggroPathfinding().getDirections();
@@ -76,15 +68,15 @@ public abstract class Hero extends LivingUnit {
 				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1, Direction.LEFT)) {
 					List<Monster> monsters = surroundingTile.getMonsters();
 					if (!monsters.isEmpty()) {
-						this.attacking = true;
+						setAttacking(true);
 						attackingDir = surroundingTile.getLocation();
-						setTask(new AttackTask(surroundingTile));
+						System.out.println("Set Task " + delta);
+						setTask(new AttackTask(surroundingTile, Monster.class));
 						break;
 					}
 				}
 			}
 			else{
-				this.attacking = false;
 				attackingDir = null;
 			}
 			
@@ -164,7 +156,7 @@ public abstract class Hero extends LivingUnit {
 			if (dirX == 1 && dirY == 0) this.selectedAnimation = 3;
 		}
 		
-		if(!attacking) this.selectedAnimation += 4;
+		if(!isAttacking()) this.selectedAnimation += 4;
 		animationTime += delta;
 		if (animationTime > animationSpeed) {
 			animationTime = 0;

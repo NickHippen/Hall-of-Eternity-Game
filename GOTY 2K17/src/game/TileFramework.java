@@ -89,13 +89,17 @@ public class TileFramework extends SimpleFramework {
 	
 	public void renderTiles(Graphics2D g2d) {
 		Matrix3x3f view = getViewportTransform();
-		for (Tile[] tiles : tileWorld.getTiles()) {
-			for (Tile tile : tiles) {
-				for (Unit unit : tile.getUnits()) {
-					unit.setView(view);
-					unit.draw(g2d);
-				}
-			}
+//		for (Tile[] tiles : tileWorld.getTiles()) {
+//			for (Tile tile : tiles) {
+//				for (Unit unit : tile.getUnits()) {
+//					unit.setView(view);
+//					unit.draw(g2d);
+//				}
+//			}
+//		}
+		for (Unit unit : getWorld().getUnits()) {
+			unit.setView(view);
+			unit.draw(g2d);
 		}
 	}
 	

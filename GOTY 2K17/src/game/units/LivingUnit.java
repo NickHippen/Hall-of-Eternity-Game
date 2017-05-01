@@ -4,11 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import game.Tile;
 import game.TileWorld;
 import game.units.status.StatusEffects;
+import game.units.tasks.Task;
 import game.vectors.Vector2f;
 
 
@@ -17,11 +17,13 @@ public abstract class LivingUnit extends Unit {
 	private static final int ATTACK_SPEED = 2; // attack rate adjustments to all living units
 	
 	private int maxHealth;
+	private boolean attacking;
 	private int health;
 	private float attackSpeed;
 	private float timeSinceLastAttack;
 	private int damage;
 	private StatusEffects status;
+	private Task task;
 
 	protected String name;
 	
@@ -72,6 +74,22 @@ public abstract class LivingUnit extends Unit {
 		return status;
 	}
 
+	public boolean isAttacking() {
+		return attacking;
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
 	public boolean isReadyToAttack() {
 		if (timeSinceLastAttack >= attackSpeed) {
 			return true;
@@ -79,10 +97,8 @@ public abstract class LivingUnit extends Unit {
 		return false;
 	}
 	
-	public void attack(List<? extends LivingUnit> targets) {
-		for (LivingUnit target : targets) {
-			target.applyDamage(getDamage());
-		}
+	public void attack(LivingUnit target) {
+		target.applyDamage(getDamage());
 		timeSinceLastAttack = 0;
 	}
 	
@@ -99,26 +115,29 @@ public abstract class LivingUnit extends Unit {
 	
 	public void kill() {
 		setHealth(0);
-		for(Tile[] tileRow : getWorld().getTiles()){
-			for(Tile tile : tileRow){
-				if (tile.getUnits().contains(this)){
-					tile.removeUnit(this);
-					getWorld().getMap().removeInvalidTileLocation(tile.getLocation());
-				}
-			}
-		}
+		getWorld().getUnits().remove(this);
 		getWorld().policyIteration(Tile::getAggroPathfinding);
 	}
 	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		timeSinceLastAttack += delta;
+		if (getTask() != null) {
+			boolean taskComplete = getTask().contributeTask(this, delta);
+			if (taskComplete) {
+				setTask(null);
+				setAttacking(false);
+			}
+		}
 		getStatusEffects().processStatus(delta);
 		if(!isAlive()){
 			kill();
 		}
-		
-		timeSinceLastAttack += delta;
+	}
+	
+	public float getTimeSinceLastAttack() {
+		return timeSinceLastAttack;
 	}
 	
 	@Override //Draws the healthbar of monster

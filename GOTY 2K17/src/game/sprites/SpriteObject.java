@@ -43,7 +43,7 @@ public class SpriteObject {
 		g.drawImage(renderedImage, transform, null);
 	}
 	
-	public void update(float delta){
+	public void update(float delta) {
 		if( this instanceof Monster) ((Monster)this).attackAnimation(delta); 
 	}
 	

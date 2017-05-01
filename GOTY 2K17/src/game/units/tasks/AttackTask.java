@@ -4,28 +4,33 @@ import java.util.List;
 
 import game.Tile;
 import game.units.LivingUnit;
-import game.units.monsters.Monster;
+import game.units.Unit;
 
 public class AttackTask implements Task {
 
 	private Tile attackLoc;
+	private Class<? extends LivingUnit> targetClass;
 	
-	public AttackTask(Tile attackLoc) {
+	public AttackTask(Tile attackLoc, Class<? extends LivingUnit> targetClass) {
 		this.attackLoc = attackLoc;
-	}
-	
-	@Override
-	public boolean contributeTask(LivingUnit unit, float delta) {
-		List<Monster> monsters = attackLoc.getMonsters();
-		if (unit.isReadyToAttack()) {
-			unit.attack(monsters);
-		}
-		for (Monster monster : monsters) {
-			if (monster.isAlive()) {
-				return false;
-			}
-		}
-		return true;
+		this.targetClass = targetClass;
 	}
 
+	@Override
+	public boolean contributeTask(LivingUnit unit, float delta) {
+		if (unit.isReadyToAttack()) {
+			List<Unit> targets = attackLoc.getUnits(targetClass);
+			boolean complete = true;
+			for (Unit target : targets) {
+				LivingUnit livingTarget = (LivingUnit) target;
+				unit.attack(livingTarget);
+				if (livingTarget.isAlive()) {
+					complete = false;
+				}
+			}
+			return complete;
+		}
+		return false;
+	}
+	
 }

@@ -2,11 +2,11 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import game.maps.GameMap;
 import game.units.Unit;
-import game.units.monsters.Dragon;
 import game.units.monsters.Monster;
 import game.util.Direction;
 import game.vectors.Vector2f;
@@ -16,6 +16,7 @@ public class TileWorld {
 	private Tile[][] tiles;
 	
 	private GameMap map;
+	private List<Unit> units;
 	private int tilesX;
 	private int tilesY;
 	private float tileSizeX;
@@ -25,6 +26,7 @@ public class TileWorld {
 	
 	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
 		this.map = map;
+		this.units = new ArrayList<>();
 		this.tilesX = tilesX;
 		this.tilesY = tilesY;
 		this.tileSizeX = tileSizeX;
@@ -36,7 +38,7 @@ public class TileWorld {
 		 for (int i = 0; i < tiles.length; i++) {
 			 tiles[i] = new Tile[tilesY];
 			 for (int j = 0; j < tiles[i].length; j++) {
-				 tiles[i][j] = new Tile(new TileLocation(i, j), map);
+				 tiles[i][j] = new Tile(new TileLocation(i, j), this);
 			 }
 		 }
 	}
@@ -49,16 +51,8 @@ public class TileWorld {
 		return map;
 	}
 	
-	public ArrayList<Unit> getAllUnits(){
-		ArrayList<Unit> allUnits = new ArrayList<>();
-		for (Tile[] tileRow : getTiles()) {
-			for (Tile tile : tileRow) {
-				for (Unit unit : tile.getUnits()) {
-					if(!allUnits.contains(unit)) allUnits.add(unit);
-				}
-			}
-		}
-		return allUnits;
+	public List<Unit> getUnits(){
+		return units;
 	}
 	
 	public void addUnitToTile(TileLocation location, Unit unit) {
@@ -67,12 +61,13 @@ public class TileWorld {
 		//It must also be shifted frameSize/2 - 48 pixels up/down for the bottom to line up with the tile
 		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
-		tiles[location.getX()][location.getY()].getUnits().add(unit);
+//		tiles[location.getX()][location.getY()].getUnits().add(unit);
+		units.add(unit);
 
 		//Hard code dragon to take up 1x3 tiles
-		if(unit instanceof Dragon){
-			tiles[location.getX()-1][location.getY()].getUnits().add(unit);
-		}
+//		if(unit instanceof Dragon){
+//			tiles[location.getX()-1][location.getY()].getUnits().add(unit);
+//		}
 	
 		if (unit instanceof Monster) {
 			policyIteration(Tile::getAggroPathfinding);

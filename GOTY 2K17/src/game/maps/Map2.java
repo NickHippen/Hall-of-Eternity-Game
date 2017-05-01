@@ -146,10 +146,11 @@ public class Map2 extends GameMap {
 	
 	public void addBoss(TileWorld world, Boss unit ){
 			unit.setLocation(new Vector2f(2.6f,.75f));
-			world.getTiles()[27][6].getUnits().add(unit);
-			world.getTiles()[28][6].getUnits().add(unit);
-			world.getTiles()[27][7].getUnits().add(unit);
-			world.getTiles()[28][7].getUnits().add(unit);
+			world.addUnitToTile(new TileLocation(27, 6), unit);
+//			world.getTiles()[27][6].getUnits().add(unit);
+//			world.getTiles()[28][6].getUnits().add(unit);
+//			world.getTiles()[27][7].getUnits().add(unit);
+//			world.getTiles()[28][7].getUnits().add(unit);
 			
 			if (unit instanceof Monster) {
 				world.policyIteration(tile -> tile.getAggroPathfinding());		
