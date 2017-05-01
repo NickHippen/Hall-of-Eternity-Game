@@ -11,6 +11,7 @@ import java.util.Set;
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
 import game.units.Unit;
+import game.units.heroes.Hero;
 import game.units.monsters.Boss;
 import game.util.Direction;
 import game.util.Matrix3x3f;
