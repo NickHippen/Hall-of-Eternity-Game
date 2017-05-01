@@ -11,6 +11,4 @@ public abstract class ActionCard extends Card {
 		super(image, world);
 	}
 	
-	public abstract void performAction();
-	
 }

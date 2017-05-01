@@ -14,6 +14,7 @@ import game.cards.Card;
 import game.cards.Deck;
 import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
+import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
@@ -68,7 +69,7 @@ public class Game extends TileFramework {
 		// Player drops card
 		if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
 			if(onBoard(centeredMouseVec)){
-				if(grabbedCard instanceof MonsterSpawnCard) selectingTarget = true;
+				if(grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard) selectingTarget = true;
 				if(grabbedCard instanceof AreaCard) selectingArea = true;
 				deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 				deck.getHand().remove(grabbedCard);

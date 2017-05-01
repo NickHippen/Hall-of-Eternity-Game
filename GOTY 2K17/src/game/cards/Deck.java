@@ -9,6 +9,7 @@ import game.TileWorld;
 import game.cards.curses.BlastCard;
 import game.cards.curses.CardBack;
 import game.cards.curses.FlashFreezeCard;
+import game.cards.curses.HealCard;
 import game.cards.monsters.ZombieCard;
 import game.vectors.Vector2f;
 
@@ -44,6 +45,9 @@ public class Deck {
 		cards.add(new FlashFreezeCard(this.world));
 		cards.add(new FlashFreezeCard(this.world));
 		cards.add(new FlashFreezeCard(this.world));
+		cards.add(new HealCard(this.world));
+		cards.add(new HealCard(this.world));
+		cards.add(new HealCard(this.world));
 	}
 	
 	public List<Card> getCards() {
