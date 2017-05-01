@@ -53,7 +53,6 @@ public abstract class Hero extends LivingUnit {
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2, Direction.LEFT)) {
 				List<Monster> monsters = surroundingTile.getMonsters();
 				if (!monsters.isEmpty()) {
-					setAttacking(true);
 					attackingDir = surroundingTile.getLocation();
 					if (classType.getDamageType().getRange() == 2) {
 						setTask(new AttackTask(surroundingTile, Monster.class));
@@ -68,7 +67,6 @@ public abstract class Hero extends LivingUnit {
 				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1, Direction.LEFT)) {
 					List<Monster> monsters = surroundingTile.getMonsters();
 					if (!monsters.isEmpty()) {
-						setAttacking(true);
 						attackingDir = surroundingTile.getLocation();
 						setTask(new AttackTask(surroundingTile, Monster.class));
 						break;

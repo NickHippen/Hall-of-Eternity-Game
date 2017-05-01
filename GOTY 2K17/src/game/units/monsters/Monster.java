@@ -18,7 +18,7 @@ public abstract class Monster extends LivingUnit {
 	protected int maxFrameNum = 1;
 	protected int frameNum=-1;
 	protected int frameSize;
-	protected double animationSpeed = 1.4;
+	protected double animationSpeed = 2;
 	
 	protected ArrayList<Hero> target;
 	
@@ -35,7 +35,7 @@ public abstract class Monster extends LivingUnit {
 				frameNum++;
 				if (frameNum > maxFrameNum) {
 					frameNum = 0;
-					attacking = false;
+					this.setAttacking(false);
 				}
 				this.setRenderedImage(this.getAttackAnimation().get(frameNum));
 			}
@@ -60,7 +60,7 @@ public abstract class Monster extends LivingUnit {
 				}
 				Tile unitTile = unit.getWorld().getTileAtPosition(unit.getLocation());
 				if (affectedTiles.contains(unitTile)) {
-					setAttacking(true);
+				//	setAttacking(true);
 					setTask(new AttackTask(unitTile, Hero.class));
 					break;
 				}

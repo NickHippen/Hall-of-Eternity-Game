@@ -20,6 +20,7 @@ public class AttackTask implements Task {
 	public boolean contributeTask(LivingUnit unit, float delta) {
 		if (unit.isReadyToAttack()) {
 			List<Unit> targets = attackLoc.getUnits(targetClass);
+			unit.setAttacking(true);
 			boolean complete = true;
 			for (Unit target : targets) {
 				LivingUnit livingTarget = (LivingUnit) target;

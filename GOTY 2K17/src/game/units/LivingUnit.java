@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import game.Tile;
 import game.TileWorld;
 import game.units.heroes.Hero;
+import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
 import game.units.tasks.Task;
 import game.vectors.Vector2f;
@@ -125,10 +126,11 @@ public abstract class LivingUnit extends Unit {
 		super.update(delta);
 		timeSinceLastAttack += delta;
 		if (getTask() != null) {
+			if(this instanceof Monster) this.setAttacking(true);
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
 				setTask(null);
-				setAttacking(false);
+				this.setAttacking(false);
 			}
 		}
 		getStatusEffects().processStatus(delta);
