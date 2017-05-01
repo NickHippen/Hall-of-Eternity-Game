@@ -13,7 +13,7 @@ public abstract class Unit extends BoundingSprite {
 	private Task task;
 	
 	private ArrayList<BufferedImage> attackAnimation;
-		
+	
 	protected Unit(BufferedImage image, TileWorld world, int horizontalFrameNum, int verticalFrameNum) {
 		super(image, horizontalFrameNum, verticalFrameNum);
 		this.world = world;

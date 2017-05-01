@@ -84,7 +84,6 @@ public abstract class LivingUnit extends Unit {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-	//	System.out.println(getWorld().getAllUnits().size());
 
 		if(!isAlive()){
 			for(Tile[] tileRow : getWorld().getTiles()){

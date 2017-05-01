@@ -44,7 +44,7 @@ public abstract class Monster extends LivingUnit {
 		this.attacking = attacking;
 	}
 	
-	@Override
+	@Override //Draws the healthbar of monster
 	public void draw(Graphics2D g) {
 		super.draw(g);
 		Vector2f adjustedLoc = adjustPoint(getLocation());

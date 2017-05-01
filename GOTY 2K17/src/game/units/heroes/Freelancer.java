@@ -11,13 +11,12 @@ public class Freelancer extends Hero {
 	private final static int MAX_HEALTH = 75;
 	private final static int DAMAGE = 20;
 	
-	private static BufferedImage BASE_IMAGE;
+	private static BufferedImage spriteSheet;
 	
 	static {
 		try {
 			URL url = Freelancer.class.getResource("/resources/units/heroes/freelancer.png");
-			BufferedImage spriteSheet = ImageIO.read(url);
-			BASE_IMAGE = spriteSheet.getSubimage(0, 0, 64, 64);
+			spriteSheet = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -25,7 +24,7 @@ public class Freelancer extends Hero {
 	}
 	
 	public Freelancer(TileWorld world) {
-		super(BASE_IMAGE, world, MAX_HEALTH, HeroDamageType.MELEE);
+		super(spriteSheet, world, MAX_HEALTH, HeroDamageType.MELEE);
 		this.name="Freelancer";		
 		this.setDamage(DAMAGE);
 	}

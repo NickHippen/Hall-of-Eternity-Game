@@ -1,11 +1,15 @@
 package game.units.heroes;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 import game.Tile;
+import game.TileLocation;
 import game.TileWorld;
 import game.units.LivingUnit;
 import game.units.monsters.Monster;
@@ -23,14 +27,27 @@ public abstract class Hero extends LivingUnit {
 	private int dropAmount;
 	private StatusEffects status;
 	private HeroDamageType heroDamageType;
-	private float movementTimer = MOVE_TIMER;
+		
+	private boolean attacking;
+	private float animationTime = 0;
+	protected int maxFrameNum = 1;
+	protected int frameNum=0;
+	protected int frameSize;
+	protected float animationSpeed = .1f;
+	private int selectedAnimation;
+	private Direction dir;
+
+	private BufferedImage[][] animations;
+	
 	
 	protected Hero(BufferedImage image, TileWorld world, int maxHealth, HeroDamageType type) {
-		super(image, world, maxHealth, 1, 1);
+		super(image, world, maxHealth, 13, 21);
 		heroDamageType = type;
 		status = new StatusEffects(this, heroDamageType);
-		this.setHorizontalFrameNum(1);
-		this.setVerticalFrameNum(1);
+		this.setHorizontalFrameNum(13);
+		this.setVerticalFrameNum(21);
+		this.animations = new BufferedImage[8][9];
+		this.createHeroAnimations();
 	}
 	
 	protected void updateHero(float delta) {
@@ -49,6 +66,7 @@ public abstract class Hero extends LivingUnit {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		
 		if (getTask() != null) {
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
@@ -90,7 +108,7 @@ public abstract class Hero extends LivingUnit {
 				System.out.println("WARNING: NO PATHFINDING CONFIGURED.");
 				return;
 			}
-			Direction dir = (Direction) dirs.toArray()[RANDOM.nextInt(dirs.size())];
+			this.dir = (Direction) dirs.toArray()[RANDOM.nextInt(dirs.size())];
 			switch (dir) {
 			case UP:
 			case DOWN:
@@ -102,6 +120,7 @@ public abstract class Hero extends LivingUnit {
 				break;
 			}
 		}
+		this.updateAnimation(delta);
 	}
 
 	public int getDropAmount() {
@@ -120,5 +139,49 @@ public abstract class Hero extends LivingUnit {
 	
 	public HeroDamageType getHeroType() {
 		return heroDamageType;
+	}
+	
+	public void createHeroAnimations(){
+		//Add stabbing animations
+		for(int i = 4; i < 8 ; i ++){
+			for(int j = 0; j < 9; j++){
+				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 64, i * 64, 64, 64));
+			}
+		}
+		//Add walking animations
+		for(int i = 8; i < 12 ; i++){
+			for(int j = 0; j < 8; j++){
+				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 64, i * 64, 64, 64));
+			}
+		}
+	}
+	
+	public void updateAnimation(float delta) {
+		switch (dir) {
+			case UP:
+				this.selectedAnimation = 0;
+				break;
+			case LEFT:
+				this.selectedAnimation = 1;
+				break;
+			case DOWN:
+				this.selectedAnimation = 2;
+				break;
+			case RIGHT:
+				this.selectedAnimation = 3;
+				break;
+		}
+		
+		if(!attacking) this.selectedAnimation += 4;
+		System.out.println(animationTime);
+		animationTime += delta;
+		if (animationTime > animationSpeed) {
+			animationTime = 0;
+			frameNum++;
+			if (frameNum > 7) {
+				frameNum = 0;
+			}
+		}
+		this.setRenderedImage(this.animations[selectedAnimation][frameNum]);
 	}
 }

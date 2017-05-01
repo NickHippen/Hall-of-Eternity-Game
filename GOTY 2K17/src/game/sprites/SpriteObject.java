@@ -5,6 +5,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import game.units.monsters.Monster;
+import game.units.heroes.Hero;
+
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 public class SpriteObject {
