@@ -70,7 +70,6 @@ public abstract class Hero extends LivingUnit {
 					if (!monsters.isEmpty()) {
 						setAttacking(true);
 						attackingDir = surroundingTile.getLocation();
-						System.out.println("Set Task " + delta);
 						setTask(new AttackTask(surroundingTile, Monster.class));
 						break;
 					}
@@ -118,13 +117,13 @@ public abstract class Hero extends LivingUnit {
 		//Add stabbing animations
 		for(int i = 4; i < 8 ; i ++){
 			for(int j = 0; j < 9; j++){
-				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 64, i * 64, 64, 64));
+				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 48, i * 48, 48, 48));
 			}
 		}
 		//Add walking animations
 		for(int i = 8; i < 12 ; i++){
 			for(int j = 0; j < 8; j++){
-				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 64, i * 64, 64, 64));
+				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 48, i * 48, 48, 48));
 			}
 		}
 	}
