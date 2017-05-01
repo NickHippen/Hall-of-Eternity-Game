@@ -1,12 +1,15 @@
 package game.units.status;
 
 import game.units.LivingUnit;
-import game.units.heroes.Hero;
 
 public class Burn {
+	
+	private static final float TICK_DELAY = 0.5f;
+	
 	private boolean isBurned = false;
 	private float burnTimer;
 	private float burnDuration;
+	private float timeSinceTick;
 	
 	public Burn(float burnDuration) {
 		burnTimer = burnDuration;
@@ -18,13 +21,19 @@ public class Burn {
 	}
 	
 	public void updateBurn(LivingUnit livingUnit, float delta) {
-		if(isBurned) {
+		if (isBurned) {
 			burnTimer -= delta;
-			if(burnTimer < 0) {
+			if (burnTimer < 0) {
 				burnTimer = burnDuration;
 				isBurned = false;
+			} else {
+				timeSinceTick += delta;
+				if (timeSinceTick >= TICK_DELAY) {
+					livingUnit.applyDamage(3);
+					timeSinceTick = 0;
+				}
 			}
-			livingUnit.applyDamage(3);
 		}
 	}
+	
 }
