@@ -70,6 +70,7 @@ public abstract class Hero extends LivingUnit {
 		if (getTask() != null) {
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
+			
 				setTask(null);
 			}
 		} else {
@@ -79,6 +80,7 @@ public abstract class Hero extends LivingUnit {
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2, Direction.LEFT)) {
 				List<Monster> monsters = surroundingTile.getMonsters();
 				if (!monsters.isEmpty()) {
+					this.attacking = true;
 					if (getHeroType().getRange() == 2) {
 						setTask(new AttackTask(surroundingTile));
 					}
@@ -91,11 +93,13 @@ public abstract class Hero extends LivingUnit {
 				for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 1, Direction.LEFT)) {
 					List<Monster> monsters = surroundingTile.getMonsters();
 					if (!monsters.isEmpty()) {
+						this.attacking = true;
 						setTask(new AttackTask(surroundingTile));
 						break;
 					}
 				}
 			}
+			else this.attacking = false;
 			
 			if (getTask() != null) {
 				// Hero has been stopped
