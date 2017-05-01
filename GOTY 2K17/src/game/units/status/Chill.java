@@ -1,6 +1,6 @@
 package game.units.status;
 
-import game.units.heroes.Hero;
+import game.units.LivingUnit;
 
 public class Chill {
 	private boolean isChilled = false;
@@ -16,15 +16,18 @@ public class Chill {
 		isChilled = true;
 	}
 	
-	public float updateChill(Hero hero, float delta) {
+	public void updateChill(LivingUnit livingUnit, float delta) {
 		if(isChilled) {
 			chillTimer -= delta;
 			if(chillTimer < 0) {
 				chillTimer = chillDuration;
 				isChilled = false;
 			}
-			return delta /= 2f;
 		}
-		else return delta;
 	}
+	
+	public boolean isChilled() {
+		return isChilled;
+	}
+	
 }

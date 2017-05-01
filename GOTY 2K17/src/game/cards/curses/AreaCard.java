@@ -14,13 +14,23 @@ public abstract class AreaCard extends CurseCard {
 		super(image, world);
 	}
 	
-	public boolean performAction(Vector2f pos){
+	public boolean performAction(Vector2f pos) {
+		System.out.println("Perform");
 		ArrayList<Tile> affectedTiles = getWorld().getSurroundingTilesDiag(getWorld().getTileAtPosition(pos).getLocation(),1);
-		for(int i = 0; i < affectedTiles.size(); i++){
-			for(Unit unit : affectedTiles.get(i).getUnits()){
+		System.out.println(affectedTiles);
+//		for (int i = 0; i < affectedTiles.size(); i++) {
+//			System.out.println(affectedTiles.get(i).getUnits().size());
+//			for (Unit unit : affectedTiles.get(i).getUnits()) {
+//				affectUnit(unit);
+//			}
+//		}
+		for (Unit unit : getWorld().getAllUnits()) {
+			Tile tile = unit.getWorld().getTileAtPosition(unit.getLocation());
+			if (affectedTiles.contains(tile)) {
 				affectUnit(unit);
 			}
 		}
+			
 		return true;
 	}
 	

@@ -1,5 +1,6 @@
 package game.units.status;
 
+import game.units.LivingUnit;
 import game.units.heroes.Hero;
 
 public class Impair {
@@ -18,12 +19,12 @@ public class Impair {
 		isImpaired = true;
 	}
 	
-	public void updateImpair(Hero hero, float delta) {
+	public void updateImpair(LivingUnit livingUnit, float delta) {
 		if(isImpaired) {
-			hero.setDamage(0);
+			livingUnit.setDamage(0);
 			impairTimer -= delta;
 			if(impairTimer < 0) {
-				hero.setDamage(heroDamage);
+				livingUnit.setDamage(heroDamage);
 				impairTimer = impairDuration;
 				isImpaired = false;
 			}

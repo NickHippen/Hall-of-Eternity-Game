@@ -1,11 +1,10 @@
 package game.units.status;
 
-import game.units.heroes.Hero;
-import game.units.heroes.HeroDamageType;
+import game.units.LivingUnit;
 
 public class StatusEffects {
 	private final float BURN_DURATION = 200;
-	private final float CHILL_DURATION = 200;
+	private final float CHILL_DURATION = 10;
 	private final float STUN_DURATION = 50;
 	private final float IMPAIR_DURATION = 100;
 	private final float VULN_DURATION = 200;
@@ -17,28 +16,27 @@ public class StatusEffects {
 	private Stun stun;
 	private Vulnerability vuln;
 	
-	private Hero hero;
+	private LivingUnit livingUnit;
 	
-	public StatusEffects(Hero hero, HeroDamageType type) {
-		this.hero = hero;
+	public StatusEffects(LivingUnit livingUnit) {
+		this.livingUnit = livingUnit;
 		poison = new Poison();
 		burn = new Burn(BURN_DURATION);
 		chill = new Chill(CHILL_DURATION);
 		stun = new Stun(STUN_DURATION);
-		impair = new Impair(hero.getDamage(), IMPAIR_DURATION);
+		impair = new Impair(livingUnit.getDamage(), IMPAIR_DURATION);
 		vuln = new Vulnerability(VULN_DURATION);
 	}
 	
-	public float processStatus(float delta) {
-		poison.updatePoison(hero);
-		burn.updateBurn(hero, delta);
-		impair.updateImpair(hero, delta);
-		vuln.updateVulnerability(hero, delta);
+	public void processStatus(float delta) {
+		poison.updatePoison(livingUnit);
+		burn.updateBurn(livingUnit, delta);
+		impair.updateImpair(livingUnit, delta);
+		vuln.updateVulnerability(livingUnit, delta);
 		
 		// status that affects movement
-		delta = chill.updateChill(hero, delta);
-		delta = stun.updateStun(hero, delta);
-		return delta;
+		chill.updateChill(livingUnit, delta);
+		stun.updateStun(livingUnit, delta);
 	}
 	
 	public void applyPoisonStatus() {
@@ -57,17 +55,17 @@ public class StatusEffects {
 		stun.applyStun();
 	}
 	
-	public void applySilenceStatus() {
-		if(hero.getHeroType() == HeroDamageType.CASTER) {
-			impair.applyImpair();
-		}
-	}
-	
-	public void applyBlindStatus() {
-		if(hero.getHeroType() == HeroDamageType.MELEE || hero.getHeroType() == HeroDamageType.RANGED) {
-			impair.applyImpair();
-		}
-	}
+//	public void applySilenceStatus() {
+//		if(hero.getHeroType() == HeroDamageType.CASTER) {
+//			impair.applyImpair();
+//		}
+//	}
+//	
+//	public void applyBlindStatus() {
+//		if(hero.getHeroType() == HeroDamageType.MELEE || hero.getHeroType() == HeroDamageType.RANGED) {
+//			impair.applyImpair();
+//		}
+//	}
 	
 	public void applyVulnerableStatus() {
 		vuln.applyVulnerability();
@@ -76,4 +74,9 @@ public class StatusEffects {
 	public boolean isVulnerable() {
 		return vuln.isVulnerable();
 	}
+	
+	public boolean isChilled() {
+		return chill.isChilled();
+	}
+	
 }

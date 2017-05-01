@@ -1,5 +1,6 @@
 package game.units.status;
 
+import game.units.LivingUnit;
 import game.units.heroes.Hero;
 
 public class Poison {
@@ -13,10 +14,9 @@ public class Poison {
 		isPoisoned = true;
 	}
 	
-	public void updatePoison(Hero hero) {
+	public void updatePoison(LivingUnit livingUnit) {
 		if(isPoisoned) {
-			hero.applyDamage(1);;
-	
+			livingUnit.applyDamage(1);;
 		}
 	}
 }
