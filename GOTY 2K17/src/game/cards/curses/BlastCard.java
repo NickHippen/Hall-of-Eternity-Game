@@ -6,13 +6,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
-import game.units.LivingUnit;
 import game.units.Unit;
+import game.units.heroes.Hero;
 import game.units.monsters.Zombie;
 
 public class BlastCard extends AreaCard {
 
 	private static BufferedImage BASE_IMAGE;
+	private static final int DAMAGE = 50;
 
 	static {
 		try {
@@ -34,7 +35,10 @@ public class BlastCard extends AreaCard {
 	}
 
 	public void affectUnit(Unit unit) {
-		if(unit instanceof LivingUnit) ((LivingUnit) unit).setHealth(((LivingUnit) unit).getHealth() - 50);
+		if(unit instanceof Hero) {
+			Hero hero = (Hero) unit;
+			hero.applyDamage(DAMAGE);
+		}
 	}
 
 }

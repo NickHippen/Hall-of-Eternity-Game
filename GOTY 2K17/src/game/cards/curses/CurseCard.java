@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import game.TileWorld;
 import game.cards.Card;
-import game.vectors.Vector2f;
 
 public abstract class CurseCard extends Card {
 
@@ -12,8 +11,4 @@ public abstract class CurseCard extends Card {
 		super(image, world);
 	}
 
-	@Override
-	public boolean performAction(Vector2f location) {
-		return false;
-	}
 }

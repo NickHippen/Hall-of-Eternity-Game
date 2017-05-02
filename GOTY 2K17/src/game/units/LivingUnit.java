@@ -45,6 +45,9 @@ public abstract class LivingUnit extends Unit {
 
 	public void setHealth(int health) {
 		this.health = health;
+		if (this.health > this.maxHealth) {
+			this.health = this.maxHealth;
+		}
 	}
 	
 	public float getAttackSpeed() {
@@ -107,7 +110,7 @@ public abstract class LivingUnit extends Unit {
 	
 	public void applyDamage(int amount) {
 		if (getStatusEffects().isVulnerable()) {
-			amount /= 2;
+			amount *= 2;
 		}
 		setHealth(getHealth() - amount);
 	}

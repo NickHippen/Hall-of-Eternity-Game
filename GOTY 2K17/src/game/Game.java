@@ -12,8 +12,10 @@ import java.util.Random;
 
 import game.cards.Card;
 import game.cards.Deck;
+import game.cards.curses.ActionCard;
 import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
+import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
@@ -88,12 +90,18 @@ public class Game extends TileFramework {
 
 		if (gameplay) {
 			// Player drops card
+			
+			// Player drops card
 			if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
-				if (onBoard(mouseVec)) {
-					if (grabbedCard instanceof MonsterSpawnCard)
+				if(onBoard(mouseVec)){
+					if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard) {
 						selectingTarget = true;
-					if (grabbedCard instanceof AreaCard)
+					} else if (grabbedCard instanceof AreaCard) {
 						selectingArea = true;
+					} else if (grabbedCard instanceof ActionCard) {
+						grabbedCard.performAction(mouseVec);
+					}
+					
 					deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 					deck.getHand().remove(grabbedCard);
 					activatedCard = grabbedCard;

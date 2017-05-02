@@ -7,17 +7,17 @@ import javax.imageio.ImageIO;
 
 import game.TileWorld;
 import game.units.Unit;
-import game.units.monsters.Monster;
+import game.units.heroes.Hero;
 import game.units.monsters.Zombie;
+import game.vectors.Vector2f;
 
-public class HealCard extends UnitSelectCard {
+public class FirestormCard extends ActionCard {
 
 	private static BufferedImage BASE_IMAGE;
-	private static final int HEAL = 50;
 
 	static {
 		try {
-			URL url = Zombie.class.getResource("/resources/cards/curses/heal.png");
+			URL url = Zombie.class.getResource("/resources/cards/curses/firestorm.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
@@ -26,7 +26,7 @@ public class HealCard extends UnitSelectCard {
 		}
 	}
 
-	public HealCard(TileWorld world) {
+	public FirestormCard(TileWorld world) {
 		super(BASE_IMAGE, world);
 	}
 	
@@ -35,11 +35,15 @@ public class HealCard extends UnitSelectCard {
 	}
 
 	@Override
-	public void performAction(Unit unit) {
-		if (unit instanceof Monster) {
-			Monster monster = (Monster) unit;
-			monster.setHealth(monster.getHealth() + HEAL);
+	public boolean performAction(Vector2f pos) {
+		for (Unit unit : getWorld().getUnits()) {
+			if (unit instanceof Hero) {
+				Hero hero = (Hero) unit;
+				hero.getStatusEffects().applyBurnStatus();
+				System.out.println("APPLIED");
+			}
 		}
+		return true;
 	}
 	
 }

@@ -29,12 +29,6 @@ public class CardBack extends ActionCard {
 	}
 	
 	@Override
-	public void performAction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean performAction(Vector2f pos) {
 		// TODO Auto-generated method stub
 		return false;
