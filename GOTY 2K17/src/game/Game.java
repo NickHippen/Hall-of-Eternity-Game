@@ -17,14 +17,11 @@ import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
-<<<<<<< HEAD
 import game.sound.*;
-=======
 import game.cards.traps.TrapSpawnCard;
 import game.menu.Button;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
->>>>>>> 368480bd8c002d3e33d0bce014f6cf3e315c2ece
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
@@ -50,10 +47,7 @@ public class Game extends TileFramework {
 	Vector2f initialLocCard = null;
 
 	private String message;
-<<<<<<< HEAD
 	static  PlayerControl bg;
-	
-=======
 
 	private boolean titleScreen;
 	private boolean levelSelection;
@@ -67,7 +61,6 @@ public class Game extends TileFramework {
 	Button quitButton;
 	Button doneButton;
 
->>>>>>> 368480bd8c002d3e33d0bce014f6cf3e315c2ece
 	@Override
 	protected void initialize() {
 		super.initialize();

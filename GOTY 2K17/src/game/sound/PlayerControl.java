@@ -1,6 +1,8 @@
 package game.sound;
 
 import java.io.*;
+import java.net.URL;
+
 import game.util.*;
 
 public class PlayerControl {
@@ -10,9 +12,9 @@ public class PlayerControl {
 	private byte[] rawSound;
 
 	public PlayerControl(){
-		InputStream in = ResourceLoader.load(PlayerControl.class,
-				".\\GOTY-2K17\\GOTY 2K17\\src\\resources\\sound\\Background.wav",
-				"notneeded");
+		FileInputStream in1;
+	InputStream in = PlayerControl.class.getResourceAsStream("/resources/sound/Background.wav");
+		
 		rawSound = readBytes(in);
 		clip = new BlockingClip(rawSound);
 		loopClip = new LoopEvent(clip);
