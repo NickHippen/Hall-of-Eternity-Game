@@ -92,7 +92,6 @@ public class Game extends TileFramework {
 		}
 		
 		if(levelSelection){
-			System.out.println(mouseVec.x + " " + mouseVec.y);
 			//Player hovering over CARDS button
 			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08){
 				level.selectButton(4);
