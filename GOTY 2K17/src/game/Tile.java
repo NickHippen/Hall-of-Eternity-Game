@@ -28,10 +28,6 @@ public class Tile {
 		return location;
 	}
 	
-//	public List<Unit> getUnits() {
-//		return units;
-//	}
-	
 	public List<Unit> getUnits() {
 		return getUnits(null);
 	}
@@ -53,14 +49,6 @@ public class Tile {
 	public TileWorld getWorld() {
 		return world;
 	}
-	
-//	public void removeUnit(Unit removedUnit){
-//		this.units.remove(removedUnit);
-//	}
-//
-//	public void setUnits(List<Unit> units) {
-//		this.units = units;
-//	}
 	
 	public PathfindingNode getStandardPathfinding() {
 		return standardPathfinding;

@@ -20,7 +20,7 @@ public abstract class Hero extends LivingUnit {
 	
 	private final float MOVE_TIMER = 5; // Time before moving to next tile
 	
-	private int dropAmount;
+	private int dropAmount = 7;
 	
 	private HeroClassType classType;
 	private float animationTime = 0;
@@ -32,7 +32,6 @@ public abstract class Hero extends LivingUnit {
 	private Direction dir;
 	private TileLocation attackingDir; //Used to turn the unit based on location of monster
 	private BufferedImage[][] animations;
-	
 	
 	protected Hero(BufferedImage image, TileWorld world, int maxHealth, HeroClassType classType) {
 		super(image, world, maxHealth, 13, 21);
@@ -109,6 +108,12 @@ public abstract class Hero extends LivingUnit {
 	
 	public void setDropAmount(int amount) {
 		dropAmount = amount;
+	}
+	
+	@Override
+	public void kill() {
+		super.kill();
+		getWorld().addBones(getDropAmount());
 	}
 	
 	public void createHeroAnimations(){
