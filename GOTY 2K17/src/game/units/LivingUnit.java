@@ -12,6 +12,7 @@ import game.TileWorld;
 import game.units.heroes.Hero;
 import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
+import game.units.tasks.AttackTask;
 import game.units.tasks.MoveTask;
 import game.units.tasks.Task;
 import game.units.traps.Trap;
@@ -135,13 +136,13 @@ public abstract class LivingUnit extends Unit {
 		super.update(delta);
 		timeSinceLastAttack += delta;
 		if (getTask() != null) {
+			if(getTask() instanceof AttackTask) this.setAttacking(true);
 			if(this instanceof Monster) this.setAttacking(true);
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
 				if (getTask() instanceof MoveTask) {
 					List<Trap> traps = getWorld().getTileAtPosition(getLocation()).getUnits(Trap.class);
 					if (!traps.isEmpty()) {
-						System.out.println("Trigger trap");
 						traps.get(0).triggerEffect(this);
 					}
 				}

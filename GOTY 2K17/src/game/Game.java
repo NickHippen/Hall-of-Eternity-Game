@@ -50,10 +50,11 @@ public class Game extends TileFramework {
 	private boolean levelSelection;
 	private boolean deckCreation;
 	private boolean gameplay;
+	private boolean pause;
 
 	private TitleScreen title;
 	private LevelSelect level;
-	
+
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -70,7 +71,7 @@ public class Game extends TileFramework {
 		selectedUnits = new ArrayList<Unit>();
 
 		this.titleScreen = true;
-		
+
 		title = new TitleScreen(getWorld());
 		level = new LevelSelect(getWorld());
 	}
@@ -81,138 +82,142 @@ public class Game extends TileFramework {
 		mouseVec = getCenteredRelativeWorldMousePosition();
 
 		if (titleScreen) {
-			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57){
-				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
 					levelSelection = true;
 				}
 				title.selectButton();
-			}			
-			else title.unselectButton();
+			} else
+				title.unselectButton();
 		}
-		
-		if(levelSelection){
-			//Player hovering over CARDS button
-			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08){
+
+		if (levelSelection) {
+			// Player hovering over CARDS button
+			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08) {
 				level.selectButton(4);
-				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
-					//Not here yet
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+					// Not here yet
 				}
-			}		
-			//Player hovering over RUINS button
-			else if(mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < 1.26 && mouseVec.y > .97){
+			}
+			// Player hovering over RUINS button
+			else if (mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < 1.26 && mouseVec.y > .97) {
 				level.selectButton(1);
-				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					levelSelection = false;
 					gameplay = true;
 				}
 			}
-			//Player hovering over SNOW button
-			else if(mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < .014 && mouseVec.y > -.3){
+			// Player hovering over SNOW button
+			else if (mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < .014 && mouseVec.y > -.3) {
 				level.selectButton(2);
-				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
-					//Not here yet
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+					// Not here yet
 				}
 			}
-			//Player hovering over TOWN button
-			else if(mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < -1.22 && mouseVec.y > -1.54){
+			// Player hovering over TOWN button
+			else if (mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < -1.22 && mouseVec.y > -1.54) {
 				level.selectButton(3);
-				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
-					//Not here yet
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+					// Not here yet
 				}
-			}else level.selectButton(0);
+			} else
+				level.selectButton(0);
 		}
 
 		if (gameplay) {
-			// Player drops card
-			
-			// Player drops card
-			if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
-				if(onBoard(mouseVec)){
-					if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard || grabbedCard instanceof TrapSpawnCard) {
-						selectingTarget = true;
-					} else if (grabbedCard instanceof AreaCard) {
-						selectingArea = true;
-					} else if (grabbedCard instanceof ActionCard) {
-						grabbedCard.performAction(mouseVec);
-					}
-					
-					deck.setRemoved(deck.getHand().indexOf(grabbedCard));
-					deck.getHand().remove(grabbedCard);
-					activatedCard = grabbedCard;
-					for (Unit unit : getWorld().getUnits()) {
-						if (unit instanceof Boss) {
-							((Boss) unit).setAttacking(true);
-							break;
+			if (!pause) {
+				// Player drops card
+				if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
+					if (onBoard(mouseVec)) {
+						if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard
+								|| grabbedCard instanceof TrapSpawnCard) {
+							selectingTarget = true;
+						} else if (grabbedCard instanceof AreaCard) {
+							selectingArea = true;
+						} else if (grabbedCard instanceof ActionCard) {
+							grabbedCard.performAction(mouseVec);
 						}
-					}
-				} else {
-					// Puts card back in its original spot
-					deck.getHand().get(deck.getHand().indexOf(grabbedCard))
-							.setLocation(new Vector2f(-2.95f + ((deck.getHand().indexOf(grabbedCard)) * 1f), -0.87f));
-				}
-				grabbedCard = null;
-			}
 
-			// Player grabs card
-			if (!selectingTarget && !onBoard(mouseVec)) {
-				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					for (Card card : deck.getHand()) {
-						if (card.isPointWithin(mouseVec)) {
-							grabbedCard = card;
-							initialLocCard = grabbedCard.getLocation();
-							initialLoc = mouseVec;
-							break;
+						deck.setRemoved(deck.getHand().indexOf(grabbedCard));
+						deck.getHand().remove(grabbedCard);
+						activatedCard = grabbedCard;
+						for (Unit unit : getWorld().getUnits()) {
+							if (unit instanceof Boss) {
+								((Boss) unit).setAttacking(true);
+								break;
+							}
 						}
+					} else {
+						// Puts card back in its original spot
+						deck.getHand().get(deck.getHand().indexOf(grabbedCard)).setLocation(
+								new Vector2f(-2.95f + ((deck.getHand().indexOf(grabbedCard)) * 1f), -0.87f));
 					}
-				}
-			}
-
-			// Initial code for unit selection
-			if (onBoard(mouseVec)) {
-				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					selectedUnits.clear();
-					int xPos = getWorld().getTileLocationAtPosition(mouseVec).getX();
-					int yPos = getWorld().getTileLocationAtPosition(mouseVec).getY();
-					selectedUnits.addAll((getWorld().getTiles()[xPos][yPos].getUnits()));
-					for (int i = 0; i < selectedUnits.size(); i++) {
-						// Do something here on unit select
-					}
-				}
-			}
-
-			// Moves card that player has grabbed
-			if (mouse.buttonDown(MouseEvent.BUTTON1)) {
-				if (grabbedCard != null) {
-					grabbedCard.setLocation(initialLocCard.sub(initialLoc.sub(mouseVec)));
-				}
-			}
-
-			// Draw card by clicking on deck
-			if (deck.getCardBack().isPointWithin(mouseVec)) {
-				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					deck.drawCard();
-				}
-			}
-
-			// Player selects single tile
-			if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingTarget) {
-				if (activatedCard.performAction(mouseVec)) {
-					selectingTarget = false;
 					grabbedCard = null;
 				}
-			}
 
-			// Player selects 3x3 area tile
-			if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingArea) {
-				if (activatedCard.performAction(mouseVec)) {
-					selectingArea = false;
-					grabbedCard = null;
+				// Player grabs card
+				if (!selectingTarget && !onBoard(mouseVec)) {
+					if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+						for (Card card : deck.getHand()) {
+							if (card.isPointWithin(mouseVec)) {
+								grabbedCard = card;
+								initialLocCard = grabbedCard.getLocation();
+								initialLoc = mouseVec;
+								break;
+							}
+						}
+					}
+				}
+
+				// Initial code for unit selection
+				if (onBoard(mouseVec)) {
+					if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+						selectedUnits.clear();
+						int xPos = getWorld().getTileLocationAtPosition(mouseVec).getX();
+						int yPos = getWorld().getTileLocationAtPosition(mouseVec).getY();
+						selectedUnits.addAll((getWorld().getTiles()[xPos][yPos].getUnits()));
+						for (int i = 0; i < selectedUnits.size(); i++) {
+							// Do something here on unit select
+						}
+					}
+				}
+
+				// Moves card that player has grabbed
+				if (mouse.buttonDown(MouseEvent.BUTTON1)) {
+					if (grabbedCard != null) {
+						grabbedCard.setLocation(initialLocCard.sub(initialLoc.sub(mouseVec)));
+					}
+				}
+
+				// Draw card by clicking on deck
+				if (deck.getCardBack().isPointWithin(mouseVec)) {
+					if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
+						deck.drawCard();
+					}
+				}
+
+				// Player selects single tile
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingTarget) {
+					if (activatedCard.performAction(mouseVec)) {
+						selectingTarget = false;
+						grabbedCard = null;
+					}
+				}
+
+				// Player selects 3x3 area tile
+				if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && selectingArea) {
+					if (activatedCard.performAction(mouseVec)) {
+						selectingArea = false;
+						grabbedCard = null;
+					}
+				}
+				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
+					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
 				}
 			}
-
-			if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-				getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
+			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
+				pause = !pause;
 			}
 		}
 	}
@@ -221,7 +226,7 @@ public class Game extends TileFramework {
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
 
-		if (gameplay) {
+		if (gameplay && !pause) {
 			deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
 
 			deck.drawAnimation(delta);
@@ -241,17 +246,16 @@ public class Game extends TileFramework {
 		Matrix3x3f view = getViewportTransform();
 		Graphics2D g2d = (Graphics2D) g;
 
-		if(titleScreen){
+		if (titleScreen) {
 			title.setView(view);
 			title.draw(g2d);
 		}
-		
-		
-		if(levelSelection){
+
+		if (levelSelection) {
 			level.setView(view);
 			level.draw(g2d);
 		}
-		
+
 		if (gameplay) {
 			getWorld().getMap().setView(view);
 			getWorld().getMap().draw(g2d);
