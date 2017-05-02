@@ -30,7 +30,6 @@ public class TileWorld {
 	private int boneNum;
 	
 	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
-		this.map = map;
 		this.units = new ArrayList<>();
 		this.tilesX = tilesX;
 		this.tilesY = tilesY;
@@ -46,6 +45,7 @@ public class TileWorld {
 				 tiles[i][j] = new Tile(new TileLocation(i, j), this);
 			 }
 		 }
+		 setMap(map);
 	}
 	
 	public Tile[][] getTiles() {
@@ -54,6 +54,12 @@ public class TileWorld {
 	
 	public GameMap getMap() {
 		return map;
+	}
+	
+	public void setMap(GameMap map) {
+		this.map = map;
+		policyIteration(Tile::getStandardPathfinding);
+		policyIteration(Tile::getAggroPathfinding);
 	}
 	
 	public List<Unit> getUnits(){

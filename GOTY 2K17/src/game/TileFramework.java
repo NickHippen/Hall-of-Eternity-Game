@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.Set;
 
-import game.maps.Map2;
+import game.maps.DungeonMap;
 import game.sprites.BoundingSprite;
 import game.units.LivingUnit;
 import game.units.Unit;
@@ -52,7 +52,7 @@ public class TileFramework extends SimpleFramework {
 	@Override
 	protected void initialize() {
 		super.initialize();
-		tileWorld = new TileWorld(new Map2(), TILES_X, TILES_Y, TILE_SIZE_X, TILE_SIZE_Y, APP_WORLD_WIDTH, APP_WORLD_HEIGHT);
+		tileWorld = new TileWorld(new DungeonMap(), TILES_X, TILES_Y, TILE_SIZE_X, TILE_SIZE_Y, APP_WORLD_WIDTH, APP_WORLD_HEIGHT);
 		tileWorld.getMap().addBoss(getWorld(), new Boss(getWorld()));
 	}
 	

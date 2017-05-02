@@ -18,6 +18,7 @@ import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.cards.traps.TrapSpawnCard;
+import game.maps.SnowMap;
 import game.menu.Button;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
@@ -64,9 +65,6 @@ public class Game extends TileFramework {
 		super.initialize();
 
 		deck = new Deck(getWorld());
-
-		getWorld().policyIteration(Tile::getStandardPathfinding);
-		getWorld().policyIteration(Tile::getAggroPathfinding);
 
 		this.getWorld().setWaveNum(0);
 		this.getWorld().setBoneNum(123);
@@ -121,7 +119,9 @@ public class Game extends TileFramework {
 			else if (mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < .014 && mouseVec.y > -.3) {
 				level.selectButton(2);
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					// Not here yet
+					levelSelection = false;
+					gameplay = true;
+					getWorld().setMap(new SnowMap());
 				}
 			}
 			// Player hovering over TOWN button

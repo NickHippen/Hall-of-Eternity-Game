@@ -19,8 +19,9 @@ import game.units.monsters.Monster;
 import game.util.Direction;
 import game.vectors.Vector2f;
 
-public class Map2 extends GameMap {
+public class DungeonMap extends GameMap {
 
+	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
 	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
 	
@@ -106,7 +107,7 @@ public class Map2 extends GameMap {
 		
 		// Image
 		try {
-			URL url = Map2.class.getResource("/resources/maps/dungeon.png");
+			URL url = DungeonMap.class.getResource("/resources/maps/dungeon.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
@@ -115,7 +116,7 @@ public class Map2 extends GameMap {
 		}
 	}
 	
-	public Map2() {
+	public DungeonMap() {
 		super(BASE_IMAGE);
 	}
 
