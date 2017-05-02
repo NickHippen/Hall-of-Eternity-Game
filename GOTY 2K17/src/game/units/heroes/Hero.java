@@ -131,6 +131,10 @@ public abstract class Hero extends LivingUnit {
 		}
 	}
 	
+	public HeroClassType getClassType() {
+		return classType;
+	}
+	
 	public void updateAnimation(float delta) {
 		switch (dir) {
 			case UP:

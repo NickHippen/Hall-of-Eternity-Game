@@ -1,6 +1,8 @@
 package game.units.status;
 
 import game.units.LivingUnit;
+import game.units.heroes.Hero;
+import game.units.heroes.HeroDamageType;
 
 public class StatusEffects {
 	
@@ -8,7 +10,7 @@ public class StatusEffects {
 	private final float BURN_DURATION = 5;
 	private final float CHILL_DURATION = 10;
 	private final float STUN_DURATION = 2;
-	private final float IMPAIR_DURATION = 100;
+	private final float IMPAIR_DURATION = 5;
 	private final float VULN_DURATION = 200;
 	
 	private Poison poison;
@@ -63,11 +65,15 @@ public class StatusEffects {
 //		}
 //	}
 //	
-//	public void applyBlindStatus() {
-//		if(hero.getHeroType() == HeroDamageType.MELEE || hero.getHeroType() == HeroDamageType.RANGED) {
-//			impair.applyImpair();
-//		}
-//	}
+	public void applyBlindStatus() {
+		if (!(livingUnit instanceof Hero)) {
+			return;
+		}
+		Hero hero = (Hero) livingUnit;
+		if(hero.getClassType().getDamageType() == HeroDamageType.MELEE || hero.getClassType().getDamageType() == HeroDamageType.RANGED) {
+			impair.applyImpair();
+		}
+	}
 	
 	public void applyVulnerableStatus() {
 		vuln.applyVulnerability();

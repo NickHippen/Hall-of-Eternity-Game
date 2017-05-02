@@ -18,6 +18,8 @@ public class TrapFactory {
 			return new FireTrap(world);
 		case POISON:
 			return new PoisonTrap(world);
+		case BLIND:
+			return new BlindTrap(world);
 		default:
 			return null;
 		}
