@@ -18,6 +18,9 @@ import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.cards.traps.TrapSpawnCard;
+import game.maps.DungeonMap;
+import game.maps.SnowMap;
+import game.maps.TownMap;
 import game.menu.Button;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
@@ -65,9 +68,6 @@ public class Game extends TileFramework {
 
 		deck = new Deck(getWorld());
 
-		getWorld().policyIteration(Tile::getStandardPathfinding);
-		getWorld().policyIteration(Tile::getAggroPathfinding);
-
 		this.getWorld().setWaveNum(0);
 		this.getWorld().setBoneNum(123);
 		this.message = "";
@@ -96,6 +96,7 @@ public class Game extends TileFramework {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
 					levelSelection = true;
+					return;
 				}
 				title.selectButton();
 			} else
@@ -108,6 +109,7 @@ public class Game extends TileFramework {
 				level.selectButton(4);
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					// Not here yet
+					return;
 				}
 			}
 			// Player hovering over RUINS button
@@ -116,20 +118,28 @@ public class Game extends TileFramework {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					levelSelection = false;
 					gameplay = true;
+					getWorld().setMap(new DungeonMap());
+					return;
 				}
 			}
 			// Player hovering over SNOW button
 			else if (mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < .014 && mouseVec.y > -.3) {
 				level.selectButton(2);
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					// Not here yet
+					levelSelection = false;
+					gameplay = true;
+					getWorld().setMap(new SnowMap());
+					return;
 				}
 			}
 			// Player hovering over TOWN button
 			else if (mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < -1.22 && mouseVec.y > -1.54) {
 				level.selectButton(3);
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					// Not here yet
+					levelSelection = false;
+					gameplay = true;
+					getWorld().setMap(new TownMap());
+					return;
 				}
 			} else
 				level.selectButton(0);
@@ -238,6 +248,7 @@ public class Game extends TileFramework {
 				doneButton.selectButton(1);
 				if (mouse.buttonDown(MouseEvent.BUTTON1)) {
 					pause = false;
+					return;
 				}
 			}
 
@@ -249,6 +260,7 @@ public class Game extends TileFramework {
 					gameplay = false;
 					pause = false;
 					this.initialize();
+					return;
 				}
 			}
 		}
