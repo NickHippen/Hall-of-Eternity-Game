@@ -42,6 +42,18 @@ public class Button extends BoundingSprite{
 			buttonList.add(ImageIO.read(url));
 			url = Zombie.class.getResource("/resources/menus/buttons/buttonQuit_selected.png");
 			buttonList.add(ImageIO.read(url));
+			url = Zombie.class.getResource("/resources/menus/buttons/buttonMonster.png");
+			buttonList.add(ImageIO.read(url));
+			url = Zombie.class.getResource("/resources/menus/buttons/buttonMonster_selected.png");
+			buttonList.add(ImageIO.read(url));
+			url = Zombie.class.getResource("/resources/menus/buttons/buttonCurse.png");
+			buttonList.add(ImageIO.read(url));
+			url = Zombie.class.getResource("/resources/menus/buttons/buttonCurse_selected.png");
+			buttonList.add(ImageIO.read(url));
+			url = Zombie.class.getResource("/resources/menus/buttons/buttonTrap.png");
+			buttonList.add(ImageIO.read(url));
+			url = Zombie.class.getResource("/resources/menus/buttons/buttonTrap_selected.png");
+			buttonList.add(ImageIO.read(url));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -49,6 +61,10 @@ public class Button extends BoundingSprite{
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-0.55f, 0.21f),
 				new Vector2f(0.55f, -.22f)));
+	}
+	
+	public Button(BufferedImage image){
+		super(image, 1, 1);
 	}
 	
 	public void selectButton(int i){

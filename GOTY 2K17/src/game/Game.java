@@ -22,6 +22,7 @@ import game.maps.DungeonMap;
 import game.maps.SnowMap;
 import game.maps.TownMap;
 import game.menu.Button;
+import game.menu.DeckMaker;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
 import game.units.Unit;
@@ -58,7 +59,7 @@ public class Game extends TileFramework {
 
 	private TitleScreen title;
 	private LevelSelect level;
-
+	private DeckMaker deckEditor;
 	Button quitButton;
 	Button doneButton;
 
@@ -78,6 +79,7 @@ public class Game extends TileFramework {
 
 		title = new TitleScreen(getWorld());
 		level = new LevelSelect(getWorld());
+		deckEditor = new DeckMaker(getWorld());
 		
 		doneButton = new Button(getWorld());
 		doneButton.setLocation(doneButton.getLocation().add(new Vector2f (0, .3f)));
@@ -89,7 +91,7 @@ public class Game extends TileFramework {
 	protected void processInput(float delta) {
 		super.processInput(delta);
 		mouseVec = getCenteredRelativeWorldMousePosition();
-
+		System.out.println(mouseVec.x + " " + mouseVec.y);
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
@@ -108,7 +110,8 @@ public class Game extends TileFramework {
 			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08) {
 				level.selectButton(4);
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-					// Not here yet
+					deckCreation = true;
+					levelSelection = false;
 					return;
 				}
 			}
@@ -143,6 +146,14 @@ public class Game extends TileFramework {
 				}
 			} else
 				level.selectButton(0);
+		}
+		
+		if(deckCreation){
+			if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+				deckCreation=false;
+				levelSelection = true;
+				return;
+			}
 		}
 
 		if (gameplay) {
@@ -297,6 +308,11 @@ public class Game extends TileFramework {
 		if (levelSelection) {
 			level.setView(view);
 			level.draw(g2d);
+		}
+		
+		if (deckCreation){
+			deckEditor.setView(view);
+			deckEditor.draw(g2d);
 		}
 
 		if (gameplay) {
