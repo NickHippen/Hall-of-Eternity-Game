@@ -15,6 +15,7 @@ import game.cards.Deck;
 import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.monsters.MonsterSpawnCard;
+import game.sound.*;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
@@ -42,7 +43,8 @@ public class Game extends TileFramework {
 	Vector2f initialLocCard = null;
 	
 	private String message;
-
+	static  PlayerControl bg;
+	
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -239,6 +241,7 @@ public class Game extends TileFramework {
 	
 	public static void main(String[] args) {
 		launchApp(new Game());
+		bg = new PlayerControl();
 	}
 	
 }
