@@ -42,8 +42,4 @@ public class Boss extends Monster {
 	public String getName(){
 		return "Lazrius";
 	}
-	
-	public void bossAttack(){
-		this.setAttacking(true);
-	}
 }
