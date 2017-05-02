@@ -12,6 +12,8 @@ public class TrapFactory {
 			return new StunTrap(world);
 		case PITFALL:
 			return new PitfallTrap(world);
+		case IRON_MAIDEN:
+			return new IronMaidenTrap(world);
 		default:
 			return null;
 		}
