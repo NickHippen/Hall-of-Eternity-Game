@@ -18,6 +18,7 @@ import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
 import game.cards.traps.TrapSpawnCard;
+import game.menu.Button;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
 import game.units.Unit;
@@ -55,6 +56,9 @@ public class Game extends TileFramework {
 	private TitleScreen title;
 	private LevelSelect level;
 
+	Button quitButton;
+	Button doneButton;
+
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -74,6 +78,11 @@ public class Game extends TileFramework {
 
 		title = new TitleScreen(getWorld());
 		level = new LevelSelect(getWorld());
+		
+		doneButton = new Button(getWorld());
+		doneButton.setLocation(doneButton.getLocation().add(new Vector2f (0, .3f)));
+		quitButton = new Button(getWorld());
+		quitButton.setLocation(quitButton.getLocation().add(new Vector2f (0, -.3f)));
 	}
 
 	@Override
@@ -220,12 +229,31 @@ public class Game extends TileFramework {
 				pause = !pause;
 			}
 		}
+		
+		if(pause){
+			System.out.println(mouseVec.y);
+			doneButton.selectButton(0);
+			if(doneButton.isPointWithin(mouseVec)){
+				doneButton.selectButton(1);
+				if (mouse.buttonDown(MouseEvent.BUTTON1)) {
+					pause = false;
+				}
+			}
+
+			quitButton.selectButton(2);
+			if(quitButton.isPointWithin(mouseVec)){
+				quitButton.selectButton(3);
+				if (mouse.buttonDown(MouseEvent.BUTTON1)) {
+					levelSelection = true;
+					gameplay = false;
+				}
+			}
+		}
 	}
 
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
-
 		if (gameplay && !pause) {
 			deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
 
@@ -300,9 +328,9 @@ public class Game extends TileFramework {
 			g.drawString(String.format("%03d", getWorld().getBoneNum()), 1299, 664);
 
 			// Renders map tile selection or area selection
-			if ((selectingArea && grabbedCard == null) && onBoard(mouseVec))
+			if ((selectingArea && grabbedCard == null && !pause) && onBoard(mouseVec))
 				renderSelectedArea(g2d, getWorld().getTileLocationAtPosition(mouseVec));
-			else if ((selectingTarget || grabbedCard == null) && onBoard(mouseVec))
+			else if ((selectingTarget || grabbedCard == null && !pause) && onBoard(mouseVec))
 				renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(mouseVec));
 
 			// Renders cards
@@ -326,6 +354,14 @@ public class Game extends TileFramework {
 				grabbedCard.draw(g2d);
 			if (grabbedCard != null)
 				grabbedCard.getOuterBound().render(g);
+		}
+		
+		
+		if(pause){
+			doneButton.setView(view);
+			doneButton.draw(g2d);
+			quitButton.setView(view);
+			quitButton.draw(g2d);
 		}
 	}
 
