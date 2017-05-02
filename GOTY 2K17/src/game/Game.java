@@ -32,8 +32,6 @@ public class Game extends TileFramework {
 	private Card grabbedCard;
 	private Card activatedCard;
 
-	private int waveNum;
-	private int boneNum;
 	Vector2f mouseVec;
 
 	boolean selectingTarget;
@@ -62,8 +60,8 @@ public class Game extends TileFramework {
 		getWorld().policyIteration(Tile::getStandardPathfinding);
 		getWorld().policyIteration(Tile::getAggroPathfinding);
 
-		this.waveNum = 0;
-		this.boneNum = 123;
+		this.getWorld().setWaveNum(0);
+		this.getWorld().setBoneNum(123);
 		this.message = "";
 
 		selectedUnits = new ArrayList<Unit>();
@@ -251,8 +249,8 @@ public class Game extends TileFramework {
 			}
 
 			g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
-			g.drawString(String.format("%03d", waveNum), 99, 664);
-			g.drawString(String.format("%03d", boneNum), 1299, 664);
+			g.drawString(String.format("%03d", getWorld().getWaveNum()), 99, 664);
+			g.drawString(String.format("%03d", getWorld().getBoneNum()), 1299, 664);
 
 			// Renders map tile selection or area selection
 			if ((selectingArea && grabbedCard == null) && onBoard(mouseVec))

@@ -25,6 +25,9 @@ public class TileWorld {
 	private float worldWidth;
 	private float worldHeight;
 	
+	private int waveNum;
+	private int boneNum;
+	
 	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
 		this.map = map;
 		this.units = new ArrayList<>();
@@ -260,6 +263,26 @@ public class TileWorld {
 		return worldHeight;
 	}
 	
+	public int getWaveNum() {
+		return waveNum;
+	}
+
+	public void setWaveNum(int waveNum) {
+		this.waveNum = waveNum;
+	}
+
+	public int getBoneNum() {
+		return boneNum;
+	}
+
+	public void setBoneNum(int boneNum) {
+		this.boneNum = boneNum;
+	}
+	
+	public void addBones(int amount) {
+		this.setBoneNum(this.getBoneNum() + amount);
+	}
+
 	@FunctionalInterface
 	public static interface PathfindingNodeGetter {
 		public PathfindingNode getNode(Tile tile);
