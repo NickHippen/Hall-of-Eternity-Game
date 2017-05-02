@@ -49,7 +49,10 @@ public class MoveTask implements Task {
 	public boolean contributeTask(LivingUnit unit, float delta) {
 		float speed = getSpeed();
 		if (unit.getStatusEffects().isChilled()) {
-			speed /= 2;
+			speed /= 2f;
+		}
+		if (unit.getStatusEffects().isStunned()) {
+			speed = 0;
 		}
 		increaseDistanceCovered(speed, delta);
 		boolean taskComplete;

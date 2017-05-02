@@ -1,7 +1,6 @@
 package game.units.status;
 
 import game.units.LivingUnit;
-import game.units.heroes.Hero;
 
 public class Stun {
 	private boolean isStuned = false;
@@ -17,15 +16,18 @@ public class Stun {
 		isStuned = true;
 	}
 	
-	public float updateStun(LivingUnit livingUnit, float delta) {
+	public void updateStun(LivingUnit livingUnit, float delta) {
 		if(isStuned) {
 			stunTimer -= delta;
 			if(stunTimer < 0) {
 				stunTimer = stunDuration;
 				isStuned = false;
 			}
-			return 0;
 		}
-		else return delta;
 	}
+	
+	public boolean isStunned() {
+		return isStuned;
+	}
+	
 }

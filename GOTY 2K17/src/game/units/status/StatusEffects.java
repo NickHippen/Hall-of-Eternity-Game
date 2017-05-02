@@ -5,7 +5,7 @@ import game.units.LivingUnit;
 public class StatusEffects {
 	private final float BURN_DURATION = 200;
 	private final float CHILL_DURATION = 10;
-	private final float STUN_DURATION = 50;
+	private final float STUN_DURATION = 2;
 	private final float IMPAIR_DURATION = 100;
 	private final float VULN_DURATION = 200;
 	
@@ -77,6 +77,10 @@ public class StatusEffects {
 	
 	public boolean isChilled() {
 		return chill.isChilled();
+	}
+	
+	public boolean isStunned() {
+		return stun.isStunned();
 	}
 	
 }

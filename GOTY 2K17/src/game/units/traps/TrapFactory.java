@@ -8,6 +8,8 @@ public class TrapFactory {
 		switch (trapType) {
 		case ICE:
 			return new IceTrap(world);
+		case PITFALL:
+			return new PitfallTrap(world);
 		default:
 			return null;
 		}
