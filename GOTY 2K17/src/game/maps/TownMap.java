@@ -13,14 +13,14 @@ import javax.imageio.ImageIO;
 
 import game.TileLocation;
 import game.TileWorld;
-import game.units.Unit;
 import game.units.monsters.Boss;
 import game.units.monsters.Monster;
 import game.util.Direction;
 import game.vectors.Vector2f;
 
-public class Map2 extends GameMap {
+public class TownMap extends GameMap {
 
+	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
 	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
 	
@@ -33,80 +33,96 @@ public class Map2 extends GameMap {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
-		for (int x = 5; x < 9; x++) {
-			for (int y = 5; y < 9; y++) {
-				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
-			}
-		}
-		for (int x = 12; x < 14; x++) {
-			for (int y = 2; y < 5; y++) {
-				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
-			}
-		}
-		for (int x = 0; x < 30; x++) {
-			for (int y = 12; y < 20; y++) {
-				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
-			}
-		}
 		for (int x = 0; x < 3; x++) {
-			for (int y = 9; y < 12; y++) {
+			for (int y = 5; y < 8; y++) {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
-		for (int x = 28; x < 30; x++) {
-			for (int y = 0; y < 20; y++) {
+		INVALID_TILE_LOCATIONS.add(new TileLocation(0, 8));
+		INVALID_TILE_LOCATIONS.add(new TileLocation(0, 9));
+		for (int x = 3; x < 5; x++) {
+			for (int y = 6; y < 10; y++) {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
-		for (int x = 12; x < 14; x++) {
-			for (int y = 9; y < 12; y++) {
-				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
-			}
+		for (int y = 8; y < 10; y++) {
+			INVALID_TILE_LOCATIONS.add(new TileLocation(5, y));
 		}
-		for (int x = 16; x < 26; x++) {
-			for (int y = 4; y < 6; y++) {
-				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
-			}
-		}
-		for (int x = 16; x < 26; x++) {
+		for (int x = 8; x < 11; x++) {
 			for (int y = 8; y < 10; y++) {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
-		for (int x = 0; x < 3; x++) {
-			for (int y = 2; y < 5; y++) {
+		INVALID_TILE_LOCATIONS.add(new TileLocation(11, 9));
+		for (int x = 10; x < 14; x++) {
+			for (int y = 5; y < 8; y++) {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
-
-		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 6));
-		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 7));
-
-		GOAL_LOCATIONS.add(new TileLocation(27, 6));
-		GOAL_LOCATIONS.add(new TileLocation(27, 7));
+		for (int x = 14; x < 16; x++) {
+			for (int y = 6; y < 8; y++) {
+				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
+			}
+		}
+		for (int x = 14; x < 17; x++) {
+			for (int y = 8; y < 10; y++) {
+				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
+			}
+		}
+		for (int x = 19; x < 25; x++) {
+			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 9));
+		}
+		for (int x = 19; x < 24; x++) {
+			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 8));
+		}
+		for (int x = 20; x < 24; x++) {
+			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 7));
+		}
+		for (int x = 20; x < 22; x++) {
+			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 6));
+		}
+		for (int x = 0; x < 30; x++) {
+			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 12));
+		}
+		for (int x = 27; x < 30; x++) {
+			for (int y = 9; y < 12; y++) {
+				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
+			}
+		}
+		
+		GOAL_LOCATIONS.add(new TileLocation(28, 5));
+		GOAL_LOCATIONS.add(new TileLocation(29, 5));
+		GOAL_LOCATIONS.add(new TileLocation(28, 6));
+		GOAL_LOCATIONS.add(new TileLocation(29, 6));
 		
 		
 		// Hardcoded Pathfinding
-		for (int x = 10; x < 15; x++) {
-			addPathfindingDirection(new TileLocation(x, 8), Direction.RIGHT);
-			addPathfindingDirection(new TileLocation(x, 5), Direction.RIGHT);
-		}
-		for (int x = 14; x < 16; x++) {
-			for (int y = 8; y < 10; y++) {
-				addPathfindingDirection(new TileLocation(x, y), Direction.DOWN);
-			}
-			for (int y = 4; y < 6; y++) {
-				addPathfindingDirection(new TileLocation(x, y), Direction.UP);
-			}
-		}
-		for (int x = 14; x < 16; x++) {
-			addPathfindingDirection(new TileLocation(x, 10), Direction.RIGHT);
-			addPathfindingDirection(new TileLocation(x, 3), Direction.RIGHT);
-		}
+		addPathfindingDirection(new TileLocation(6, 10), Direction.RIGHT);
+		addPathfindingDirection(new TileLocation(6, 10), Direction.UP);
+		addPathfindingDirection(new TileLocation(6, 9), Direction.UP);
+		addPathfindingDirection(new TileLocation(7, 9), Direction.UP);
+		addPathfindingDirection(new TileLocation(17, 10), Direction.RIGHT);
+		addPathfindingDirection(new TileLocation(17, 10), Direction.UP);
+//		for (int x = 10; x < 15; x++) {
+//			addPathfindingDirection(new TileLocation(x, 8), Direction.RIGHT);
+//			addPathfindingDirection(new TileLocation(x, 5), Direction.RIGHT);
+//		}c
+//		for (int x = 14; x < 16; x++) {
+//			for (int y = 8; y < 10; y++) {
+//				addPathfindingDirection(new TileLocation(x, y), Direction.DOWN);
+//			}
+//			for (int y = 4; y < 6; y++) {
+//				addPathfindingDirection(new TileLocation(x, y), Direction.UP);
+//			}
+//		}
+//		for (int x = 14; x < 16; x++) {
+//			addPathfindingDirection(new TileLocation(x, 10), Direction.RIGHT);
+//			addPathfindingDirection(new TileLocation(x, 3), Direction.RIGHT);
+//		}
 		
 		// Image
 		try {
-			URL url = Map2.class.getResource("/resources/maps/dungeon.png");
+			URL url = TownMap.class.getResource("/resources/maps/town.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
@@ -115,7 +131,7 @@ public class Map2 extends GameMap {
 		}
 	}
 	
-	public Map2() {
+	public TownMap() {
 		super(BASE_IMAGE);
 	}
 
