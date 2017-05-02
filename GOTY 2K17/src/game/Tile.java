@@ -36,15 +36,15 @@ public class Tile {
 		return getUnits(null);
 	}
 	
-	public List<Unit> getUnits(Class<? extends Unit> desiredClass) {
-		List<Unit> units = new ArrayList<>();
+	public <T extends Unit> List<T> getUnits(Class<T> desiredClass) {
+		List<T> units = new ArrayList<>();
 		for (Unit unit : getWorld().getUnits()) {
 			if (desiredClass != null && !desiredClass.isInstance(unit)) {
 				continue;
 			}
 			Tile tile = getWorld().getTileAtPosition(unit.getLocation());
 			if (this.equals(tile)) {
-				units.add(unit);
+				units.add((T) unit);
 			}
 		}
 		return units;

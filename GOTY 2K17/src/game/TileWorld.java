@@ -9,6 +9,7 @@ import game.maps.GameMap;
 import game.units.Unit;
 import game.units.monsters.Boss;
 import game.units.monsters.Monster;
+import game.units.traps.Trap;
 import game.util.Direction;
 import game.vectors.Vector2f;
 
@@ -65,6 +66,7 @@ public class TileWorld {
 		//It must also be shifted frameSize/2 - 48 pixels up/down for the bottom to line up with the tile
 		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
+		if (unit instanceof Trap) System.out.println(unit.getFrameSize());
 		if(unit instanceof Boss) unit.setLocation(unit.getLocation().add(new Vector2f(.11f, -.06f)));
 //		tiles[location.getX()][location.getY()].getUnits().add(unit);
 		units.add(unit);

@@ -10,9 +10,10 @@ import java.util.Set;
 
 import game.maps.Map2;
 import game.sprites.BoundingSprite;
+import game.units.LivingUnit;
 import game.units.Unit;
-import game.units.heroes.Hero;
 import game.units.monsters.Boss;
+import game.units.traps.Trap;
 import game.util.Direction;
 import game.util.Matrix3x3f;
 import game.util.SimpleFramework;
@@ -90,17 +91,17 @@ public class TileFramework extends SimpleFramework {
 	
 	public void renderTiles(Graphics2D g2d) {
 		Matrix3x3f view = getViewportTransform();
-//		for (Tile[] tiles : tileWorld.getTiles()) {
-//			for (Tile tile : tiles) {
-//				for (Unit unit : tile.getUnits()) {
-//					unit.setView(view);
-//					unit.draw(g2d);
-//				}
-//			}
-//		}
+		for (Unit unit : getWorld().getUnits()) { // Render traps first
+			if (unit instanceof Trap) {
+				unit.setView(view);
+				unit.draw(g2d);
+			}
+		}
 		for (Unit unit : getWorld().getUnits()) {
-			unit.setView(view);
-			unit.draw(g2d);
+			if (unit instanceof LivingUnit) {
+				unit.setView(view);
+				unit.draw(g2d);
+			}
 		}
 	}
 	

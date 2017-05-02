@@ -17,6 +17,7 @@ import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
+import game.cards.traps.TrapSpawnCard;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
 import game.units.Unit;
@@ -129,7 +130,7 @@ public class Game extends TileFramework {
 			// Player drops card
 			if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
 				if(onBoard(mouseVec)){
-					if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard) {
+					if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard || grabbedCard instanceof TrapSpawnCard) {
 						selectingTarget = true;
 					} else if (grabbedCard instanceof AreaCard) {
 						selectingArea = true;

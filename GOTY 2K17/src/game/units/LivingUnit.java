@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import game.Tile;
 import game.TileLocation;
@@ -11,7 +12,9 @@ import game.TileWorld;
 import game.units.heroes.Hero;
 import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
+import game.units.tasks.MoveTask;
 import game.units.tasks.Task;
+import game.units.traps.Trap;
 import game.vectors.Vector2f;
 
 
@@ -135,6 +138,13 @@ public abstract class LivingUnit extends Unit {
 			if(this instanceof Monster) this.setAttacking(true);
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
+				if (getTask() instanceof MoveTask) {
+					List<Trap> traps = getWorld().getTileAtPosition(getLocation()).getUnits(Trap.class);
+					if (!traps.isEmpty()) {
+						System.out.println("Trigger trap");
+						traps.get(0).triggerEffect(this);
+					}
+				}
 				setTask(null);
 				this.setAttacking(false);
 			}
