@@ -88,6 +88,7 @@ public class Game extends TileFramework {
 		super.processInput(delta);
 		mouseVec = getCenteredRelativeWorldMousePosition();
 
+		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
@@ -231,9 +232,9 @@ public class Game extends TileFramework {
 		}
 		
 		if(pause){
-			System.out.println(mouseVec.y);
+			System.out.println(mouseVec.x + " " + mouseVec.y);
 			doneButton.selectButton(0);
-			if(doneButton.isPointWithin(mouseVec)){
+			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < .515 && mouseVec.y > .073) {
 				doneButton.selectButton(1);
 				if (mouse.buttonDown(MouseEvent.BUTTON1)) {
 					pause = false;
@@ -241,11 +242,13 @@ public class Game extends TileFramework {
 			}
 
 			quitButton.selectButton(2);
-			if(quitButton.isPointWithin(mouseVec)){
+			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -.085 && mouseVec.y > -.52) {
 				quitButton.selectButton(3);
 				if (mouse.buttonDown(MouseEvent.BUTTON1)) {
 					levelSelection = true;
 					gameplay = false;
+					pause = false;
+					this.initialize();
 				}
 			}
 		}
