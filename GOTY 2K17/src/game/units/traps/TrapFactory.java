@@ -10,6 +10,8 @@ public class TrapFactory {
 			return new IceTrap(world);
 		case STUN:
 			return new StunTrap(world);
+		case PITFALL:
+			return new PitfallTrap(world);
 		default:
 			return null;
 		}
