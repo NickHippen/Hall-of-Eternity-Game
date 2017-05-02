@@ -17,6 +17,7 @@ import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
+import game.sound.*;
 import game.cards.traps.TrapSpawnCard;
 import game.maps.DungeonMap;
 import game.maps.SnowMap;
@@ -50,6 +51,7 @@ public class Game extends TileFramework {
 	Vector2f initialLocCard = null;
 
 	private String message;
+	static  PlayerControl bg;
 
 	private boolean titleScreen;
 	private boolean levelSelection;
@@ -398,6 +400,7 @@ public class Game extends TileFramework {
 
 	public static void main(String[] args) {
 		launchApp(new Game());
+		bg = new PlayerControl();
 	}
 
 }

@@ -145,6 +145,7 @@ public class SimpleFramework extends JFrame implements Runnable {
 	}
 
 	protected void initialize() {
+		
 	}
 
 	protected void terminate() {
