@@ -20,6 +20,8 @@ public class TrapFactory {
 			return new PoisonTrap(world);
 		case BLIND:
 			return new BlindTrap(world);
+		case VULNERABLE:
+			return new VulnerableTrap(world);
 		default:
 			return null;
 		}

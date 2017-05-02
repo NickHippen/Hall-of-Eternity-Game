@@ -21,6 +21,7 @@ import game.cards.traps.IronMaidenTrapCard;
 import game.cards.traps.PitfallTrapCard;
 import game.cards.traps.PoisonTrapCard;
 import game.cards.traps.StunTrapCard;
+import game.cards.traps.VulnerableTrapCard;
 import game.vectors.Vector2f;
 
 public class Deck {
@@ -88,6 +89,9 @@ public class Deck {
 		cards.add(new BlindTrapCard(this.world));
 		cards.add(new BlindTrapCard(this.world));
 		cards.add(new BlindTrapCard(this.world));
+		cards.add(new VulnerableTrapCard(this.world));
+		cards.add(new VulnerableTrapCard(this.world));
+		cards.add(new VulnerableTrapCard(this.world));
 	}
 	
 	public List<Card> getCards() {
