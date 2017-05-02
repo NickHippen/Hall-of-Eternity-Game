@@ -1,7 +1,6 @@
 package game.units.status;
 
 import game.units.LivingUnit;
-import game.units.heroes.Hero;
 
 public class Impair {
 	private boolean isImpaired = false;

@@ -6,12 +6,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.units.Unit;
+import game.units.monsters.Monster;
 import game.units.monsters.Zombie;
-import game.vectors.Vector2f;
 
-public class HealCard extends ActionCard {
+public class HealCard extends UnitSelectCard {
 
 	private static BufferedImage BASE_IMAGE;
+	private static final int HEAL = 50;
 
 	static {
 		try {
@@ -28,19 +30,16 @@ public class HealCard extends ActionCard {
 		super(BASE_IMAGE, world);
 	}
 	
-	@Override
-	public void performAction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean performAction(Vector2f pos) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 	public String getName(){
 		return "Heal";
 	}
+
+	@Override
+	public void performAction(Unit unit) {
+		if (unit instanceof Monster) {
+			Monster monster = (Monster) unit;
+			monster.setHealth(monster.getHealth() + HEAL);
+		}
+	}
+	
 }

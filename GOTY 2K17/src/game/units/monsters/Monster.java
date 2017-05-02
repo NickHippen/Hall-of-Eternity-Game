@@ -18,7 +18,7 @@ public abstract class Monster extends LivingUnit {
 	protected int maxFrameNum = 1;
 	protected int frameNum=-1;
 	protected int frameSize;
-	protected double animationSpeed = 2;
+	protected double animationSpeed = 1.7;
 	
 	protected ArrayList<Hero> target;
 	

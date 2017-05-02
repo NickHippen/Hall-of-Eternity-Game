@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import game.Tile;
 import game.TileLocation;
@@ -11,7 +12,10 @@ import game.TileWorld;
 import game.units.heroes.Hero;
 import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
+import game.units.tasks.AttackTask;
+import game.units.tasks.MoveTask;
 import game.units.tasks.Task;
+import game.units.traps.Trap;
 import game.vectors.Vector2f;
 
 
@@ -45,6 +49,9 @@ public abstract class LivingUnit extends Unit {
 
 	public void setHealth(int health) {
 		this.health = health;
+		if (this.health > this.maxHealth) {
+			this.health = this.maxHealth;
+		}
 	}
 	
 	public float getAttackSpeed() {
@@ -105,9 +112,17 @@ public abstract class LivingUnit extends Unit {
 		timeSinceLastAttack = 0;
 	}
 	
+	public void attack(Tile attackLoc, Class<? extends LivingUnit> targetClass) {
+		List<? extends LivingUnit> targets = attackLoc.getUnits(targetClass);
+		if (targets.isEmpty()) {
+			return;
+		}
+		this.attack(targets.get(0));
+	}
+	
 	public void applyDamage(int amount) {
 		if (getStatusEffects().isVulnerable()) {
-			amount /= 2;
+			amount *= 2;
 		}
 		setHealth(getHealth() - amount);
 	}
@@ -129,9 +144,16 @@ public abstract class LivingUnit extends Unit {
 		super.update(delta);
 		timeSinceLastAttack += delta;
 		if (getTask() != null) {
+			if(getTask() instanceof AttackTask) this.setAttacking(true);
 			if(this instanceof Monster) this.setAttacking(true);
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
+				if (getTask() instanceof MoveTask) {
+					List<Trap> traps = getWorld().getTileAtPosition(getLocation()).getUnits(Trap.class);
+					if (!traps.isEmpty()) {
+						traps.get(0).triggerEffect(this);
+					}
+				}
 				setTask(null);
 				this.setAttacking(false);
 			}

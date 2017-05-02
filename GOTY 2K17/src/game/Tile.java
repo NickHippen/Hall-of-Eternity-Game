@@ -28,23 +28,19 @@ public class Tile {
 		return location;
 	}
 	
-//	public List<Unit> getUnits() {
-//		return units;
-//	}
-	
 	public List<Unit> getUnits() {
 		return getUnits(null);
 	}
 	
-	public List<Unit> getUnits(Class<? extends Unit> desiredClass) {
-		List<Unit> units = new ArrayList<>();
+	public <T extends Unit> List<T> getUnits(Class<T> desiredClass) {
+		List<T> units = new ArrayList<>();
 		for (Unit unit : getWorld().getUnits()) {
 			if (desiredClass != null && !desiredClass.isInstance(unit)) {
 				continue;
 			}
 			Tile tile = getWorld().getTileAtPosition(unit.getLocation());
 			if (this.equals(tile)) {
-				units.add(unit);
+				units.add((T) unit);
 			}
 		}
 		return units;
@@ -53,14 +49,6 @@ public class Tile {
 	public TileWorld getWorld() {
 		return world;
 	}
-	
-//	public void removeUnit(Unit removedUnit){
-//		this.units.remove(removedUnit);
-//	}
-//
-//	public void setUnits(List<Unit> units) {
-//		this.units = units;
-//	}
 	
 	public PathfindingNode getStandardPathfinding() {
 		return standardPathfinding;

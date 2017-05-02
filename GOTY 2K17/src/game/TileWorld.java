@@ -7,7 +7,9 @@ import java.util.Set;
 
 import game.maps.GameMap;
 import game.units.Unit;
+import game.units.monsters.Boss;
 import game.units.monsters.Monster;
+import game.units.traps.Trap;
 import game.util.Direction;
 import game.vectors.Vector2f;
 
@@ -23,6 +25,9 @@ public class TileWorld {
 	private float tileSizeY;
 	private float worldWidth;
 	private float worldHeight;
+	
+	private int waveNum;
+	private int boneNum;
 	
 	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
 		this.map = map;
@@ -61,6 +66,8 @@ public class TileWorld {
 		//It must also be shifted frameSize/2 - 48 pixels up/down for the bottom to line up with the tile
 		unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
+		if (unit instanceof Trap) System.out.println(unit.getFrameSize());
+		if(unit instanceof Boss) unit.setLocation(unit.getLocation().add(new Vector2f(.11f, -.06f)));
 //		tiles[location.getX()][location.getY()].getUnits().add(unit);
 		units.add(unit);
 
@@ -258,6 +265,26 @@ public class TileWorld {
 		return worldHeight;
 	}
 	
+	public int getWaveNum() {
+		return waveNum;
+	}
+
+	public void setWaveNum(int waveNum) {
+		this.waveNum = waveNum;
+	}
+
+	public int getBoneNum() {
+		return boneNum;
+	}
+
+	public void setBoneNum(int boneNum) {
+		this.boneNum = boneNum;
+	}
+	
+	public void addBones(int amount) {
+		this.setBoneNum(this.getBoneNum() + amount);
+	}
+
 	@FunctionalInterface
 	public static interface PathfindingNodeGetter {
 		public PathfindingNode getNode(Tile tile);
