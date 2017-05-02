@@ -14,8 +14,9 @@ import game.cards.curses.HealCard;
 import game.cards.curses.TouchOfDeathCard;
 import game.cards.curses.TransmuteCard;
 import game.cards.monsters.ZombieCard;
+import game.cards.traps.FireTrapCard;
 import game.cards.traps.IceTrapCard;
-import game.cards.traps.IronMaidenCard;
+import game.cards.traps.IronMaidenTrapCard;
 import game.cards.traps.PitfallTrapCard;
 import game.cards.traps.StunTrapCard;
 import game.vectors.Vector2f;
@@ -73,9 +74,12 @@ public class Deck {
 		cards.add(new PitfallTrapCard(this.world));
 		cards.add(new PitfallTrapCard(this.world));
 		cards.add(new PitfallTrapCard(this.world));
-		cards.add(new IronMaidenCard(this.world));
-		cards.add(new IronMaidenCard(this.world));
-		cards.add(new IronMaidenCard(this.world));
+		cards.add(new IronMaidenTrapCard(this.world));
+		cards.add(new IronMaidenTrapCard(this.world));
+		cards.add(new IronMaidenTrapCard(this.world));
+		cards.add(new FireTrapCard(this.world));
+		cards.add(new FireTrapCard(this.world));
+		cards.add(new FireTrapCard(this.world));
 	}
 	
 	public List<Card> getCards() {

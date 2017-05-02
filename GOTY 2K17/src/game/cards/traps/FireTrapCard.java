@@ -8,13 +8,13 @@ import javax.imageio.ImageIO;
 import game.TileWorld;
 import game.units.traps.TrapType;
 
-public class IronMaidenCard extends TrapSpawnCard {
+public class FireTrapCard extends TrapSpawnCard {
 
 	private static BufferedImage BASE_IMAGE;
 
 	static {
 		try {
-			URL url = IronMaidenCard.class.getResource("/resources/cards/traps/ironMaiden.png");
+			URL url = FireTrapCard.class.getResource("/resources/cards/traps/fire.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
@@ -23,17 +23,17 @@ public class IronMaidenCard extends TrapSpawnCard {
 		}
 	}
 
-	public IronMaidenCard(TileWorld world) {
+	public FireTrapCard(TileWorld world) {
 		super(BASE_IMAGE, world);
 	}
 
 	@Override
 	public TrapType getType() {
-		return TrapType.IRON_MAIDEN;
+		return TrapType.FIRE;
 	}
 
 	public String getName(){
-		return "Iron Maiden Trap";
+		return "Fire Trap";
 	}
 	
 }
