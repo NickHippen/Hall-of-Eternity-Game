@@ -8,13 +8,13 @@ import javax.imageio.ImageIO;
 import game.TileWorld;
 import game.units.traps.TrapType;
 
-public class PitfallTrapCard extends TrapSpawnCard {
+public class StunTrapCard extends TrapSpawnCard {
 
 	private static BufferedImage BASE_IMAGE;
 
 	static {
 		try {
-			URL url = PitfallTrapCard.class.getResource("/resources/cards/traps/stun.png");
+			URL url = StunTrapCard.class.getResource("/resources/cards/traps/stun.png");
 			BufferedImage spriteSheet = ImageIO.read(url);
 			BASE_IMAGE = spriteSheet;
 		} catch (Exception e) {
@@ -23,17 +23,17 @@ public class PitfallTrapCard extends TrapSpawnCard {
 		}
 	}
 
-	public PitfallTrapCard(TileWorld world) {
+	public StunTrapCard(TileWorld world) {
 		super(BASE_IMAGE, world);
 	}
 
 	@Override
 	public TrapType getType() {
-		return TrapType.PITFALL;
+		return TrapType.STUN;
 	}
 
 	public String getName(){
-		return "Pitfall Trap";
+		return "Stun Trap";
 	}
 	
 }

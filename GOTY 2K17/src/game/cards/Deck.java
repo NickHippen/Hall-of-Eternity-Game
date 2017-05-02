@@ -15,7 +15,7 @@ import game.cards.curses.TouchOfDeathCard;
 import game.cards.curses.TransmuteCard;
 import game.cards.monsters.ZombieCard;
 import game.cards.traps.IceTrapCard;
-import game.cards.traps.PitfallTrapCard;
+import game.cards.traps.StunTrapCard;
 import game.vectors.Vector2f;
 
 public class Deck {
@@ -65,9 +65,9 @@ public class Deck {
 		cards.add(new IceTrapCard(this.world));
 		cards.add(new IceTrapCard(this.world));
 		cards.add(new IceTrapCard(this.world));
-		cards.add(new PitfallTrapCard(this.world));
-		cards.add(new PitfallTrapCard(this.world));
-		cards.add(new PitfallTrapCard(this.world));
+		cards.add(new StunTrapCard(this.world));
+		cards.add(new StunTrapCard(this.world));
+		cards.add(new StunTrapCard(this.world));
 	}
 	
 	public List<Card> getCards() {
