@@ -112,6 +112,14 @@ public abstract class LivingUnit extends Unit {
 		timeSinceLastAttack = 0;
 	}
 	
+	public void attack(Tile attackLoc, Class<? extends LivingUnit> targetClass) {
+		List<? extends LivingUnit> targets = attackLoc.getUnits(targetClass);
+		if (targets.isEmpty()) {
+			return;
+		}
+		this.attack(targets.get(0));
+	}
+	
 	public void applyDamage(int amount) {
 		if (getStatusEffects().isVulnerable()) {
 			amount *= 2;

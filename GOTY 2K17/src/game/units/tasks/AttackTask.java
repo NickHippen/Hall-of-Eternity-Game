@@ -4,7 +4,6 @@ import java.util.List;
 
 import game.Tile;
 import game.units.LivingUnit;
-import game.units.Unit;
 
 public class AttackTask implements Task {
 
@@ -19,16 +18,14 @@ public class AttackTask implements Task {
 	@Override
 	public boolean contributeTask(LivingUnit unit, float delta) {
 		if (unit.isReadyToAttack()) {
+			unit.attack(attackLoc, targetClass);
 			List<? extends LivingUnit> targets = attackLoc.getUnits(targetClass);
-			boolean complete = true;
-			for (Unit target : targets) {
-				LivingUnit livingTarget = (LivingUnit) target;
-				unit.attack(livingTarget);
-				if (livingTarget.isAlive()) {
-					complete = false;
+			for (LivingUnit target : targets) {
+				if (target.isAlive()) {
+					return false;
 				}
 			}
-			return complete;
+			return true;
 		}
 		return false;
 	}
