@@ -3,7 +3,9 @@ package game.units.status;
 import game.units.LivingUnit;
 
 public class StatusEffects {
-	private final float BURN_DURATION = 200;
+	
+	private final float POISON_DURATION = 15;
+	private final float BURN_DURATION = 5;
 	private final float CHILL_DURATION = 10;
 	private final float STUN_DURATION = 2;
 	private final float IMPAIR_DURATION = 100;
@@ -20,7 +22,7 @@ public class StatusEffects {
 	
 	public StatusEffects(LivingUnit livingUnit) {
 		this.livingUnit = livingUnit;
-		poison = new Poison();
+		poison = new Poison(POISON_DURATION);
 		burn = new Burn(BURN_DURATION);
 		chill = new Chill(CHILL_DURATION);
 		stun = new Stun(STUN_DURATION);
@@ -29,7 +31,7 @@ public class StatusEffects {
 	}
 	
 	public void processStatus(float delta) {
-		poison.updatePoison(livingUnit);
+		poison.updatePoison(livingUnit, delta);
 		burn.updateBurn(livingUnit, delta);
 		impair.updateImpair(livingUnit, delta);
 		vuln.updateVulnerability(livingUnit, delta);

@@ -18,6 +18,7 @@ import game.cards.traps.FireTrapCard;
 import game.cards.traps.IceTrapCard;
 import game.cards.traps.IronMaidenTrapCard;
 import game.cards.traps.PitfallTrapCard;
+import game.cards.traps.PoisonTrapCard;
 import game.cards.traps.StunTrapCard;
 import game.vectors.Vector2f;
 
@@ -80,6 +81,9 @@ public class Deck {
 		cards.add(new FireTrapCard(this.world));
 		cards.add(new FireTrapCard(this.world));
 		cards.add(new FireTrapCard(this.world));
+		cards.add(new PoisonTrapCard(this.world));
+		cards.add(new PoisonTrapCard(this.world));
+		cards.add(new PoisonTrapCard(this.world));
 	}
 	
 	public List<Card> getCards() {
