@@ -17,12 +17,13 @@ import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
+import game.menu.LevelSelect;
+import game.menu.TitleScreen;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
-import menu.TitleScreen;
 
 public class Game extends TileFramework {
 
@@ -52,6 +53,7 @@ public class Game extends TileFramework {
 	private boolean gameplay;
 
 	private TitleScreen title;
+	private LevelSelect level;
 	
 	@Override
 	protected void initialize() {
@@ -71,6 +73,7 @@ public class Game extends TileFramework {
 		this.titleScreen = true;
 		
 		title = new TitleScreen(getWorld());
+		level = new LevelSelect(getWorld());
 	}
 
 	@Override
@@ -79,13 +82,47 @@ public class Game extends TileFramework {
 		mouseVec = getCenteredRelativeWorldMousePosition();
 
 		if (titleScreen) {
-			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.x > -1.57){
+			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57){
 				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
 					titleScreen = false;
-					gameplay = true;
+					levelSelection = true;
 				}
 				title.selectButton();
-			}else title.unselectButton();
+			}			
+			else title.unselectButton();
+		}
+		
+		if(levelSelection){
+			System.out.println(mouseVec.x + " " + mouseVec.y);
+			//Player hovering over CARDS button
+			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08){
+				level.selectButton(4);
+				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+					//Not here yet
+				}
+			}		
+			//Player hovering over RUINS button
+			else if(mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < 1.26 && mouseVec.y > .97){
+				level.selectButton(1);
+				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+					levelSelection = false;
+					gameplay = true;
+				}
+			}
+			//Player hovering over SNOW button
+			else if(mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < .014 && mouseVec.y > -.3){
+				level.selectButton(2);
+				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+					//Not here yet
+				}
+			}
+			//Player hovering over TOWN button
+			else if(mouseVec.x < .4 && mouseVec.x > -.4 && mouseVec.y < -1.22 && mouseVec.y > -1.54){
+				level.selectButton(3);
+				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+					//Not here yet
+				}
+			}else level.selectButton(0);
 		}
 
 		if (gameplay) {
@@ -209,6 +246,12 @@ public class Game extends TileFramework {
 		if(titleScreen){
 			title.setView(view);
 			title.draw(g2d);
+		}
+		
+		
+		if(levelSelection){
+			level.setView(view);
+			level.draw(g2d);
 		}
 		
 		if (gameplay) {
