@@ -16,6 +16,12 @@ public class TrapFactory {
 			return new IronMaidenTrap(world);
 		case FIRE:
 			return new FireTrap(world);
+		case POISON:
+			return new PoisonTrap(world);
+		case BLIND:
+			return new BlindTrap(world);
+		case VULNERABLE:
+			return new VulnerableTrap(world);
 		default:
 			return null;
 		}

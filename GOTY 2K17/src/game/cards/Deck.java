@@ -14,11 +14,14 @@ import game.cards.curses.HealCard;
 import game.cards.curses.TouchOfDeathCard;
 import game.cards.curses.TransmuteCard;
 import game.cards.monsters.ZombieCard;
+import game.cards.traps.BlindTrapCard;
 import game.cards.traps.FireTrapCard;
 import game.cards.traps.IceTrapCard;
 import game.cards.traps.IronMaidenTrapCard;
 import game.cards.traps.PitfallTrapCard;
+import game.cards.traps.PoisonTrapCard;
 import game.cards.traps.StunTrapCard;
+import game.cards.traps.VulnerableTrapCard;
 import game.vectors.Vector2f;
 
 public class Deck {
@@ -80,6 +83,15 @@ public class Deck {
 		cards.add(new FireTrapCard(this.world));
 		cards.add(new FireTrapCard(this.world));
 		cards.add(new FireTrapCard(this.world));
+		cards.add(new PoisonTrapCard(this.world));
+		cards.add(new PoisonTrapCard(this.world));
+		cards.add(new PoisonTrapCard(this.world));
+		cards.add(new BlindTrapCard(this.world));
+		cards.add(new BlindTrapCard(this.world));
+		cards.add(new BlindTrapCard(this.world));
+		cards.add(new VulnerableTrapCard(this.world));
+		cards.add(new VulnerableTrapCard(this.world));
+		cards.add(new VulnerableTrapCard(this.world));
 	}
 	
 	public List<Card> getCards() {

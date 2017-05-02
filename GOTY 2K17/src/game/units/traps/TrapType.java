@@ -2,6 +2,6 @@ package game.units.traps;
 
 public enum TrapType {
 	
-	ICE, STUN, PITFALL, IRON_MAIDEN, FIRE;
+	ICE, STUN, PITFALL, IRON_MAIDEN, FIRE, POISON, BLIND, VULNERABLE;
 	
 }

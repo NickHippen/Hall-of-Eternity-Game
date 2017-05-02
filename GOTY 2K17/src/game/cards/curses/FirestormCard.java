@@ -9,9 +9,8 @@ import game.TileWorld;
 import game.units.Unit;
 import game.units.heroes.Hero;
 import game.units.monsters.Zombie;
-import game.vectors.Vector2f;
 
-public class FirestormCard extends ActionCard {
+public class FirestormCard extends AreaCard {
 
 	private static BufferedImage BASE_IMAGE;
 
@@ -35,14 +34,11 @@ public class FirestormCard extends ActionCard {
 	}
 
 	@Override
-	public boolean performAction(Vector2f pos) {
-		for (Unit unit : getWorld().getUnits()) {
-			if (unit instanceof Hero) {
-				Hero hero = (Hero) unit;
-				hero.getStatusEffects().applyBurnStatus();
-			}
+	public void affectUnit(Unit unit) {
+		if (unit instanceof Hero) {
+			Hero hero = (Hero) unit;
+			hero.getStatusEffects().applyBurnStatus();
 		}
-		return true;
 	}
 	
 }
