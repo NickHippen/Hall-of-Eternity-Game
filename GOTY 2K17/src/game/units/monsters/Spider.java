@@ -29,7 +29,7 @@ public class Spider extends Monster {
 	
 	public Spider(TileWorld world) {
 		super(spriteSheet, world, MAX_HEALTH);
-		this.maxFrameNum = 12;	
+		this.maxFrameNum = 12;
 
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
