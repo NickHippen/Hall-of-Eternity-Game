@@ -8,13 +8,14 @@ import javax.imageio.ImageIO;
 import game.TileWorld;
 import game.cards.Card;
 import game.units.Unit;
+import game.units.monsters.Boss;
 import game.units.monsters.Monster;
 import game.units.monsters.Zombie;
 
 public class HealCard extends UnitSelectCard {
 
 	private static BufferedImage BASE_IMAGE;
-	private static final int HEAL = 50;
+	private static final int HEAL = 150;
 
 	static {
 		try {
@@ -37,7 +38,7 @@ public class HealCard extends UnitSelectCard {
 
 	@Override
 	public void performAction(Unit unit) {
-		if (unit instanceof Monster) {
+		if (unit instanceof Monster && !(unit instanceof Boss)) {
 			Monster monster = (Monster) unit;
 			monster.setHealth(monster.getHealth() + HEAL);
 		}

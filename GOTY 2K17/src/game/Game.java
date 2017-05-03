@@ -562,6 +562,7 @@ public class Game extends TileFramework {
 				return;
 			}
 		}
+		getWorld().setBoneNum(getWorld().getBoneNum() + getWorld().getWaveNum() * 20);
 		getWorld().setWaveNum(getWorld().getWaveNum() + 1);
 		waveTimer = 0f;
 		spawnTimer = calculateTimeBetweenSpawns();
