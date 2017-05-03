@@ -38,7 +38,7 @@ public class Tile {
 			if (desiredClass != null && !desiredClass.isInstance(unit)) {
 				continue;
 			}
-			Tile tile = getWorld().getTileAtPosition(unit.getLocation());
+			Tile tile = unit.getTile();
 			if (this.equals(tile)) {
 				units.add((T) unit);
 			}

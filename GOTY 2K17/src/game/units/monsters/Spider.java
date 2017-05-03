@@ -36,10 +36,17 @@ public class Spider extends Monster {
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
 		
 		this.setDamage(DAMAGE);
+		setOffsetY(-0.1f);
 	}
 	
 	public String getName(){
 		return "Spider";
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		System.out.println("SPIDER: " + getTileLocation());
 	}
 	
 }

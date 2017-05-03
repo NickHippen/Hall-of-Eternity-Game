@@ -3,14 +3,18 @@ package game.units;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import game.Tile;
+import game.TileLocation;
 import game.TileWorld;
 import game.sprites.BoundingSprite;
+import game.vectors.Vector2f;
 
 public abstract class Unit extends BoundingSprite {
 	
 	private TileWorld world;
 	
 	private ArrayList<BufferedImage> attackAnimation;
+	private float offsetY = 0;
 	
 	protected Unit(BufferedImage image, TileWorld world, int horizontalFrameNum, int verticalFrameNum) {
 		super(image, horizontalFrameNum, verticalFrameNum);
@@ -46,5 +50,23 @@ public abstract class Unit extends BoundingSprite {
 	}
 	
 	public abstract String getName();
+	
+	public TileLocation getTileLocation() {
+		Vector2f loc = new Vector2f(getLocation());
+		loc.y += offsetY;
+		return getWorld().getTileLocationAtPosition(loc);  
+	}
+	
+	public Tile getTile() {
+		return getWorld().getTile(getTileLocation());
+	}
+	
+	public float getOffsetY() {
+		return offsetY;
+	}
+	
+	public void setOffsetY(float offsetY) {
+		this.offsetY = offsetY;
+	}
 
 }

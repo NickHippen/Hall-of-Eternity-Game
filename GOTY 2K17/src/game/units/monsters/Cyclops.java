@@ -28,6 +28,7 @@ public class Cyclops extends Monster {
 		super(spriteSheet, world, MAX_HEALTH);
 		this.maxFrameNum = 15;
 		this.setDamage(DAMAGE);
+		setOffsetY(-0.1f);
 	}
 	
 	public String getName(){

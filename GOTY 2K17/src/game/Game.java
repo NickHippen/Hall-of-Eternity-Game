@@ -29,6 +29,7 @@ import game.menu.TitleScreen;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
+import game.units.monsters.Spider;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 

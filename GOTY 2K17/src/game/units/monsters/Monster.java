@@ -52,13 +52,13 @@ public abstract class Monster extends LivingUnit {
 	public void update(float delta) {
 		super.update(delta);
 		if (getTask() == null) {
-			Tile tile = getWorld().getTileAtPosition(getLocation());
+			Tile tile = getTile();
 			Set<Tile> affectedTiles = getWorld().getSurroundingTiles(tile.getLocation(), 1);
 			for (Unit unit : getWorld().getUnits()) {
 				if (!(unit instanceof Hero)) {
 					continue;
 				}
-				Tile unitTile = unit.getWorld().getTileAtPosition(unit.getLocation());
+				Tile unitTile = unit.getTile();
 				if (affectedTiles.contains(unitTile)) {
 				//	setAttacking(true);
 					setTask(new AttackTask(unitTile, Hero.class));

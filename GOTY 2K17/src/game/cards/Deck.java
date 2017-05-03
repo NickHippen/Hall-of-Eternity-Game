@@ -15,12 +15,6 @@ import game.cards.monsters.SpiderCard;
 import game.cards.monsters.SwordSkeletonCard;
 import game.cards.monsters.WolfCard;
 import game.cards.monsters.ZombieCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
 import game.vectors.Vector2f;
 
 public class Deck {

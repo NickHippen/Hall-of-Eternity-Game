@@ -46,7 +46,7 @@ public abstract class Hero extends LivingUnit {
 	public void update(float delta) {
 		super.update(delta);
 		if (getTask() == null) {
-			Tile tile = getWorld().getTileAtPosition(getLocation());
+			Tile tile = getTile();
 			Set<Direction> dirs = null;
 			boolean nearMonster = false;
 			for (Tile surroundingTile : getWorld().getSurroundingTiles(tile.getLocation(), 2, Direction.LEFT)) {
@@ -152,8 +152,8 @@ public abstract class Hero extends LivingUnit {
 		}
 		
 		if(attackingDir != null){
-			int dirX = attackingDir.getX() - getWorld().getTileAtPosition(getLocation()).getLocation().getX();
-			int dirY = attackingDir.getY() - getWorld().getTileAtPosition(getLocation()).getLocation().getY();
+			int dirX = attackingDir.getX() - getTileLocation().getX();
+			int dirY = attackingDir.getY() - getTileLocation().getY();
 		
 		
 			if (dirX == 0 && dirY == -1) this.selectedAnimation = 0;
