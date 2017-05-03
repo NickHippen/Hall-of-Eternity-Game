@@ -28,6 +28,7 @@ public class Wolf extends Monster {
 		super(spriteSheet, world, MAX_HEALTH);
 		this.maxFrameNum = 12;
 		this.setDamage(DAMAGE);
+		setAttackSpeed(getAttackSpeed() / 2f);
 	}
 	
 	public String getName(){

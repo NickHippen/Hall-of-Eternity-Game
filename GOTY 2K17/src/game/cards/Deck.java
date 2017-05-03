@@ -7,6 +7,7 @@ import java.util.Random;
 
 import game.TileWorld;
 import game.cards.curses.CardBack;
+
 import game.vectors.Vector2f;
 
 public class Deck {

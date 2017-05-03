@@ -34,4 +34,10 @@ public class Zombie extends Monster {
 		return "Zombie";
 	}
 	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		System.out.println("ZOMBIE: " + getLocation());
+	}
+	
 }

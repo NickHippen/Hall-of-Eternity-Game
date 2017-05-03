@@ -2,10 +2,14 @@ package game.units.monsters;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import game.Tile;
 import game.TileWorld;
+import game.units.LivingUnit;
 
 public class Centaur extends Monster {
 
@@ -28,9 +32,22 @@ public class Centaur extends Monster {
 		super(spriteSheet, world, MAX_HEALTH);
 		this.maxFrameNum = 12;
 		this.setDamage(DAMAGE);
+		setOffsetY(-0.1f);
 	}
 	
-	public String getName(){
+	public String getName() {
 		return "Centaur";
 	}
+	
+	@Override
+	public void attack(Tile attackLoc, Class<? extends LivingUnit> targetClass) {
+		ArrayList<Tile> targetTiles = getWorld().getSurroundingTilesDiag(getTileLocation(), 1);
+		for (Tile tile : targetTiles) {
+			List<? extends LivingUnit> targets = tile.getUnits(targetClass);
+			for (LivingUnit target : targets) {
+				this.attack(target);
+			}
+		}
+	}
+	
 }

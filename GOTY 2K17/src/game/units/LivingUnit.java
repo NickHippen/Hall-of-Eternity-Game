@@ -134,7 +134,7 @@ public abstract class LivingUnit extends Unit {
 	public void kill() {
 		setHealth(0);
 		getWorld().getUnits().remove(this);
-		TileLocation loc = getWorld().getTileLocationAtPosition(getLocation());
+		TileLocation loc = getTileLocation();
 		getWorld().getMap().removeInvalidTileLocation(loc);
 		getWorld().policyIteration(Tile::getAggroPathfinding);
 	}
@@ -149,7 +149,7 @@ public abstract class LivingUnit extends Unit {
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
 				if (getTask() instanceof MoveTask) {
-					List<Trap> traps = getWorld().getTileAtPosition(getLocation()).getUnits(Trap.class);
+					List<Trap> traps = getTile().getUnits(Trap.class);
 					if (!traps.isEmpty()) {
 						traps.get(0).triggerEffect(this);
 					}
