@@ -73,15 +73,8 @@ public class TileWorld {
 		if(!(unit instanceof Boss)) unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
 		if (unit instanceof Trap) System.out.println(unit.getFrameSize());
-		//if(unit instanceof Boss) unit.setLocation(unit.getLocation().add(new Vector2f(.11f, -.06f)));
-//		tiles[location.getX()][location.getY()].getUnits().add(unit);
 		units.add(unit);
 
-		//Hard code dragon to take up 1x3 tiles
-//		if(unit instanceof Dragon){
-//			tiles[location.getX()-1][location.getY()].getUnits().add(unit);
-//		}
-	
 		if (unit instanceof Monster) {
 			policyIteration(Tile::getAggroPathfinding);
 		}
