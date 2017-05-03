@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import game.TileFramework;
 import game.TileWorld;
+import game.units.LivingUnit;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
@@ -44,9 +45,9 @@ public class Spider extends Monster {
 	}
 	
 	@Override
-	public void update(float delta) {
-		super.update(delta);
-		System.out.println("SPIDER: " + getTileLocation());
+	public void attack(LivingUnit target) {
+		super.attack(target);
+		target.getStatusEffects().applyPoisonStatus();
 	}
 	
 }

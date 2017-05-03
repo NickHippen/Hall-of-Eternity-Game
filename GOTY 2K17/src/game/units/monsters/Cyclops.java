@@ -2,10 +2,13 @@ package game.units.monsters;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import game.Tile;
 import game.TileWorld;
+import game.units.LivingUnit;
 
 public class Cyclops extends Monster {
 
@@ -33,6 +36,14 @@ public class Cyclops extends Monster {
 	
 	public String getName(){
 		return "Cyclops";
+	}
+	
+	@Override
+	public void attack(Tile attackLoc, Class<? extends LivingUnit> targetClass) {
+		List<? extends LivingUnit> targets = attackLoc.getUnits(targetClass);
+		for (LivingUnit target : targets) {
+			this.attack(target);
+		}
 	}
 	
 }
