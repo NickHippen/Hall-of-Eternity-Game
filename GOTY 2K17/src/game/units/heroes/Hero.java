@@ -18,8 +18,6 @@ public abstract class Hero extends LivingUnit {
 	
 	private static final Random RANDOM = new Random();
 	
-	private final float MOVE_TIMER = 5; // Time before moving to next tile
-	
 	private int dropAmount = 7;
 	
 	private HeroClassType classType;
