@@ -310,7 +310,6 @@ public class Game extends TileFramework {
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
 					getWorld().waveStarted = true;
 				}
-				System.out.println(mouseVec.x + " " + mouseVec.y);
 				if (mouseVec.x < 2.91 && mouseVec.x > 2.045 && mouseVec.y < -.84 && mouseVec.y > -1.03) {
 					if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && getWorld().getBoneNum() >= drawCost && deck.getCardsRemaining() > 0){
 						deck.drawCard();

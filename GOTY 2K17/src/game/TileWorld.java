@@ -80,7 +80,6 @@ public class TileWorld {
 			unit.setLocation(new Vector2f(tileSizeX * location.getX() - (worldWidth / 2F) + (tileSizeX/48) * 24,
 				tileSizeY * (tilesY - location.getY() - 1) - (worldHeight / 2F) + tileSizeY + (unit.getFrameSize()/2 - 48) * (tileSizeY/48)));
 		}
-		if (unit instanceof Trap) System.out.println(unit.getFrameSize());
 		units.add(unit);
 
 		if (unit instanceof Monster) {

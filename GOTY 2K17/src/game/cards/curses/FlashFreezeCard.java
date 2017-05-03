@@ -38,7 +38,6 @@ public class FlashFreezeCard extends AreaCard {
 		if (!(unit instanceof LivingUnit)) {
 			return;
 		}
-		System.out.println("Hit");
 		LivingUnit livingUnit = (LivingUnit) unit;
 		livingUnit.getStatusEffects().applyChillStatus();
 	}

@@ -15,7 +15,6 @@ public class BlindTrap extends Trap {
 	static {
 		try {
 			URL url = BlindTrap.class.getResource("/resources/units/traps/blind.png");
-			System.out.println(url.toString());
 			IMAGE = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
