@@ -30,7 +30,8 @@ public class Tank extends Hero {
 		this.setDropAmount(13);
 	}
 	
-	public String getName(){
+	public String getName() {
 		return "Tank";
 	}
+	
 }
