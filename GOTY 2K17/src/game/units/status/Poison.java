@@ -34,4 +34,8 @@ public class Poison {
 			}
 		}
 	}
+
+	public boolean isPoisoned() {
+		return isPoisoned;
+	}
 }

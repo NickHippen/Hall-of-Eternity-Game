@@ -91,4 +91,12 @@ public class StatusEffects {
 		return stun.isStunned();
 	}
 	
+	public boolean isPoisoned() {
+		return poison.isPoisoned();
+	}
+	
+	public boolean isBurning() {
+		return burn.isBurning();
+	}
+	
 }
