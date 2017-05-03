@@ -7,109 +7,40 @@ import java.util.Random;
 
 import game.TileWorld;
 import game.cards.curses.CardBack;
-import game.cards.monsters.BowSkeletonCard;
-import game.cards.monsters.CentaurCard;
-import game.cards.monsters.CerberusCard;
-import game.cards.monsters.CyclopsCard;
-import game.cards.monsters.SpiderCard;
-import game.cards.monsters.SwordSkeletonCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
-import game.cards.monsters.WolfCard;
-import game.cards.monsters.ZombieCard;
 import game.vectors.Vector2f;
 
 public class Deck {
 
-	private List<Card> cards;
+	private List<Card> deck;
+	private List<Card> tempDeck;
 	private List<Card> hand;
+
 	private Card cardBack;
-	private TileWorld world;
 	private int removed;
 	private boolean drawing;
+	
 	public Deck(TileWorld world) {
-		cards = new ArrayList<>();
+		deck = new ArrayList<>();
+		tempDeck = new ArrayList<>();
 		hand = new ArrayList<>();
-		this.world = world;
 		
 		cardBack = new CardBack(world);
-		setupDeck();
 		shuffle();
 		this.removed = -1;
 	}
 	
-	//Currently the only way to put cards into deck
-	public void setupDeck(){
-//		cards.add(new ZombieCard(this.world));
-//		cards.add(new ZombieCard(this.world));
-//		cards.add(new ZombieCard(this.world));
-//		cards.add(new ZombieCard(this.world));
-//		cards.add(new ZombieCard(this.world));
-//		cards.add(new BlastCard(this.world));
-//		cards.add(new BlastCard(this.world));
-//		cards.add(new BlastCard(this.world));
-//		cards.add(new FlashFreezeCard(this.world));
-//		cards.add(new FlashFreezeCard(this.world));
-//		cards.add(new FlashFreezeCard(this.world));
-//		cards.add(new HealCard(this.world));
-//		cards.add(new HealCard(this.world));
-//		cards.add(new HealCard(this.world));
-//		cards.add(new FirestormCard(this.world));
-//		cards.add(new FirestormCard(this.world));
-//		cards.add(new FirestormCard(this.world));
-//		cards.add(new TouchOfDeathCard(this.world));
-//		cards.add(new TouchOfDeathCard(this.world));
-//		cards.add(new TouchOfDeathCard(this.world));
-//		cards.add(new TransmuteCard(this.world));
-//		cards.add(new TransmuteCard(this.world));
-//		cards.add(new TransmuteCard(this.world));
-//		cards.add(new IceTrapCard(this.world));
-//		cards.add(new IceTrapCard(this.world));
-//		cards.add(new IceTrapCard(this.world));
-//		cards.add(new StunTrapCard(this.world));
-//		cards.add(new StunTrapCard(this.world));
-//		cards.add(new StunTrapCard(this.world));
-//		cards.add(new PitfallTrapCard(this.world));
-//		cards.add(new PitfallTrapCard(this.world));
-//		cards.add(new PitfallTrapCard(this.world));
-//		cards.add(new IronMaidenTrapCard(this.world));
-//		cards.add(new IronMaidenTrapCard(this.world));
-//		cards.add(new IronMaidenTrapCard(this.world));
-//		cards.add(new FireTrapCard(this.world));
-//		cards.add(new FireTrapCard(this.world));
-//		cards.add(new FireTrapCard(this.world));
-//		cards.add(new PoisonTrapCard(this.world));
-//		cards.add(new PoisonTrapCard(this.world));
-//		cards.add(new PoisonTrapCard(this.world));
-//		cards.add(new BlindTrapCard(this.world));
-//		cards.add(new BlindTrapCard(this.world));
-//		cards.add(new BlindTrapCard(this.world));
-//		cards.add(new VulnerableTrapCard(this.world));
-//		cards.add(new VulnerableTrapCard(this.world));
-//		cards.add(new VulnerableTrapCard(this.world));
-//		cards.add(new WolfCard(this.world));
-//		cards.add(new WolfCard(this.world));
-//		cards.add(new WolfCard(this.world));
-		cards.add(new BowSkeletonCard(world));
-		cards.add(new CentaurCard(world));
-		cards.add(new CerberusCard(world));
-		cards.add(new CyclopsCard(world));
-		cards.add(new SpiderCard(world));
-		cards.add(new SwordSkeletonCard(world));
-		cards.add(new WolfCard(world));
-		cards.add(new ZombieCard(world));
-	}
+	//Currently the only way to put tempDeck into deck
 	
-	public List<Card> getCards() {
-		return cards;
+	public List<Card> getTempDeck() {
+		return tempDeck;
 	}
 	
 	public List<Card> getHand() {
 		return hand;
+	}
+	
+	public List<Card> getDeck(){
+		return deck;
 	}
 	
 	public Card getCardBack(){
@@ -121,18 +52,18 @@ public class Deck {
 	}
 	
 	public int getCardsRemaining(){
-		return cards.size();
+		return tempDeck.size();
 	}
 	
 	public void shuffle(){
 		long seed = System.nanoTime();
-		Collections.shuffle(cards, new Random(seed));
+		Collections.shuffle(tempDeck, new Random(seed));
 	}
 	
 	//Adds card to your hand, triggers draw for draw animation
 	public void drawCard(){
-		if(hand.size() < 5 && !drawing && cards.size() != 0){
-			hand.add(cards.remove(0));
+		if(hand.size() < 5 && !drawing && tempDeck.size() != 0){
+			hand.add(tempDeck.remove(0));
 			drawing = true;
 			hand.get(hand.size() - 1).setLocation((new Vector2f(-2.95f + 5f, -0.87f)));
 		}
@@ -164,5 +95,20 @@ public class Deck {
 			}
 		}
 		if(done == 0) this.removed = -1;
+	}
+	
+	public void addCard(Card card){
+		deck.add(card);
+	}
+	
+	public void removeCard(Card card){
+		deck.remove(card);
+	}
+	
+	public void resetDeck(){
+		tempDeck.clear();
+		tempDeck.addAll(deck);
+		System.out.println(deck.size());
+		this.shuffle();
 	}
 }

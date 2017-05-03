@@ -87,6 +87,7 @@ public class Game extends TileFramework {
 		doneButton.setLocation(doneButton.getLocation().add(new Vector2f (0, .3f)));
 		quitButton = new Button(getWorld());
 		quitButton.setLocation(quitButton.getLocation().add(new Vector2f (0, -.3f)));
+		deck = deckEditor.getDeck();
 	}
 
 	@Override
@@ -107,6 +108,7 @@ public class Game extends TileFramework {
 		}
 
 		if (levelSelection) {
+			deck.resetDeck();
 			// Player hovering over CARDS button
 			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08) {
 				level.selectButton(4);
@@ -150,8 +152,10 @@ public class Game extends TileFramework {
 		}
 		
 		if(deckCreation){
+			deck = deckEditor.getDeck();
 			deckEditor.processInput(mouseVec, mouse);
 			if(deckEditor.getQuit()){
+				deck = deckEditor.getDeck();
 				deckEditor.setQuit(false);
 				levelSelection = true;
 				deckCreation = false;
@@ -366,8 +370,7 @@ public class Game extends TileFramework {
 				renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(mouseVec));
 
 			// Renders cards
-			for (int i = 0; i < deck.getHand().size(); i++) {
-				Card card = deck.getHand().get(i);
+			for (Card card : deck.getHand()) {
 				card.setView(view);
 				card.draw(g2d);
 				// Shows line around selected cards

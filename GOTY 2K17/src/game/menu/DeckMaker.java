@@ -1,5 +1,7 @@
 package game.menu;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -32,8 +34,6 @@ public class DeckMaker extends BoundingSprite{
 	private Button doneButton;
 	
 	public Deck deck;
-	
-
 	
 	private BlastCard blastC;
 	private FirestormCard firestormC;
@@ -68,6 +68,10 @@ public class DeckMaker extends BoundingSprite{
 	//Select 0 to show monsters, 1 to show curses, 2 to show traps
 	private boolean quit;
 	
+	private Vector2f mouseVec;
+	
+	ArrayList<Card> tempList = new ArrayList<Card>();
+
 	private int selection;
 	static {
 		try {
@@ -81,6 +85,7 @@ public class DeckMaker extends BoundingSprite{
 	
 	public DeckMaker(TileWorld world) {
 		super(spriteSheet, 1, 1);		
+		mouseVec = new Vector2f();
 		
 		setOuterBound(new AxisAlignedBoundingBox(
 				new Vector2f(-TileFramework.TILE_SIZE_X / 2F, TileFramework.TILE_SIZE_Y / 2F),
@@ -103,7 +108,7 @@ public class DeckMaker extends BoundingSprite{
 		
 		
 		deck = new Deck(world);
-		
+		tempList = new ArrayList<Card>();
 		//Initialize all curse cards and them to a set
 		blastC = new BlastCard(world);
 		firestormC = new FirestormCard(world);
@@ -170,6 +175,7 @@ public class DeckMaker extends BoundingSprite{
 	}
 	
 	public void processInput(Vector2f mouseVec, RelativeMouseInput mouse){
+		this.mouseVec = mouseVec;
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if(mouseVec.x > -2.56 && mouseVec.x < -1.44 && mouseVec.y < 1.7 && mouseVec.y > 1.29){
 			monsterButton.selectButton(5);
@@ -194,6 +200,30 @@ public class DeckMaker extends BoundingSprite{
 			if (mouse.buttonDown(MouseEvent.BUTTON1)) quit = true;
 		}
 		else doneButton.selectButton(0);
+		
+		for(Card card : tempList){
+			if(card.isPointWithin(mouseVec)){
+				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+					deck.addCard(card);
+				}
+			}
+		}
+		
+		Card removedCard = null;
+		int yPos = 60;
+		for(Card card : deck.getDeck()){
+			float topY = 2.1f - (1/240f) * yPos + .02f;
+			if(mouseVec.x > 2.79 && mouseVec.x < 2.87 && mouseVec.y < topY && mouseVec.y > topY - .04f){
+				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
+					removedCard = card;
+					break;
+				}
+			}
+			yPos+=45;
+			if(deck.getDeck().indexOf(card) % 2 == 0) yPos++;
+		}
+		if(removedCard != null)  deck.removeCard(removedCard);
+		
 	}
 	
 	public void render(Matrix3x3f view, Graphics2D g2d){
@@ -212,8 +242,7 @@ public class DeckMaker extends BoundingSprite{
 		trapButton.setView(view);
 		trapButton.draw(g2d);
 		
-		ArrayList<Card> tempList = new ArrayList<Card>();
-		
+		tempList.clear();
 		if(selection == 0) tempList.addAll(monsterCards);
 		else if(selection == 1) tempList.addAll(curseCards);
 		else if(selection == 2) tempList.addAll(trapCards);
@@ -228,7 +257,37 @@ public class DeckMaker extends BoundingSprite{
 			card.setLocation(new Vector2f(-2.85f + index * 1f, .5f +  rowSize));
 			card.setView(view);
 			card.draw(g2d);
+			
+			if(card.isPointWithin(mouseVec)){
+				card.getOuterBound().render(g2d);
+			}	
 		}
+		
+		int yPos = 60;
+		for(Card card: deck.getDeck()){
+			//Needs to move 45.5 up each time, so 45 then 46 I guess
+			g2d.setColor(Color.WHITE);
+			g2d.setFont(new Font("Cooper Black", Font.PLAIN, 22));
+			g2d.drawString(card.getName(), 1222, yPos);
+			
+			Button deleteX;
+			BufferedImage image = null;
+			try {
+				URL url = Zombie.class.getResource("/resources/menus/buttons/deleteButton.png");
+				image = ImageIO.read(url);
+			} catch (Exception e) {
+				System.exit(1);
+			}
+			deleteX = new Button(image);
+
+			deleteX.setLocation(new Vector2f(2.83f, 2.1f - (1/240f) * yPos));
+			deleteX.setView(view);
+			deleteX.draw(g2d);
+			
+			yPos+=45;
+			if(deck.getDeck().indexOf(card) % 2 == 0) yPos++;
+		}
+		
 	}
 	
 	public boolean getQuit(){
