@@ -15,7 +15,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent; 
 
 import game.vectors.Vector2f;
 
