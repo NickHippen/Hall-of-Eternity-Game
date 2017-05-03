@@ -197,7 +197,7 @@ public class Game extends TileFramework {
 			if (!pause) {
 				// Player drops card
 				if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
-					if (onBoard(mouseVec)) {
+					if (onBoard(mouseVec) && (getWorld().getBoneNum() > grabbedCard.getCost())) {
 						if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard
 								|| grabbedCard instanceof TrapSpawnCard) {
 							selectingTarget = true;
@@ -206,7 +206,7 @@ public class Game extends TileFramework {
 						} else if (grabbedCard instanceof ActionCard) {
 							grabbedCard.performAction(mouseVec);
 						}
-
+						getWorld().setBoneNum(getWorld().getBoneNum() - grabbedCard.getCost());
 						deck.setRemoved(deck.getHand().indexOf(grabbedCard));
 						deck.getHand().remove(grabbedCard);
 						activatedCard = grabbedCard;
