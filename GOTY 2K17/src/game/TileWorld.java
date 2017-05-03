@@ -32,6 +32,7 @@ public class TileWorld {
 	
 	private int waveNum;
 	private int boneNum;
+	public boolean waveStarted = false;
 	private boolean gameover = false;
 	
 	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {

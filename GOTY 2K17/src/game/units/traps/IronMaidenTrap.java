@@ -37,6 +37,9 @@ public class IronMaidenTrap extends Trap {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		if (!getWorld().waveStarted) {
+			return;
+		}
 		timeSinceLastGain += delta;
 		if (timeSinceLastGain >= TICK_RATE) {
 			getWorld().addBones(BONE_GAIN);

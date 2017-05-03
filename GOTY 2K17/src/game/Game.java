@@ -69,7 +69,6 @@ public class Game extends TileFramework {
 	
 	private float spawnTimer;
 	private float waveTimer;
-	private boolean waveStarted = false;
 
 	private TitleScreen title;
 	private LevelSelect level;
@@ -120,7 +119,7 @@ public class Game extends TileFramework {
 	protected void restart(){
 		selectingTarget = false;
 		selectingArea = false;
-		waveStarted = false;
+		getWorld().waveStarted = false;
 		waveTimer = 0f;
 		grabbedCard = null;
 		activatedCard = null;
@@ -309,7 +308,7 @@ public class Game extends TileFramework {
 					}
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-					waveStarted = true;
+					getWorld().waveStarted = true;
 				}
 				System.out.println(mouseVec.x + " " + mouseVec.y);
 				if (mouseVec.x < 2.91 && mouseVec.x > 2.045 && mouseVec.y < -.84 && mouseVec.y > -1.03) {
@@ -359,7 +358,7 @@ public class Game extends TileFramework {
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
-		if (waveStarted) {
+		if (getWorld().waveStarted) {
 			updateWave(delta);
 		}
 		if (gameplay && !pause) {
@@ -442,7 +441,7 @@ public class Game extends TileFramework {
 					g.drawString(message, 581, 645);
 					this.message = "Press 'Esc' to Quit!";
 					g.drawString(message, 581, 666);
-				} else if (!waveStarted) {
+				} else if (!getWorld().waveStarted) {
 					this.message = "Press 'Space' to start";
 					g.drawString(message, 581, 645);
 					this.message = "the next wave.";
@@ -567,7 +566,7 @@ public class Game extends TileFramework {
 		getWorld().setWaveNum(getWorld().getWaveNum() + 1);
 		waveTimer = 0f;
 		spawnTimer = calculateTimeBetweenSpawns();
-		waveStarted = false;
+		getWorld().waveStarted = false;
 	}
 
 	public static void main(String[] args) {
