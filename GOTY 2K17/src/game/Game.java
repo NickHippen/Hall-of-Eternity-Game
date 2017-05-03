@@ -26,6 +26,7 @@ import game.menu.DeckMaker;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
 import game.sound.PlayerControl;
+import game.units.GameOverSprite;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
 import game.units.heroes.Hero;
@@ -53,6 +54,7 @@ public class Game extends TileFramework {
 
 	private String message;
 	static  PlayerControl bg;
+	private GameOverSprite gameOverSprite;
 
 	private boolean titleScreen = true;
 	private boolean levelSelection;
@@ -74,6 +76,7 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 
+		this.gameOverSprite = new GameOverSprite(getWorld());
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
 		this.message = "";
@@ -112,6 +115,7 @@ public class Game extends TileFramework {
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
 		this.getWorld().getUnits().clear();
+		getWorld().setGameover(false);
 		getWorld().getMap().addBoss(getWorld(), new Boss(getWorld()));
 	}
 
@@ -430,6 +434,10 @@ public class Game extends TileFramework {
 				grabbedCard.getOuterBound().render(g);
 		}
 		
+		if (getWorld().isGameover()) {
+			gameOverSprite.setView(view);
+			gameOverSprite.draw(g2d);
+		}
 		
 		if(pause){
 			doneButton.setView(view);
@@ -452,6 +460,9 @@ public class Game extends TileFramework {
 	}
 	
 	public void tryNextWave() {
+		if (getWorld().isGameover()) { // Already lost, no continuing
+			return;
+		}
 		for (Unit unit : getWorld().getUnits()) {
 			if (unit instanceof Hero) { // Heroes still remain
 				return;
