@@ -201,28 +201,30 @@ public class DeckMaker extends BoundingSprite{
 		}
 		else doneButton.selectButton(0);
 		
-		for(Card card : tempList){
+		for(int i = 0; i < tempList.size(); i++){
+			Card card = tempList.get(i);
 			if(card.isPointWithin(mouseVec)){
 				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
-					deck.addCard(card);
+					deck.addCard(card.copy(card));
 				}
 			}
 		}
 		
-		Card removedCard = null;
+		
+		int removedIndex = -1;
 		int yPos = 60;
-		for(Card card : deck.getDeck()){
+		for(int i = 0; i < deck.getDeck().size(); i++){
 			float topY = 2.1f - (1/240f) * yPos + .02f;
 			if(mouseVec.x > 2.79 && mouseVec.x < 2.87 && mouseVec.y < topY && mouseVec.y > topY - .04f){
 				if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
-					removedCard = card;
+					removedIndex = i;
 					break;
 				}
 			}
 			yPos+=45;
-			if(deck.getDeck().indexOf(card) % 2 == 0) yPos++;
+			if(i % 2 == 0) yPos++;
 		}
-		if(removedCard != null)  deck.removeCard(removedCard);
+		if(removedIndex != -1)  deck.removeCard(removedIndex);
 		
 	}
 	
@@ -248,7 +250,8 @@ public class DeckMaker extends BoundingSprite{
 		else if(selection == 2) tempList.addAll(trapCards);
 		
 		float rowSize = .7f;
-		for(Card card : tempList){
+		for(int i = 0; i < tempList.size(); i++){
+			Card card = tempList.get(i);
 			int index = tempList.indexOf(card);
 			if (index >= 5)	index -= 5;
 
@@ -264,7 +267,8 @@ public class DeckMaker extends BoundingSprite{
 		}
 		
 		int yPos = 60;
-		for(Card card: deck.getDeck()){
+		for(int i = 0; i < deck.getDeck().size(); i++){
+			Card card = deck.getDeck().get(i);
 			//Needs to move 45.5 up each time, so 45 then 46 I guess
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(new Font("Cooper Black", Font.PLAIN, 22));

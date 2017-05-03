@@ -129,6 +129,8 @@ public abstract class Hero extends LivingUnit {
 				animations[i-4][j] = (this.getSpriteSheet().getSubimage(j * 48, i * 48, 48, 48));
 			}
 		}
+		
+		//Add s
 	}
 	
 	public HeroClassType getClassType() {

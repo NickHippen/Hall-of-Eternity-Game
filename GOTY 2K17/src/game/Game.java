@@ -54,7 +54,7 @@ public class Game extends TileFramework {
 	private String message;
 	static  PlayerControl bg;
 
-	private boolean titleScreen;
+	private boolean titleScreen = true;
 	private boolean levelSelection;
 	private boolean deckCreation;
 	private boolean gameplay;
@@ -70,25 +70,19 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 
-		deck = new Deck(getWorld());
-
 		this.getWorld().setWaveNum(0);
 		this.getWorld().setBoneNum(123);
 		this.message = "";
 
 		selectedUnits = new ArrayList<Unit>();
 
-		this.titleScreen = true;
-
 		title = new TitleScreen(getWorld());
 		level = new LevelSelect(getWorld());
-		deckEditor = new DeckMaker(getWorld());
 		
 		doneButton = new Button(getWorld());
 		doneButton.setLocation(doneButton.getLocation().add(new Vector2f (0, .3f)));
 		quitButton = new Button(getWorld());
 		quitButton.setLocation(quitButton.getLocation().add(new Vector2f (0, -.3f)));
-		deck = deckEditor.getDeck();
 	}
 
 	@Override
@@ -97,6 +91,9 @@ public class Game extends TileFramework {
 		mouseVec = getCenteredRelativeWorldMousePosition();
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
+			//Initialize deck here because you can't get back to the titlescreen, won't reset on initialize. This way the deck can save
+			deckEditor = new DeckMaker(getWorld());
+			deck = new Deck(getWorld()); 
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
@@ -109,7 +106,9 @@ public class Game extends TileFramework {
 		}
 
 		if (levelSelection) {
+			deck = deckEditor.getDeck();
 			deck.resetDeck();
+			deck.getHand().clear();
 			// Player hovering over CARDS button
 			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08) {
 				level.selectButton(4);
