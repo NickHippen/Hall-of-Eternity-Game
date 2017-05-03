@@ -11,7 +11,8 @@ public class StatusEffects {
 	private final float CHILL_DURATION = 10;
 	private final float STUN_DURATION = 2;
 	private final float IMPAIR_DURATION = 5;
-	private final float VULN_DURATION = 200;
+	private final float VULN_DURATION = 3;
+	private final float SPEED_DURATION = 0.5f;
 	
 	private Poison poison;
 	private Burn burn;
@@ -19,6 +20,7 @@ public class StatusEffects {
 	private Impair impair;
 	private Stun stun;
 	private Vulnerability vuln;
+	private SpeedUp speedUp;
 	
 	private LivingUnit livingUnit;
 	
@@ -30,6 +32,7 @@ public class StatusEffects {
 		stun = new Stun(STUN_DURATION);
 		impair = new Impair(livingUnit.getDamage(), IMPAIR_DURATION);
 		vuln = new Vulnerability(VULN_DURATION);
+		speedUp = new SpeedUp(SPEED_DURATION);
 	}
 	
 	public void processStatus(float delta) {
@@ -39,6 +42,7 @@ public class StatusEffects {
 		vuln.updateVulnerability(livingUnit, delta);
 		
 		// status that affects movement
+		speedUp.updateSpeedup(livingUnit, delta);
 		chill.updateChill(livingUnit, delta);
 		stun.updateStun(livingUnit, delta);
 	}
@@ -57,6 +61,10 @@ public class StatusEffects {
 	
 	public void applyStunStatus() {
 		stun.applyStun();
+	}
+	
+	public void applySpeedUp() {
+		speedUp.applySpeedup();
 	}
 	
 //	public void applySilenceStatus() {
@@ -97,6 +105,10 @@ public class StatusEffects {
 	
 	public boolean isBurning() {
 		return burn.isBurning();
+	}
+	
+	public boolean isSpedUp() {
+		return speedUp.isSpedUp();
 	}
 	
 }

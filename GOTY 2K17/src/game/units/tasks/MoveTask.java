@@ -54,6 +54,9 @@ public class MoveTask implements Task {
 		if (unit.getStatusEffects().isStunned()) {
 			speed = 0;
 		}
+		if (unit.getStatusEffects().isSpedUp()) {
+			speed *= 1.25f;
+		}
 		increaseDistanceCovered(speed, delta);
 		boolean taskComplete;
 		if (distanceCovered >= distance) {

@@ -27,7 +27,7 @@ import game.menu.LevelSelect;
 import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.Unit;
-import game.units.heroes.Archer;
+import game.units.heroes.Bard;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
@@ -251,8 +251,10 @@ public class Game extends TileFramework {
 					}
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
-					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Archer(getWorld()));
+//					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
 				}
 			}
 			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {

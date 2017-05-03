@@ -105,7 +105,7 @@ public class SpriteObject {
 	
 	public int getVerticalFrameNum(){
 		return this.verticalFrameNum;
-	}	
+	}
 	
 	public int getFrameSize(){
 		return this.frameSize;
