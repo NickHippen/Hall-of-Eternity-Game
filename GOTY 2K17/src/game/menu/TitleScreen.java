@@ -16,11 +16,13 @@ import game.vectors.Vector2f;
 public class TitleScreen extends BoundingSprite{
 
 	private static BufferedImage spriteSheet;
-	
+	private static BufferedImage spriteSheet2;
 	static {
 		try {
 			URL url = Zombie.class.getResource("/resources/menus/title.png");
 			spriteSheet = ImageIO.read(url);
+			url = Zombie.class.getResource("/resources/menus/select_title.png");
+			spriteSheet2 = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -36,20 +38,10 @@ public class TitleScreen extends BoundingSprite{
 	}
 	
 	public void selectButton(){
-		try {
-			URL url = Zombie.class.getResource("/resources/menus/select_title.png");
-			BufferedImage spriteSheet2 = ImageIO.read(url);
-			this.setRenderedImage(spriteSheet2);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		this.setRenderedImage(spriteSheet2);
 	}
 	
 	public void unselectButton() {
-		if (spriteSheet != this.getRenderedImage()) {
-			this.setRenderedImage(spriteSheet);
-		}
+		this.setRenderedImage(spriteSheet);
 	}
-	
 }
