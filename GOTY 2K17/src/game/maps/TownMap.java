@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import game.TileLocation;
 import game.TileWorld;
+import game.sound.PlayerControl;
 import game.units.monsters.Boss;
 import game.units.monsters.Monster;
 import game.util.Direction;
@@ -171,6 +172,10 @@ public class TownMap extends GameMap {
 			if (unit instanceof Monster) {
 				world.policyIteration(tile -> tile.getAggroPathfinding());		
 		}
+	}
+	@Override
+	public void getSoung(PlayerControl bg) {
+		bg.playStage3();	
 	}
 
 }

@@ -10,17 +10,10 @@ public class PlayerControl {
 	private LoopEvent loopClip;
 	private LoopEvent loopStream;
 	private byte[] rawSound;
+	public boolean running;
 
-	public PlayerControl(){
-		FileInputStream in1;
-	InputStream in = PlayerControl.class.getResourceAsStream("/resources/sound/Background.wav");
-		
-		rawSound = readBytes(in);
-		clip = new BlockingClip(rawSound);
-		loopClip = new LoopEvent(clip);
-		loopClip.initialize();
-		loopClip.fire();
-	}
+	public PlayerControl() {}
+
 	private byte[] readBytes(InputStream in) {
 		try {
 			BufferedInputStream buf = new BufferedInputStream(in);
@@ -37,15 +30,17 @@ public class PlayerControl {
 		}
 	}
 
-	private void shutDownClips() {
+	public void shutDownClips() {
+		running = false;
 		if (loopClip != null)
-			loopClip.shutDown();
+			loopClip.done();
 		if (loopStream != null)
-			loopStream.shutDown();
+			//loopStream.shutDown();
+			loopStream.done();
 	}
-	
-	public void loop(){
-		
+
+	public void loop() {
+
 	}
 
 	private void increaseGain(AudioStream audio) {
@@ -60,6 +55,32 @@ public class PlayerControl {
 		if (current > -20.0f) {
 			audio.setGain(current - 3.0f);
 		}
+	}
+
+	public void playBG() {		
+		playSong("/resources/sound/Background.wav");
+	}
+	
+	public void playStage1() {
+		playSong("/resources/sound/Awkward_Meeting.wav");
+	}
+	public void playStage2() {
+		playSong("/resources/sound/Come_Play_With_Me.wav");
+	}
+	public void playStage3() {
+		playSong("/resources/sound/Town.wav");
+	}
+	public void playSong(String input){
+		shutDownClips();
+		running = true;
+		FileInputStream in1;
+		InputStream in = PlayerControl.class.getResourceAsStream(input);
+		rawSound = readBytes(in);
+		clip = new BlockingClip(rawSound);
+		loopClip = new LoopEvent(clip);
+		loopClip.initialize();
+		loopClip.fire();
+		
 	}
 
 }

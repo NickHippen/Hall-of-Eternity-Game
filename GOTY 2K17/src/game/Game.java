@@ -87,6 +87,8 @@ public class Game extends TileFramework {
 		doneButton.setLocation(doneButton.getLocation().add(new Vector2f (0, .3f)));
 		quitButton = new Button(getWorld());
 		quitButton.setLocation(quitButton.getLocation().add(new Vector2f (0, -.3f)));
+		bg = new PlayerControl();
+		bg.playBG();
 	}
 
 	@Override
@@ -123,6 +125,7 @@ public class Game extends TileFramework {
 					levelSelection = false;
 					gameplay = true;
 					getWorld().setMap(new DungeonMap());
+					getWorld().getMap().getSoung(bg);
 					return;
 				}
 			}
@@ -133,6 +136,7 @@ public class Game extends TileFramework {
 					levelSelection = false;
 					gameplay = true;
 					getWorld().setMap(new SnowMap());
+					getWorld().getMap().getSoung(bg);
 					return;
 				}
 			}
@@ -143,6 +147,7 @@ public class Game extends TileFramework {
 					levelSelection = false;
 					gameplay = true;
 					getWorld().setMap(new TownMap());
+					getWorld().getMap().getSoung(bg);
 					return;
 				}
 			} else
@@ -313,10 +318,11 @@ public class Game extends TileFramework {
 		}
 		
 		if (deckCreation){
-			deckEditor.render(view, g2d);
+			deckEditor.render(view, g2d);	
 		}
 
 		if (gameplay) {
+			
 			getWorld().getMap().setView(view);
 			getWorld().getMap().draw(g2d);
 
@@ -399,7 +405,7 @@ public class Game extends TileFramework {
 
 	public static void main(String[] args) {
 		launchApp(new Game());
-		bg = new PlayerControl();
+		
 	}
 
 }
