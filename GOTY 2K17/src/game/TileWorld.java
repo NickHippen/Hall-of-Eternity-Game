@@ -3,10 +3,12 @@ package game;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import game.maps.GameMap;
 import game.units.Unit;
+import game.units.heroes.Hero;
 import game.units.monsters.Boss;
 import game.units.monsters.Monster;
 import game.units.traps.Trap;
@@ -15,6 +17,8 @@ import game.vectors.Vector2f;
 
 public class TileWorld {
 
+	private static final Random RANDOM = new Random();
+	
 	private Tile[][] tiles;
 	
 	private GameMap map;
@@ -284,6 +288,10 @@ public class TileWorld {
 	
 	public void addBones(int amount) {
 		this.setBoneNum(this.getBoneNum() + amount);
+	}
+	
+	public void spawnHero(Hero hero) {
+		addUnitToTile(getMap().getSpawnLocations().get(RANDOM.nextInt(getMap().getSpawnLocations().size())), hero);
 	}
 
 	@FunctionalInterface
