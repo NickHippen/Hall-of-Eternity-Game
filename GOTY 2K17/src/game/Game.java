@@ -457,7 +457,25 @@ public class Game extends TileFramework {
 		if (waveTimer > 20f) { // Time for new wave
 			tryNextWave();
 		} else if (spawnTimer > timeBetweenSpawns) { // Time to spawn new hero
-			Hero hero = heroFactory.getHero(HeroClassType.values()[RANDOM.nextInt(HeroClassType.values().length)], getWorld());
+			HeroClassType[] types = HeroClassType.values();
+			float totalWeight = 0f;
+			for (HeroClassType type : types) {
+				totalWeight += type.getWeight();
+			}
+			float roll = RANDOM.nextFloat() * totalWeight;
+			float weightCounter = 0f;
+			HeroClassType choice = null;
+			for (HeroClassType type : types) {
+				weightCounter += type.getWeight();
+				if (roll < weightCounter) {
+					choice = type;
+					break;
+				}
+			}
+			if (choice == null) {
+				choice = HeroClassType.FREELANCER;
+			}
+			Hero hero = heroFactory.getHero(choice, getWorld());
 			getWorld().spawnHero(hero);
 			spawnTimer = 0f;
 		}
