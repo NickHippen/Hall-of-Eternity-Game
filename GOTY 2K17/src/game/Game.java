@@ -28,8 +28,9 @@ import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.GameOverSprite;
 import game.units.Unit;
-import game.units.heroes.Freelancer;
 import game.units.heroes.Hero;
+import game.units.heroes.HeroClassType;
+import game.units.heroes.HeroFactory;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
@@ -55,6 +56,8 @@ public class Game extends TileFramework {
 	private String message;
 	static  PlayerControl bg;
 	private GameOverSprite gameOverSprite;
+	private final HeroFactory heroFactory = new HeroFactory();
+	
 
 	private boolean titleScreen = true;
 	private boolean levelSelection;
@@ -454,7 +457,8 @@ public class Game extends TileFramework {
 		if (waveTimer > 20f) { // Time for new wave
 			tryNextWave();
 		} else if (spawnTimer > timeBetweenSpawns) { // Time to spawn new hero
-			getWorld().spawnHero(new Freelancer(getWorld()));
+			Hero hero = heroFactory.getHero(HeroClassType.values()[RANDOM.nextInt(HeroClassType.values().length)], getWorld());
+			getWorld().spawnHero(hero);
 			spawnTimer = 0f;
 		}
 	}

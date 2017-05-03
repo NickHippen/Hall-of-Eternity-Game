@@ -3,13 +3,10 @@ package game.units.heroes;
 public enum HeroClassType {
 
 	FREELANCER(HeroDamageType.MELEE),
-	FIGHTER(HeroDamageType.MELEE),
 	ARCHER(HeroDamageType.RANGED),
 	TANK(HeroDamageType.MELEE),
-	HEALER(HeroDamageType.MELEE),
 	ROGUE(HeroDamageType.MELEE),
-	BARD(HeroDamageType.MELEE),
-	MAGE(HeroDamageType.CASTER);
+	BARD(HeroDamageType.MELEE);
 	
 	private HeroDamageType damageType;
 	
