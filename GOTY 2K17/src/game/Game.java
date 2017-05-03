@@ -100,7 +100,8 @@ public class Game extends TileFramework {
 		deck.getHand().clear();
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
-
+		this.getWorld().getUnits().clear();
+		getWorld().getMap().addBoss(getWorld(), new Boss(getWorld()));
 	}
 
 	@Override
@@ -138,6 +139,7 @@ public class Game extends TileFramework {
 					gameplay = true;
 					getWorld().setMap(new DungeonMap());
 					getWorld().getMap().getSoung(bg);
+					restart();
 					return;
 				}
 			}
@@ -149,6 +151,7 @@ public class Game extends TileFramework {
 					gameplay = true;
 					getWorld().setMap(new SnowMap());
 					getWorld().getMap().getSoung(bg);
+					restart();
 					return;
 				}
 			}
@@ -160,6 +163,7 @@ public class Game extends TileFramework {
 					gameplay = true;
 					getWorld().setMap(new TownMap());
 					getWorld().getMap().getSoung(bg);
+					restart();
 					return;
 				}
 			} else
