@@ -36,7 +36,7 @@ public class SnowMap extends GameMap {
 			}
 		}
 		for (int x = 0; x < 30; x++) {
-			for (int y = 12; y < 14; y++) {
+			for (int y = 12; y < 20; y++) {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}

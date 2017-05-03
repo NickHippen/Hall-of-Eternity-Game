@@ -84,7 +84,9 @@ public class TownMap extends GameMap {
 			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 6));
 		}
 		for (int x = 0; x < 30; x++) {
-			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 12));
+			for (int y = 12; y < 20; y++) {
+				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
+			}
 		}
 		for (int x = 27; x < 30; x++) {
 			for (int y = 9; y < 12; y++) {
