@@ -24,6 +24,7 @@ public class TownMap extends GameMap {
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
 	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
+	private static final List<TileLocation> SPAWN_LOCATIONS = new ArrayList<>();
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -83,7 +84,9 @@ public class TownMap extends GameMap {
 			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 6));
 		}
 		for (int x = 0; x < 30; x++) {
-			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 12));
+			for (int y = 12; y < 20; y++) {
+				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
+			}
 		}
 		for (int x = 27; x < 30; x++) {
 			for (int y = 9; y < 12; y++) {
@@ -95,6 +98,11 @@ public class TownMap extends GameMap {
 		GOAL_LOCATIONS.add(new TileLocation(29, 5));
 		GOAL_LOCATIONS.add(new TileLocation(28, 6));
 		GOAL_LOCATIONS.add(new TileLocation(29, 6));
+		
+		SPAWN_LOCATIONS.add(new TileLocation(2, 1));
+		SPAWN_LOCATIONS.add(new TileLocation(12, 1));
+		SPAWN_LOCATIONS.add(new TileLocation(1, 7));
+		SPAWN_LOCATIONS.add(new TileLocation(12, 7));
 		
 		
 		// Hardcoded Pathfinding
@@ -132,15 +140,17 @@ public class TownMap extends GameMap {
 		}
 	}
 	
+	private List<TileLocation> invalidTileLocations;
+	
 	public TownMap() {
 		super(BASE_IMAGE);
+		invalidTileLocations = new ArrayList<>(INVALID_TILE_LOCATIONS);
 	}
 
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
-		return INVALID_TILE_LOCATIONS;
+		return invalidTileLocations;
 	}
-
 
 	@Override
 	public List<TileLocation> getGoalLocations() {
@@ -162,7 +172,7 @@ public class TownMap extends GameMap {
 	}
 	
 	public void addBoss(TileWorld world, Boss unit ){
-			unit.setLocation(new Vector2f(2.6f,.75f));
+			unit.setLocation(new Vector2f(2.8f, 0.95f));
 			world.addUnitToTile(new TileLocation(27, 6), unit);
 //			world.getTiles()[27][6].getUnits().add(unit);
 //			world.getTiles()[28][6].getUnits().add(unit);
@@ -176,6 +186,11 @@ public class TownMap extends GameMap {
 	@Override
 	public void getSoung(PlayerControl bg) {
 		bg.playStage3();	
+	}
+
+	@Override
+	public List<TileLocation> getSpawnLocations() {
+		return SPAWN_LOCATIONS;
 	}
 
 }

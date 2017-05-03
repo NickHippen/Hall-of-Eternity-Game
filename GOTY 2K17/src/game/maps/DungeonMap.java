@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import game.TileLocation;
 import game.TileWorld;
 import game.sound.PlayerControl;
-import game.units.Unit;
 import game.units.monsters.Boss;
 import game.units.monsters.Monster;
 import game.util.Direction;
@@ -25,6 +24,7 @@ public class DungeonMap extends GameMap {
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
 	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
+	private static final List<TileLocation> SPAWN_LOCATIONS = new ArrayList<>();
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -83,9 +83,15 @@ public class DungeonMap extends GameMap {
 
 		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 6));
 		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 7));
+		INVALID_TILE_LOCATIONS.add(new TileLocation(28, 6));
+		INVALID_TILE_LOCATIONS.add(new TileLocation(28, 7));
 
 		GOAL_LOCATIONS.add(new TileLocation(27, 6));
 		GOAL_LOCATIONS.add(new TileLocation(27, 7));
+		
+		for (int y = 5; y < 9; y++) {
+			SPAWN_LOCATIONS.add(new TileLocation(0, y));
+		}
 		
 		
 		// Hardcoded Pathfinding
@@ -117,15 +123,17 @@ public class DungeonMap extends GameMap {
 		}
 	}
 	
+	private List<TileLocation> invalidTileLocations;
+	
 	public DungeonMap() {
 		super(BASE_IMAGE);
+		invalidTileLocations = new ArrayList<>(INVALID_TILE_LOCATIONS);
 	}
 
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
-		return INVALID_TILE_LOCATIONS;
+		return invalidTileLocations;
 	}
-
 
 	@Override
 	public List<TileLocation> getGoalLocations() {
@@ -162,6 +170,11 @@ public class DungeonMap extends GameMap {
 	@Override
 	public void getSoung(PlayerControl bg) {
 		bg.playStage1();	
+	}
+
+	@Override
+	public List<TileLocation> getSpawnLocations() {
+		return SPAWN_LOCATIONS;
 	}
 
 }

@@ -23,7 +23,8 @@ public class SnowMap extends GameMap {
 
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
-	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
+	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>();
+	private static final List<TileLocation> SPAWN_LOCATIONS = new ArrayList<>();
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -35,7 +36,7 @@ public class SnowMap extends GameMap {
 			}
 		}
 		for (int x = 0; x < 30; x++) {
-			for (int y = 12; y < 14; y++) {
+			for (int y = 12; y < 20; y++) {
 				INVALID_TILE_LOCATIONS.add(new TileLocation(x, y));
 			}
 		}
@@ -94,8 +95,14 @@ public class SnowMap extends GameMap {
 			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 11));
 		}
 
+		GOAL_LOCATIONS.add(new TileLocation(28, 6));
+		GOAL_LOCATIONS.add(new TileLocation(28, 7));
 		GOAL_LOCATIONS.add(new TileLocation(29, 6));
 		GOAL_LOCATIONS.add(new TileLocation(29, 7));
+		
+		for (int y = 3; y < 9; y++) {
+			SPAWN_LOCATIONS.add(new TileLocation(0, y));
+		}
 		
 		
 		// Hardcoded Pathfinding
@@ -125,13 +132,16 @@ public class SnowMap extends GameMap {
 		}
 	}
 	
+	private List<TileLocation> invalidTileLocations;
+	
 	public SnowMap() {
 		super(BASE_IMAGE);
+		invalidTileLocations = new ArrayList<>(INVALID_TILE_LOCATIONS);
 	}
 
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
-		return INVALID_TILE_LOCATIONS;
+		return invalidTileLocations;
 	}
 
 
@@ -155,7 +165,7 @@ public class SnowMap extends GameMap {
 	}
 	
 	public void addBoss(TileWorld world, Boss unit ){
-			unit.setLocation(new Vector2f(2.9f,.75f));
+			unit.setLocation(new Vector2f(2.8f,.75f));
 			world.addUnitToTile(new TileLocation(29, 6), unit);
 			
 			if (unit instanceof Monster) {
@@ -165,6 +175,11 @@ public class SnowMap extends GameMap {
 	@Override
 	public void getSoung(PlayerControl bg) {
 		bg.playStage2();	
+	}
+
+	@Override
+	public List<TileLocation> getSpawnLocations() {
+		return SPAWN_LOCATIONS;
 	}
 
 }

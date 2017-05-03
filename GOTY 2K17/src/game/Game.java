@@ -28,7 +28,7 @@ import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
-import game.units.heroes.Rogue;
+import game.units.heroes.Hero;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
@@ -59,6 +59,10 @@ public class Game extends TileFramework {
 	private boolean deckCreation;
 	private boolean gameplay;
 	private boolean pause;
+	
+	private float spawnTimer;
+	private float waveTimer;
+	private boolean waveStarted = false;
 
 	private TitleScreen title;
 	private LevelSelect level;
@@ -95,6 +99,13 @@ public class Game extends TileFramework {
 	}
 	
 	protected void restart(){
+		selectingTarget = false;
+		selectingArea = false;
+		waveStarted = false;
+		waveTimer = 0f;
+		spawnTimer = 0f;
+		grabbedCard = null;
+		activatedCard = null;
 		deck = deckEditor.getDeck();
 		deck.resetDeck();
 		deck.getHand().clear();
@@ -270,8 +281,8 @@ public class Game extends TileFramework {
 					}
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-
-					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
+					waveStarted = true;
+//					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
 //					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
 //					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
 //					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
@@ -310,6 +321,9 @@ public class Game extends TileFramework {
 	@Override
 	protected void updateObjects(float delta) {
 		super.updateObjects(delta);
+		if (waveStarted) {
+			updateWave(delta);
+		}
 		if (gameplay && !pause) {
 			deck.getCardBack().setLocation(new Vector2f(-2.95f + 5f, -0.87f));
 
@@ -423,6 +437,30 @@ public class Game extends TileFramework {
 			quitButton.setView(view);
 			quitButton.draw(g2d);
 		}
+	}
+	
+	public void updateWave(float delta) {
+		spawnTimer += delta;
+		waveTimer += delta;
+		float timeBetweenSpawns = 1f / getWorld().getWaveNum();
+		if (waveTimer > 20f) { // Time for new wave
+			tryNextWave();
+		} else if (spawnTimer > timeBetweenSpawns) { // Time to spawn new hero
+			getWorld().spawnHero(new Freelancer(getWorld()));
+			spawnTimer = 0f;
+		}
+	}
+	
+	public void tryNextWave() {
+		for (Unit unit : getWorld().getUnits()) {
+			if (unit instanceof Hero) { // Heroes still remain
+				return;
+			}
+		}
+		waveTimer = 0f;
+		spawnTimer = 0f;
+		waveStarted = false;
+		getWorld().setWaveNum(getWorld().getWaveNum() + 1);
 	}
 
 	public static void main(String[] args) {

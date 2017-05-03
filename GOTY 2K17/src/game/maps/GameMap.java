@@ -31,6 +31,8 @@ public abstract class GameMap extends SpriteObject {
 	
 	public abstract void getSoung(PlayerControl bg);
 	
+	public abstract List<TileLocation> getSpawnLocations();
+	
 	public void addInvalidTileLocation(TileLocation location) {
 		getInvalidTileLocations().add(location);
 	}
