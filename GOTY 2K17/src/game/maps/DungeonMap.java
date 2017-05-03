@@ -83,6 +83,8 @@ public class DungeonMap extends GameMap {
 
 		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 6));
 		INVALID_TILE_LOCATIONS.add(new TileLocation(27, 7));
+		INVALID_TILE_LOCATIONS.add(new TileLocation(28, 6));
+		INVALID_TILE_LOCATIONS.add(new TileLocation(28, 7));
 
 		GOAL_LOCATIONS.add(new TileLocation(27, 6));
 		GOAL_LOCATIONS.add(new TileLocation(27, 7));

@@ -172,7 +172,7 @@ public class TownMap extends GameMap {
 	}
 	
 	public void addBoss(TileWorld world, Boss unit ){
-			unit.setLocation(new Vector2f(2.6f,.75f));
+			unit.setLocation(new Vector2f(2.8f, 0.95f));
 			world.addUnitToTile(new TileLocation(27, 6), unit);
 //			world.getTiles()[27][6].getUnits().add(unit);
 //			world.getTiles()[28][6].getUnits().add(unit);

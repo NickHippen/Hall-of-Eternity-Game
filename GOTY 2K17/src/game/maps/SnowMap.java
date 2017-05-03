@@ -95,6 +95,8 @@ public class SnowMap extends GameMap {
 			INVALID_TILE_LOCATIONS.add(new TileLocation(x, 11));
 		}
 
+		GOAL_LOCATIONS.add(new TileLocation(28, 6));
+		GOAL_LOCATIONS.add(new TileLocation(28, 7));
 		GOAL_LOCATIONS.add(new TileLocation(29, 6));
 		GOAL_LOCATIONS.add(new TileLocation(29, 7));
 		
@@ -163,7 +165,7 @@ public class SnowMap extends GameMap {
 	}
 	
 	public void addBoss(TileWorld world, Boss unit ){
-			unit.setLocation(new Vector2f(2.9f,.75f));
+			unit.setLocation(new Vector2f(2.8f,.75f));
 			world.addUnitToTile(new TileLocation(29, 6), unit);
 			
 			if (unit instanceof Monster) {
