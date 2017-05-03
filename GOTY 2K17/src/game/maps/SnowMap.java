@@ -130,13 +130,16 @@ public class SnowMap extends GameMap {
 		}
 	}
 	
+	private List<TileLocation> invalidTileLocations;
+	
 	public SnowMap() {
 		super(BASE_IMAGE);
+		invalidTileLocations = new ArrayList<>(INVALID_TILE_LOCATIONS);
 	}
 
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
-		return INVALID_TILE_LOCATIONS;
+		return invalidTileLocations;
 	}
 
 

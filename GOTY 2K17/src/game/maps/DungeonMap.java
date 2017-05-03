@@ -121,15 +121,17 @@ public class DungeonMap extends GameMap {
 		}
 	}
 	
+	private List<TileLocation> invalidTileLocations;
+	
 	public DungeonMap() {
 		super(BASE_IMAGE);
+		invalidTileLocations = new ArrayList<>(INVALID_TILE_LOCATIONS);
 	}
 
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
-		return INVALID_TILE_LOCATIONS;
+		return invalidTileLocations;
 	}
-
 
 	@Override
 	public List<TileLocation> getGoalLocations() {

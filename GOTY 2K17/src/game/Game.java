@@ -28,7 +28,6 @@ import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.Unit;
 import game.units.heroes.Freelancer;
-import game.units.heroes.Rogue;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
@@ -95,6 +94,10 @@ public class Game extends TileFramework {
 	}
 	
 	protected void restart(){
+		selectingTarget = false;
+		selectingArea = false;
+		grabbedCard = null;
+		activatedCard = null;
 		deck = deckEditor.getDeck();
 		deck.resetDeck();
 		deck.getHand().clear();

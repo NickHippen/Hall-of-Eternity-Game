@@ -140,15 +140,17 @@ public class TownMap extends GameMap {
 		}
 	}
 	
+	private List<TileLocation> invalidTileLocations;
+	
 	public TownMap() {
 		super(BASE_IMAGE);
+		invalidTileLocations = new ArrayList<>(INVALID_TILE_LOCATIONS);
 	}
 
 	@Override
 	public List<TileLocation> getInvalidTileLocations() {
-		return INVALID_TILE_LOCATIONS;
+		return invalidTileLocations;
 	}
-
 
 	@Override
 	public List<TileLocation> getGoalLocations() {
