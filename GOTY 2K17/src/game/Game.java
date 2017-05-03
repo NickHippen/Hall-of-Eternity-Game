@@ -127,7 +127,7 @@ public class Game extends TileFramework {
 		deck.resetDeck();
 		deck.getHand().clear();
 		this.getWorld().setWaveNum(1);
-		this.getWorld().setBoneNum(75);
+		this.getWorld().setBoneNum(300);
 		this.getWorld().getUnits().clear();
 		spawnTimer = calculateTimeBetweenSpawns();
 		getWorld().setGameover(false);
