@@ -37,6 +37,7 @@ public class Boss extends Monster {
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
 		
 		this.setDamage(DAMAGE);
+		setRanged(true);
 	}
 	
 	public String getName(){

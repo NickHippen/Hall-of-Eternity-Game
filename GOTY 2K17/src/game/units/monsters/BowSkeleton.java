@@ -28,9 +28,10 @@ public class BowSkeleton extends Monster {
 		super(spriteSheet, world, MAX_HEALTH);
 		this.maxFrameNum = 12;
 		this.setDamage(DAMAGE);
+		setRanged(true);
 	}
 	
-	public String getName(){
+	public String getName() {
 		return "Bow Skeleton";
 	}
 }

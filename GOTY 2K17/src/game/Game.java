@@ -17,7 +17,6 @@ import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
-import game.sound.*;
 import game.cards.traps.TrapSpawnCard;
 import game.maps.DungeonMap;
 import game.maps.SnowMap;
@@ -26,10 +25,11 @@ import game.menu.Button;
 import game.menu.DeckMaker;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
+import game.sound.PlayerControl;
 import game.units.Unit;
+import game.units.heroes.Archer;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
-import game.units.monsters.Spider;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
 
@@ -249,6 +249,7 @@ public class Game extends TileFramework {
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
 					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Archer(getWorld()));
 				}
 			}
 			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
