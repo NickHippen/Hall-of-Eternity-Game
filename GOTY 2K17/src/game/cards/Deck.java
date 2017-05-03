@@ -100,7 +100,7 @@ public class Deck {
 	}
 	
 	public void addCard(Card card){
-		deck.add(card);
+		if(deck.size() < 20) deck.add(card);
 	}
 	
 	public void removeCard(int i){
@@ -110,7 +110,6 @@ public class Deck {
 	public void resetDeck(){
 		tempDeck.clear();
 		tempDeck.addAll(deck);
-		System.out.println(deck.size());
 		this.shuffle();
 	}
 }
