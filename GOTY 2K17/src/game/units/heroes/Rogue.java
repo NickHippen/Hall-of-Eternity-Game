@@ -25,7 +25,7 @@ public class Rogue extends Hero {
 	
 	public Rogue(TileWorld world) {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.ROGUE);
-		this.name="Rogue";		
+		this.name="Rogue";
 		this.setDamage(DAMAGE);
 		this.setDropAmount(13);
 	}
@@ -33,4 +33,5 @@ public class Rogue extends Hero {
 	public String getName(){
 		return "Rogue";
 	}
+	
 }

@@ -10,6 +10,7 @@ import game.Tile;
 import game.TileLocation;
 import game.TileWorld;
 import game.units.heroes.Hero;
+import game.units.heroes.Rogue;
 import game.units.monsters.Monster;
 import game.units.status.StatusEffects;
 import game.units.tasks.AttackTask;
@@ -148,7 +149,7 @@ public abstract class LivingUnit extends Unit {
 			if(this instanceof Monster) this.setAttacking(true);
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
-				if (getTask() instanceof MoveTask) {
+				if (!(this instanceof Rogue) && getTask() instanceof MoveTask) {
 					List<Trap> traps = getTile().getUnits(Trap.class);
 					if (!traps.isEmpty()) {
 						traps.get(0).triggerEffect(this);
