@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.units.LivingUnit;
+import game.units.heroes.Hero;
 
 public class Cerberus extends Monster {
 
@@ -33,6 +35,14 @@ public class Cerberus extends Monster {
 	
 	public String getName(){
 		return "Cerberus";
+	}
+	
+	@Override
+	public void attack(LivingUnit target) {
+		super.attack(target);
+		if (target.getTile().getUnits(Hero.class).size() == 1) {
+			super.attack(target); // Attack twice on solo units
+		}
 	}
 	
 }
