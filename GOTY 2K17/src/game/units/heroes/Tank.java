@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import game.TileWorld;
 
 public class Tank extends Hero {
-	private final static int MAX_HEALTH = 400;
+	private final static int MAX_HEALTH = 200;
 	private final static int DAMAGE = 10;
 	
 	private static BufferedImage spriteSheet;
@@ -27,7 +27,7 @@ public class Tank extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.TANK);
 		this.name="Tank";		
 		this.setDamage(DAMAGE);
-		this.setDropAmount(13);
+		this.setDropAmount(35);
 	}
 	
 	public String getName() {

@@ -9,7 +9,7 @@ import game.TileWorld;
 
 public class Freelancer extends Hero {
 	private final static int MAX_HEALTH = 125;
-	private final static int DAMAGE = 20;
+	private final static int DAMAGE = 15;
 	
 	private static BufferedImage spriteSheet;
 	
@@ -27,7 +27,7 @@ public class Freelancer extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.FREELANCER);
 		this.name="Freelancer";		
 		this.setDamage(DAMAGE);
-		this.setDropAmount(7);
+		this.setDropAmount(25);
 	}
 	
 	public String getName(){

@@ -15,6 +15,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import com.sun.glass.events.KeyEvent;
+
 import game.vectors.Vector2f;
 
 public class SimpleFramework extends JFrame implements Runnable {
@@ -37,6 +39,8 @@ public class SimpleFramework extends JFrame implements Runnable {
 	protected float appWorldHeight = 2.0f;
 	protected long appSleep = 10L;
 	protected boolean appMaintainRatio = false;
+	
+	private boolean fastMode = false;
 
 	public SimpleFramework() {
 		
@@ -152,6 +156,9 @@ public class SimpleFramework extends JFrame implements Runnable {
 	}
 
 	private void gameLoop(float delta) {
+		if (fastMode) {
+			delta *= 2;
+		}
 		processInput(delta);
 		updateObjects(delta);
 		renderFrame();
@@ -186,6 +193,9 @@ public class SimpleFramework extends JFrame implements Runnable {
 	protected void processInput(float delta) {
 		keyboard.poll();
 		mouse.poll();
+		if (keyboard.keyDownOnce(KeyEvent.VK_F)) {
+			fastMode = !fastMode;
+		}
 	}
 
 	protected void updateObjects(float delta) {

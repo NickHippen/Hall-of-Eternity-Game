@@ -8,8 +8,9 @@ import javax.imageio.ImageIO;
 import game.TileWorld;
 
 public class Archer extends Hero {
+	
 	private final static int MAX_HEALTH = 75;
-	private final static int DAMAGE = 20;
+	private final static int DAMAGE = 15;
 	
 	private static BufferedImage spriteSheet;
 	
@@ -27,7 +28,7 @@ public class Archer extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.ARCHER);
 		this.name="Archer";
 		this.setDamage(DAMAGE);
-		this.setDropAmount(10);
+		this.setDropAmount(30);
 	}
 	
 	public String getName(){

@@ -30,8 +30,9 @@ import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.GameOverSprite;
 import game.units.Unit;
-import game.units.heroes.Freelancer;
 import game.units.heroes.Hero;
+import game.units.heroes.HeroClassType;
+import game.units.heroes.HeroFactory;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
@@ -57,6 +58,8 @@ public class Game extends TileFramework {
 	private String message;
 	static  PlayerControl bg;
 	private GameOverSprite gameOverSprite;
+	private final HeroFactory heroFactory = new HeroFactory();
+	
 
 	private boolean titleScreen = true;
 	private boolean levelSelection;
@@ -84,6 +87,7 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 
+		spawnTimer = calculateTimeBetweenSpawns();
 		this.gameOverSprite = new GameOverSprite(getWorld());
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
@@ -118,7 +122,6 @@ public class Game extends TileFramework {
 		selectingArea = false;
 		waveStarted = false;
 		waveTimer = 0f;
-		spawnTimer = 0f;
 		grabbedCard = null;
 		activatedCard = null;
 		deck = deckEditor.getDeck();
@@ -127,6 +130,7 @@ public class Game extends TileFramework {
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
 		this.getWorld().getUnits().clear();
+		spawnTimer = calculateTimeBetweenSpawns();
 		getWorld().setGameover(false);
 		getWorld().getMap().addBoss(getWorld(), new Boss(getWorld()));
 		startHand = 0;
@@ -504,13 +508,41 @@ public class Game extends TileFramework {
 	public void updateWave(float delta) {
 		spawnTimer += delta;
 		waveTimer += delta;
-		float timeBetweenSpawns = 1f / getWorld().getWaveNum();
-		if (waveTimer > 20f) { // Time for new wave
+		float timeBetweenSpawns = calculateTimeBetweenSpawns();
+		if (waveTimer > calculateWaveLength()) { // Time for new wave
 			tryNextWave();
 		} else if (spawnTimer > timeBetweenSpawns) { // Time to spawn new hero
-			getWorld().spawnHero(new Freelancer(getWorld()));
+			HeroClassType[] types = HeroClassType.values();
+			float totalWeight = 0f;
+			for (HeroClassType type : types) {
+				totalWeight += type.getWeight();
+			}
+			float roll = RANDOM.nextFloat() * totalWeight;
+			float weightCounter = 0f;
+			HeroClassType choice = null;
+			for (HeroClassType type : types) {
+				weightCounter += type.getWeight();
+				if (roll < weightCounter) {
+					choice = type;
+					break;
+				}
+			}
+			if (choice == null) {
+				choice = HeroClassType.FREELANCER;
+			}
+			Hero hero = heroFactory.getHero(choice, getWorld());
+			getWorld().spawnHero(hero);
 			spawnTimer = 0f;
 		}
+	}
+	
+	public float calculateWaveLength() {
+		return 10f + getWorld().getWaveNum();
+	}
+	
+	public float calculateTimeBetweenSpawns() {
+//		return 10f / (float) Math.sqrt(getWorld().getWaveNum());
+		return 50f / ((float) Math.pow(getWorld().getWaveNum() - 1, 2) + 10f);
 	}
 	
 	public void tryNextWave() {
@@ -522,10 +554,10 @@ public class Game extends TileFramework {
 				return;
 			}
 		}
-		waveTimer = 0f;
-		spawnTimer = 0f;
-		waveStarted = false;
 		getWorld().setWaveNum(getWorld().getWaveNum() + 1);
+		waveTimer = 0f;
+		spawnTimer = calculateTimeBetweenSpawns();
+		waveStarted = false;
 	}
 
 	public static void main(String[] args) {
