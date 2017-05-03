@@ -59,6 +59,7 @@ public class Game extends TileFramework {
 	private boolean deckCreation;
 	private boolean gameplay;
 	private boolean pause;
+	private boolean firstTime=true;
 
 	private TitleScreen title;
 	private LevelSelect level;
@@ -92,8 +93,11 @@ public class Game extends TileFramework {
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
 			//Initialize deck here because you can't get back to the titlescreen, won't reset on initialize. This way the deck can save
-			deckEditor = new DeckMaker(getWorld());
-			deck = new Deck(getWorld()); 
+			if(firstTime){
+				deckEditor = new DeckMaker(getWorld());
+				deck = new Deck(getWorld()); 
+				firstTime = false;
+			}
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
