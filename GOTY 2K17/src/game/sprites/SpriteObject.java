@@ -119,7 +119,7 @@ public class SpriteObject {
 		return this.renderedImage;
 	}
 	
-	public void setRenderedImage(BufferedImage renderedImage){
+	public void setRenderedImage(BufferedImage renderedImage) {
 		this.renderedImage = renderedImage;
 	}
 	

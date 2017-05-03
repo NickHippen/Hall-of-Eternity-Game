@@ -46,8 +46,10 @@ public class TitleScreen extends BoundingSprite{
 		}
 	}
 	
-	public void unselectButton(){
+	public void unselectButton() {
+		if (spriteSheet != this.getRenderedImage()) {
 			this.setRenderedImage(spriteSheet);
+		}
 	}
 	
 }

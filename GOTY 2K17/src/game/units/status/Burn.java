@@ -35,5 +35,9 @@ public class Burn {
 			}
 		}
 	}
+
+	public boolean isBurning() {
+		return isBurned;
+	}
 	
 }
