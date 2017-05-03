@@ -27,7 +27,7 @@ public class Freelancer extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.FREELANCER);
 		this.name="Freelancer";		
 		this.setDamage(DAMAGE);
-		this.setDropAmount(25);
+		this.setDropAmount(50);
 	}
 	
 	public String getName(){

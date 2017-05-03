@@ -30,7 +30,7 @@ public class Bard extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.BARD);
 		this.name="Bard";		
 		this.setDamage(DAMAGE);
-		this.setDropAmount(30);
+		this.setDropAmount(60);
 	}
 	
 	public String getName() {

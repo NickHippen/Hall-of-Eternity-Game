@@ -28,7 +28,7 @@ public class Archer extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.ARCHER);
 		this.name="Archer";
 		this.setDamage(DAMAGE);
-		this.setDropAmount(30);
+		this.setDropAmount(60);
 	}
 	
 	public String getName(){

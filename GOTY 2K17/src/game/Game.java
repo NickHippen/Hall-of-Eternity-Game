@@ -83,7 +83,7 @@ public class Game extends TileFramework {
 		this.gameOverSprite = new GameOverSprite(getWorld());
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
-		this.message = "";
+		message = "";
 
 		selectedUnits = new ArrayList<Unit>();
 
@@ -290,10 +290,6 @@ public class Game extends TileFramework {
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
 					waveStarted = true;
-//					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
-//					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
-//					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
-//					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
 				}
 			}
 			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
@@ -404,6 +400,20 @@ public class Game extends TileFramework {
 					message = "select summon location";
 				g.drawString(message, 581, 666);
 				message = "";
+			} else {
+				if (getWorld().isGameover()) {
+					this.message = "Game Over!";
+					g.drawString(message, 581, 645);
+					this.message = "Press 'Esc' to Quit!";
+					g.drawString(message, 581, 666);
+				} else if (!waveStarted) {
+					this.message = "Press 'Space' to start";
+					g.drawString(message, 581, 645);
+					this.message = "the next wave.";
+					g.drawString(message, 581, 666);
+				} else {
+					this.message = "";
+				}
 			}
 
 			g.setFont(new Font("Titillium Web", Font.PLAIN, 25));

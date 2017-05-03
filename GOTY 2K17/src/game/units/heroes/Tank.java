@@ -25,9 +25,9 @@ public class Tank extends Hero {
 	
 	public Tank(TileWorld world) {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.TANK);
-		this.name="Tank";		
+		this.name="Tank";
 		this.setDamage(DAMAGE);
-		this.setDropAmount(35);
+		this.setDropAmount(70);
 	}
 	
 	public String getName() {
