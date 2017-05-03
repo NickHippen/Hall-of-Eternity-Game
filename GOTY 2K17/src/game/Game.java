@@ -79,6 +79,7 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 
+		spawnTimer = calculateTimeBetweenSpawns();
 		this.gameOverSprite = new GameOverSprite(getWorld());
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
@@ -109,7 +110,6 @@ public class Game extends TileFramework {
 		selectingArea = false;
 		waveStarted = false;
 		waveTimer = 0f;
-		spawnTimer = 0f;
 		grabbedCard = null;
 		activatedCard = null;
 		deck = deckEditor.getDeck();
@@ -118,6 +118,7 @@ public class Game extends TileFramework {
 		this.getWorld().setWaveNum(1);
 		this.getWorld().setBoneNum(75);
 		this.getWorld().getUnits().clear();
+		spawnTimer = calculateTimeBetweenSpawns();
 		getWorld().setGameover(false);
 		getWorld().getMap().addBoss(getWorld(), new Boss(getWorld()));
 	}
@@ -453,8 +454,8 @@ public class Game extends TileFramework {
 	public void updateWave(float delta) {
 		spawnTimer += delta;
 		waveTimer += delta;
-		float timeBetweenSpawns = 1f / getWorld().getWaveNum();
-		if (waveTimer > 20f) { // Time for new wave
+		float timeBetweenSpawns = calculateTimeBetweenSpawns();
+		if (waveTimer > calculateWaveLength()) { // Time for new wave
 			tryNextWave();
 		} else if (spawnTimer > timeBetweenSpawns) { // Time to spawn new hero
 			HeroClassType[] types = HeroClassType.values();
@@ -481,6 +482,15 @@ public class Game extends TileFramework {
 		}
 	}
 	
+	public float calculateWaveLength() {
+		return 10f + getWorld().getWaveNum();
+	}
+	
+	public float calculateTimeBetweenSpawns() {
+//		return 10f / (float) Math.sqrt(getWorld().getWaveNum());
+		return 50f / ((float) Math.pow(getWorld().getWaveNum() - 1, 2) + 10f);
+	}
+	
 	public void tryNextWave() {
 		if (getWorld().isGameover()) { // Already lost, no continuing
 			return;
@@ -490,10 +500,10 @@ public class Game extends TileFramework {
 				return;
 			}
 		}
-		waveTimer = 0f;
-		spawnTimer = 0f;
-		waveStarted = false;
 		getWorld().setWaveNum(getWorld().getWaveNum() + 1);
+		waveTimer = 0f;
+		spawnTimer = calculateTimeBetweenSpawns();
+		waveStarted = false;
 	}
 
 	public static void main(String[] args) {

@@ -27,7 +27,7 @@ public class Rogue extends Hero {
 		super(spriteSheet, world, MAX_HEALTH, HeroClassType.ROGUE);
 		this.name="Rogue";
 		this.setDamage(DAMAGE);
-		this.setDropAmount(13);
+		this.setDropAmount(32);
 	}
 	
 	public String getName(){
