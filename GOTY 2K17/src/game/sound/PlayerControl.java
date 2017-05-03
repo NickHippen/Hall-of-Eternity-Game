@@ -35,7 +35,6 @@ public class PlayerControl {
 		if (loopClip != null)
 			loopClip.done();
 		if (loopStream != null)
-			//loopStream.shutDown();
 			loopStream.done();
 	}
 
