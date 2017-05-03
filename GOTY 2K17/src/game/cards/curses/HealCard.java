@@ -47,4 +47,8 @@ public class HealCard extends UnitSelectCard {
 		  Card f = new HealCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 15;
+	}
 }

@@ -47,4 +47,7 @@ public class TransmuteCard extends ActionCard {
 		  return f;
 	}
 	
+	public int getCost(){
+		return 25;
+	}
 }

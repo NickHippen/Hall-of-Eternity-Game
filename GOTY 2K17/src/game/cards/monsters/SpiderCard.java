@@ -43,4 +43,8 @@ public class SpiderCard extends MonsterSpawnCard {
 		  Card f = new SpiderCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 80;
+	}
 }

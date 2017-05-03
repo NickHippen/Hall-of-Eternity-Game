@@ -43,4 +43,7 @@ public class VulnerableTrapCard extends TrapSpawnCard {
 		  return f;
 	}
 	
+	public int getCost(){
+		return 150;
+	}
 }

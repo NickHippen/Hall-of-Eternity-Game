@@ -43,4 +43,8 @@ public class WolfCard extends MonsterSpawnCard {
 		  Card f = new WolfCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 60;
+	}
 }

@@ -46,4 +46,8 @@ public class TouchOfDeathCard extends UnitSelectCard {
 		  Card f = new TouchOfDeathCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 40;
+	}
 }

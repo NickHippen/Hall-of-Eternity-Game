@@ -43,4 +43,8 @@ public class DragonCard extends MonsterSpawnCard {
 		  Card f = new DragonCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 999;
+	}
 }

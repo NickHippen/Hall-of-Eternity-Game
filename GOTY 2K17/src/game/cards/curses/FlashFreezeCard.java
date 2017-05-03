@@ -47,4 +47,8 @@ public class FlashFreezeCard extends AreaCard {
 		  Card f = new FlashFreezeCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 50;
+	}
 }

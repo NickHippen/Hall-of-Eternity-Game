@@ -46,4 +46,8 @@ public class FirestormCard extends AreaCard {
 		  Card f = new FirestormCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 75;
+	}
 }

@@ -43,4 +43,8 @@ public class IceTrapCard extends TrapSpawnCard {
 		  return f;
 	}
 	
+	public int getCost(){
+		return 100;
+	}
+	
 }

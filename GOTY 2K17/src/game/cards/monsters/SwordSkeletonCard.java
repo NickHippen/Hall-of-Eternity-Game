@@ -44,4 +44,7 @@ public class SwordSkeletonCard extends MonsterSpawnCard {
 		  return f;
 	}
 	
+	public int getCost(){
+		return 35;
+	}
 }

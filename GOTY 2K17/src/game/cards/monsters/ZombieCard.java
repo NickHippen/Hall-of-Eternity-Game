@@ -43,4 +43,8 @@ public class ZombieCard extends MonsterSpawnCard {
 		  Card f = new ZombieCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 30;
+	}
 }

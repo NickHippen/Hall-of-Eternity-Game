@@ -43,4 +43,7 @@ public class BlindTrapCard extends TrapSpawnCard {
 		  return f;
 	}
 	
+	public int getCost(){
+		return 200;
+	}
 }

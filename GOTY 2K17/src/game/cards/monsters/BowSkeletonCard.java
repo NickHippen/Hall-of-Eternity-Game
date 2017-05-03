@@ -43,4 +43,8 @@ public class BowSkeletonCard extends MonsterSpawnCard {
 		  Card f = new BowSkeletonCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 60;
+	}
 }

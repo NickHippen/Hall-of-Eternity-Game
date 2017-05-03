@@ -43,4 +43,8 @@ public class CardBack extends ActionCard {
 		  Card f = new CardBack(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 1;
+	}
 }

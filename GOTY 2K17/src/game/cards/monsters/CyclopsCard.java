@@ -43,4 +43,8 @@ public class CyclopsCard extends MonsterSpawnCard {
 		  Card f = new CyclopsCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 250;
+	}
 }

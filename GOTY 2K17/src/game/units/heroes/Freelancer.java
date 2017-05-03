@@ -9,7 +9,7 @@ import game.TileWorld;
 
 public class Freelancer extends Hero {
 	private final static int MAX_HEALTH = 125;
-	private final static int DAMAGE = 30;
+	private final static int DAMAGE = 20;
 	
 	private static BufferedImage spriteSheet;
 	

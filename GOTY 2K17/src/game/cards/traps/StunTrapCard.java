@@ -42,4 +42,8 @@ public class StunTrapCard extends TrapSpawnCard {
 		  Card f = new StunTrapCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 100;
+	}
 }

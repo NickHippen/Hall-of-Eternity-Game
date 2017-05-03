@@ -43,4 +43,8 @@ public class CentaurCard extends MonsterSpawnCard {
 		  Card f = new CentaurCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 350;
+	}
 }

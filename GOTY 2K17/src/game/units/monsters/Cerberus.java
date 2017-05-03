@@ -11,8 +11,8 @@ import game.units.heroes.Hero;
 
 public class Cerberus extends Monster {
 
-	private final static int MAX_HEALTH = 200;
-	private final static int DAMAGE = 45;
+	private final static int MAX_HEALTH = 275;
+	private final static int DAMAGE = 65;
 	
 	private static BufferedImage spriteSheet;
 	
