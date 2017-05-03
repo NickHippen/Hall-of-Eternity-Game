@@ -7,6 +7,10 @@ import javax.imageio.ImageIO;
 
 import game.TileWorld;
 
+
+//NOT IMPLEMENTED
+
+
 public class Mage extends Hero {
 	private final static int MAX_HEALTH = 100;
 	private final static int DAMAGE = 100;

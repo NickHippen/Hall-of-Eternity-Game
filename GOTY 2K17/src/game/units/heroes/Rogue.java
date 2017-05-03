@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 import game.TileWorld;
 
 public class Rogue extends Hero {
-	private final static int MAX_HEALTH = 125;
-	private final static int DAMAGE = 25;
+	private final static int MAX_HEALTH = 75;
+	private final static int DAMAGE = 50;
 	
 	private static BufferedImage spriteSheet;
 	
