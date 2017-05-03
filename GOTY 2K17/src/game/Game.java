@@ -23,7 +23,9 @@ import game.maps.SnowMap;
 import game.maps.TownMap;
 import game.menu.Button;
 import game.menu.DeckMaker;
+import game.menu.DrawButton;
 import game.menu.LevelSelect;
+import game.menu.ReshuffleButton;
 import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.GameOverSprite;
@@ -69,9 +71,15 @@ public class Game extends TileFramework {
 	private TitleScreen title;
 	private LevelSelect level;
 	private DeckMaker deckEditor;
+	private DrawButton drawButton;
+	private ReshuffleButton reshuffleButton;
 	Button quitButton;
 	Button doneButton;
-
+	
+	private int drawCost=25; //Cost to draw a card
+	private int reshuffleCost=0; //Cost to reshuffle deck
+	private int startHand = 0; //Draw 5 cards at start of game
+	
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -98,7 +106,11 @@ public class Game extends TileFramework {
 
 		deck = deckEditor.getDeck();
 		deck.resetDeck();
+		
 		deck.getHand().clear();
+		
+		drawButton = new DrawButton(getWorld());
+		reshuffleButton = new ReshuffleButton(getWorld());
 	}
 	
 	protected void restart(){
@@ -117,6 +129,7 @@ public class Game extends TileFramework {
 		this.getWorld().getUnits().clear();
 		getWorld().setGameover(false);
 		getWorld().getMap().addBoss(getWorld(), new Boss(getWorld()));
+		startHand = 0;
 	}
 
 	@Override
@@ -128,7 +141,7 @@ public class Game extends TileFramework {
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
-					levelSelection = true;
+					deckCreation = true;
 					return;
 				}
 				title.selectButton();
@@ -199,9 +212,17 @@ public class Game extends TileFramework {
 
 		if (gameplay) {
 			if (!pause) {
+				
+				if(deck.getCardsRemaining() == 0) reshuffleCost = 0;
+				else reshuffleCost = 100;
+				
+				if(deck.getHand().size() < 5 && startHand == 0){ 
+					if(deck.getCardsRemaining() == 0) startHand = 1;
+					deck.drawCard();
+				} else startHand = 1;
 				// Player drops card
 				if (!mouse.buttonDown(MouseEvent.BUTTON1) && grabbedCard != null) {
-					if (onBoard(mouseVec) && (getWorld().getBoneNum() > grabbedCard.getCost())) {
+					if (onBoard(mouseVec) && (getWorld().getBoneNum() >= grabbedCard.getCost())) {
 						if (grabbedCard instanceof MonsterSpawnCard || grabbedCard instanceof UnitSelectCard
 								|| grabbedCard instanceof TrapSpawnCard) {
 							selectingTarget = true;
@@ -265,7 +286,6 @@ public class Game extends TileFramework {
 				// Draw card by clicking on deck
 				if (deck.getCardBack().isPointWithin(mouseVec)) {
 					if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
-						deck.drawCard();
 					}
 				}
 
@@ -290,6 +310,20 @@ public class Game extends TileFramework {
 //					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
 //					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
 //					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
+				}
+				System.out.println(mouseVec.x + " " + mouseVec.y);
+				if (mouseVec.x < 2.91 && mouseVec.x > 2.045 && mouseVec.y < -.84 && mouseVec.y > -1.03) {
+					if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && getWorld().getBoneNum() >= drawCost && deck.getCardsRemaining() > 0){
+						deck.drawCard();
+						getWorld().setBoneNum(getWorld().getBoneNum() - drawCost);
+					}
+				}
+				if (mouseVec.x < 2.91 && mouseVec.x > 2.045 && mouseVec.y < -1.78 && mouseVec.y > -1.98) {
+					if (mouse.buttonDownOnce(MouseEvent.BUTTON1) && getWorld().getBoneNum() >= reshuffleCost){
+						getWorld().setBoneNum(getWorld().getBoneNum() - reshuffleCost);
+						deck.resetDeck();
+						deck.getHand().clear();
+					}
 				}
 			}
 			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
@@ -398,6 +432,8 @@ public class Game extends TileFramework {
 					message = "select target location";
 				if (activatedCard instanceof MonsterSpawnCard)
 					message = "select summon location";
+				if (activatedCard instanceof TrapSpawnCard)
+					message = "select build location";
 				g.drawString(message, 581, 666);
 				message = "";
 			}
@@ -426,7 +462,25 @@ public class Game extends TileFramework {
 			deck.getCardBack().setView(view);
 			if (deck.getCardsRemaining() > 0)
 				deck.getCardBack().draw(g2d);
+			
+			g.setFont(new Font("Titillium Web", Font.PLAIN, 18));
+			g.setColor(Color.WHITE);
 
+			drawButton.setView(view);
+			drawButton.draw(g2d);
+			reshuffleButton.setView(view);
+			reshuffleButton.draw(g2d);
+			
+			
+			g.drawString(String.format("%03d", drawCost), 1376, 703);
+			g.drawString(String.format("%03d", reshuffleCost), 1376, 927);
+			
+			//Render wave num and bones
+			g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
+			g.drawString(String.format("%03d", getWorld().getWaveNum()), 99, 664);
+			g.drawString(String.format("%04d", getWorld().getBoneNum()), 1292, 664);
+			
+			
 			// Render grabbed card last so it's on top of everything
 			if (grabbedCard != null)
 				grabbedCard.draw(g2d);
