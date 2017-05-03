@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import game.TileLocation;
 import game.TileWorld;
+import game.sound.PlayerControl;
 import game.units.Unit;
 import game.units.monsters.Boss;
 import game.units.monsters.Monster;
@@ -156,6 +157,11 @@ public class DungeonMap extends GameMap {
 			if (unit instanceof Monster) {
 				world.policyIteration(tile -> tile.getAggroPathfinding());		
 		}
+	}
+
+	@Override
+	public void getSoung(PlayerControl bg) {
+		bg.playStage1();	
 	}
 
 }

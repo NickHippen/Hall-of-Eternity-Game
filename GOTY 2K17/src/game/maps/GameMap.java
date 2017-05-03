@@ -6,6 +6,7 @@ import java.util.Set;
 
 import game.TileLocation;
 import game.TileWorld;
+import game.sound.PlayerControl;
 import game.sprites.SpriteObject;
 import game.units.monsters.Boss;
 import game.util.Direction;
@@ -28,6 +29,7 @@ public abstract class GameMap extends SpriteObject {
 
 	public abstract void addBoss(TileWorld world, Boss boss);
 	
+	public abstract void getSoung(PlayerControl bg);
 	
 	public void addInvalidTileLocation(TileLocation location) {
 		getInvalidTileLocations().add(location);
