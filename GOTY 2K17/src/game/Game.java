@@ -284,6 +284,7 @@ public class Game extends TileFramework {
 					levelSelection = true;
 					gameplay = false;
 					pause = false;
+					bg.shutDownClips();
 					this.initialize();
 					return;
 				}
