@@ -43,4 +43,11 @@ public class Boss extends Monster {
 	public String getName(){
 		return "Lazrius";
 	}
+	
+	@Override
+	public void kill() {
+		super.kill();
+		getWorld().setGameover(true);
+	}
+	
 }

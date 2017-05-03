@@ -32,6 +32,7 @@ public class TileWorld {
 	
 	private int waveNum;
 	private int boneNum;
+	private boolean gameover = false;
 	
 	protected TileWorld(GameMap map, int tilesX, int tilesY, float tileSizeX, float tileSizeY, float worldWidth, float worldHeight) {
 		this.units = new ArrayList<>();
@@ -290,6 +291,14 @@ public class TileWorld {
 		this.setBoneNum(this.getBoneNum() + amount);
 	}
 	
+	public boolean isGameover() {
+		return gameover;
+	}
+
+	public void setGameover(boolean gameover) {
+		this.gameover = gameover;
+	}
+
 	public void spawnHero(Hero hero) {
 		addUnitToTile(getMap().getSpawnLocations().get(RANDOM.nextInt(getMap().getSpawnLocations().size())), hero);
 	}
