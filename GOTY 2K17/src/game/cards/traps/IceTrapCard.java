@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
+import game.cards.curses.BlastCard;
 import game.units.traps.TrapType;
 
 public class IceTrapCard extends TrapSpawnCard {
@@ -34,6 +36,11 @@ public class IceTrapCard extends TrapSpawnCard {
 
 	public String getName(){
 		return "Ice Trap";
+	}
+	
+	public Card copy (Card card){
+		  Card f = new IceTrapCard(world);
+		  return f;
 	}
 	
 }

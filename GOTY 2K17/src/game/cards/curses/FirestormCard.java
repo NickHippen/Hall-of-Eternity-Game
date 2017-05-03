@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
 import game.units.Unit;
 import game.units.heroes.Hero;
 import game.units.monsters.Zombie;
@@ -41,4 +42,8 @@ public class FirestormCard extends AreaCard {
 		}
 	}
 	
+	public Card copy (Card card){
+		  Card f = new FirestormCard(world);
+		  return f;
+	}
 }

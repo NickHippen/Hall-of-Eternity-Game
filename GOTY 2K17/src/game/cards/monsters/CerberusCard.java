@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
+import game.cards.curses.BlastCard;
 import game.units.monsters.MonsterType;
 import game.units.monsters.Zombie;
 
@@ -36,5 +38,9 @@ public class CerberusCard extends MonsterSpawnCard {
 	public String getName(){
 		return "Cerberus";
 	}
-	
+
+	public Card copy (Card card){
+		  Card f = new CerberusCard(world);
+		  return f;
+	}
 }

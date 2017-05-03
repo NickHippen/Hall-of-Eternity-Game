@@ -78,6 +78,7 @@ public class Deck {
 			if (hand.get(hand.size() - 1).getLocation().x > nextLoc.x) {
 				hand.get(hand.size() - 1).setLocation(new Vector2f(hand.get(hand.size() - 1).getLocation().x - delta * 15, -0.87f));
 			}else{
+				hand.get(hand.size() -1).setLocation(nextLoc);
 				drawing = false;
 			}
 		}
@@ -102,8 +103,8 @@ public class Deck {
 		deck.add(card);
 	}
 	
-	public void removeCard(Card card){
-		deck.remove(card);
+	public void removeCard(int i){
+		deck.remove(i);
 	}
 	
 	public void resetDeck(){
