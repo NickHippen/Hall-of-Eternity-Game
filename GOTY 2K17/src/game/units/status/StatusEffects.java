@@ -6,7 +6,7 @@ import game.units.heroes.HeroDamageType;
 
 public class StatusEffects {
 	
-	private final float POISON_DURATION = 15;
+	private final float POISON_DURATION = 9999;
 	private final float BURN_DURATION = 5;
 	private final float CHILL_DURATION = 10;
 	private final float STUN_DURATION = 2;

@@ -28,7 +28,7 @@ public class Poison {
 			} else {
 				timeSinceTick += delta;
 				if (timeSinceTick >= TICK_DELAY) {
-					livingUnit.applyDamage(3);
+					livingUnit.applyDamage(1);
 					timeSinceTick = 0;
 				}
 			}

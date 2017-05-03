@@ -11,8 +11,8 @@ import game.Tile;
 import game.TileWorld;
 
 public class Bard extends Hero {
-	private final static int MAX_HEALTH = 200;
-	private final static int DAMAGE = 10;
+	private final static int MAX_HEALTH = 150;
+	private final static int DAMAGE = 8;
 	
 	private static BufferedImage spriteSheet;
 	

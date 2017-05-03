@@ -11,7 +11,7 @@ import game.units.LivingUnit;
 public class PitfallTrap extends Trap {
 
 	private static BufferedImage IMAGE;
-	private static final int DAMAGE = 50;
+	private static final int DAMAGE = 25;
 	
 	static {
 		try {

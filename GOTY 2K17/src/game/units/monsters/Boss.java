@@ -7,13 +7,14 @@ import javax.imageio.ImageIO;
 
 import game.TileFramework;
 import game.TileWorld;
+import game.units.LivingUnit;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
 public class Boss extends Monster {
 
-	private final static int MAX_HEALTH = 200;
-	private final static int DAMAGE = 35;
+	private final static int MAX_HEALTH = 20;
+	private final static int DAMAGE = 99999;
 	
 	private static BufferedImage spriteSheet;
 	
@@ -48,6 +49,17 @@ public class Boss extends Monster {
 	public void kill() {
 		super.kill();
 		getWorld().setGameover(true);
+	}
+	
+	@Override
+	public void attack(LivingUnit target) { // Kill target then take 1 damage
+		super.attack(target);
+		setHealth(getHealth() - 1);
+	}
+	
+	@Override
+	public void applyDamage(int amount) {
+		// Take no damage from other sources
 	}
 	
 }
