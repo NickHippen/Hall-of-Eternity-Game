@@ -24,6 +24,7 @@ public class TownMap extends GameMap {
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
 	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
+	private static final List<TileLocation> SPAWN_LOCATIONS = new ArrayList<>();
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -95,6 +96,11 @@ public class TownMap extends GameMap {
 		GOAL_LOCATIONS.add(new TileLocation(29, 5));
 		GOAL_LOCATIONS.add(new TileLocation(28, 6));
 		GOAL_LOCATIONS.add(new TileLocation(29, 6));
+		
+		SPAWN_LOCATIONS.add(new TileLocation(2, 1));
+		SPAWN_LOCATIONS.add(new TileLocation(12, 1));
+		SPAWN_LOCATIONS.add(new TileLocation(1, 7));
+		SPAWN_LOCATIONS.add(new TileLocation(12, 7));
 		
 		
 		// Hardcoded Pathfinding
@@ -176,6 +182,11 @@ public class TownMap extends GameMap {
 	@Override
 	public void getSoung(PlayerControl bg) {
 		bg.playStage3();	
+	}
+
+	@Override
+	public List<TileLocation> getSpawnLocations() {
+		return SPAWN_LOCATIONS;
 	}
 
 }

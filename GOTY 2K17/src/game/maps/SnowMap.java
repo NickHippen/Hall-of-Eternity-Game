@@ -23,7 +23,8 @@ public class SnowMap extends GameMap {
 
 	private static final List<TileLocation> INVALID_TILE_LOCATIONS = new ArrayList<>();
 	private static final List<TileLocation> GOAL_LOCATIONS = new ArrayList<>();
-	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>(); 
+	private static final Map<TileLocation, Set<Direction>> PATHFINDING_DIRECTIONS = new HashMap<>();
+	private static final List<TileLocation> SPAWN_LOCATIONS = new ArrayList<>();
 	
 	private static BufferedImage BASE_IMAGE;
 
@@ -97,6 +98,10 @@ public class SnowMap extends GameMap {
 		GOAL_LOCATIONS.add(new TileLocation(29, 6));
 		GOAL_LOCATIONS.add(new TileLocation(29, 7));
 		
+		for (int y = 3; y < 9; y++) {
+			SPAWN_LOCATIONS.add(new TileLocation(0, y));
+		}
+		
 		
 		// Hardcoded Pathfinding
 		addPathfindingDirection(new TileLocation(19, 8), Direction.RIGHT);
@@ -165,6 +170,11 @@ public class SnowMap extends GameMap {
 	@Override
 	public void getSoung(PlayerControl bg) {
 		bg.playStage2();	
+	}
+
+	@Override
+	public List<TileLocation> getSpawnLocations() {
+		return SPAWN_LOCATIONS;
 	}
 
 }
