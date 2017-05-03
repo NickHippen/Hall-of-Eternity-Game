@@ -17,7 +17,6 @@ import game.cards.curses.AreaCard;
 import game.cards.curses.CurseCard;
 import game.cards.curses.UnitSelectCard;
 import game.cards.monsters.MonsterSpawnCard;
-import game.sound.*;
 import game.cards.traps.TrapSpawnCard;
 import game.maps.DungeonMap;
 import game.maps.SnowMap;
@@ -26,7 +25,9 @@ import game.menu.Button;
 import game.menu.DeckMaker;
 import game.menu.LevelSelect;
 import game.menu.TitleScreen;
+import game.sound.PlayerControl;
 import game.units.Unit;
+import game.units.heroes.Bard;
 import game.units.heroes.Freelancer;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
@@ -53,7 +54,7 @@ public class Game extends TileFramework {
 	private String message;
 	static  PlayerControl bg;
 
-	private boolean titleScreen;
+	private boolean titleScreen = true;
 	private boolean levelSelection;
 	private boolean deckCreation;
 	private boolean gameplay;
@@ -69,19 +70,14 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 
-		deck = new Deck(getWorld());
-
 		this.getWorld().setWaveNum(0);
 		this.getWorld().setBoneNum(123);
 		this.message = "";
 
 		selectedUnits = new ArrayList<Unit>();
 
-		this.titleScreen = true;
-
 		title = new TitleScreen(getWorld());
 		level = new LevelSelect(getWorld());
-		deckEditor = new DeckMaker(getWorld());
 		
 		doneButton = new Button(getWorld());
 		doneButton.setLocation(doneButton.getLocation().add(new Vector2f (0, .3f)));
@@ -97,6 +93,9 @@ public class Game extends TileFramework {
 		mouseVec = getCenteredRelativeWorldMousePosition();
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
+			//Initialize deck here because you can't get back to the titlescreen, won't reset on initialize. This way the deck can save
+			deckEditor = new DeckMaker(getWorld());
+			deck = new Deck(getWorld()); 
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
@@ -109,6 +108,9 @@ public class Game extends TileFramework {
 		}
 
 		if (levelSelection) {
+			deck = deckEditor.getDeck();
+			deck.resetDeck();
+			deck.getHand().clear();
 			// Player hovering over CARDS button
 			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08) {
 				level.selectButton(4);
@@ -155,8 +157,10 @@ public class Game extends TileFramework {
 		}
 		
 		if(deckCreation){
+			deck = deckEditor.getDeck();
 			deckEditor.processInput(mouseVec, mouse);
 			if(deckEditor.getQuit()){
+				deck = deckEditor.getDeck();
 				deckEditor.setQuit(false);
 				levelSelection = true;
 				deckCreation = false;
@@ -252,7 +256,10 @@ public class Game extends TileFramework {
 					}
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
+//					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
+					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
 				}
 			}
 			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
@@ -372,8 +379,7 @@ public class Game extends TileFramework {
 				renderSelectedTile(g2d, getWorld().getTileLocationAtPosition(mouseVec));
 
 			// Renders cards
-			for (int i = 0; i < deck.getHand().size(); i++) {
-				Card card = deck.getHand().get(i);
+			for (Card card : deck.getHand()) {
 				card.setView(view);
 				card.draw(g2d);
 				// Shows line around selected cards

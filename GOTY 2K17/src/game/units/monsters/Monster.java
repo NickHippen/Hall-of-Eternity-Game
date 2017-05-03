@@ -19,6 +19,7 @@ public abstract class Monster extends LivingUnit {
 	protected int frameNum=-1;
 	protected int frameSize;
 	protected double animationSpeed = 1.7;
+	private boolean ranged = false;
 	
 	protected ArrayList<Hero> target;
 	
@@ -48,17 +49,30 @@ public abstract class Monster extends LivingUnit {
 		this.attacking = attacking;
 	}
 	
+	public boolean isRanged() {
+		return ranged;
+	}
+
+	public void setRanged(boolean ranged) {
+		this.ranged = ranged;
+	}
+
 	@Override
 	public void update(float delta) {
 		super.update(delta);
 		if (getTask() == null) {
-			Tile tile = getWorld().getTileAtPosition(getLocation());
-			Set<Tile> affectedTiles = getWorld().getSurroundingTiles(tile.getLocation(), 1);
+			Tile tile = getTile();
+			Set<Tile> affectedTiles;
+			if (isRanged()) {
+				affectedTiles = getWorld().getSurroundingTiles(tile.getLocation(), 2);
+			} else {
+				affectedTiles = getWorld().getSurroundingTiles(tile.getLocation(), 1);
+			}
 			for (Unit unit : getWorld().getUnits()) {
 				if (!(unit instanceof Hero)) {
 					continue;
 				}
-				Tile unitTile = unit.getWorld().getTileAtPosition(unit.getLocation());
+				Tile unitTile = unit.getTile();
 				if (affectedTiles.contains(unitTile)) {
 				//	setAttacking(true);
 					setTask(new AttackTask(unitTile, Hero.class));

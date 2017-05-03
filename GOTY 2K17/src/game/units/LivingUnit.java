@@ -134,7 +134,7 @@ public abstract class LivingUnit extends Unit {
 	public void kill() {
 		setHealth(0);
 		getWorld().getUnits().remove(this);
-		TileLocation loc = getWorld().getTileLocationAtPosition(getLocation());
+		TileLocation loc = getTileLocation();
 		getWorld().getMap().removeInvalidTileLocation(loc);
 		getWorld().policyIteration(Tile::getAggroPathfinding);
 	}
@@ -149,7 +149,7 @@ public abstract class LivingUnit extends Unit {
 			boolean taskComplete = getTask().contributeTask(this, delta);
 			if (taskComplete) {
 				if (getTask() instanceof MoveTask) {
-					List<Trap> traps = getWorld().getTileAtPosition(getLocation()).getUnits(Trap.class);
+					List<Trap> traps = getTile().getUnits(Trap.class);
 					if (!traps.isEmpty()) {
 						traps.get(0).triggerEffect(this);
 					}
@@ -180,7 +180,17 @@ public abstract class LivingUnit extends Unit {
 
 		width *= (double) getHealth() / (double) getMaxHealth();
 		if (width > 0) {
-			g.setColor(Color.GREEN);
+			Color healthColor;
+			if (getStatusEffects().isBurning()) {
+				healthColor = Color.ORANGE;
+			} else if (getStatusEffects().isPoisoned()) {
+				healthColor = new Color(0, 153, 51); // Dark green
+			} else if (getStatusEffects().isChilled()) {
+				healthColor = Color.CYAN;
+			} else {
+				healthColor = Color.GREEN;
+			}
+			g.setColor(healthColor);
 			if (this instanceof Hero) g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 18, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 18);
 			else g.drawLine((int)adjustedLoc.x - 15, (int) adjustedLoc.y - 10, (int) adjustedLoc.x - 15 + (int) width, (int) adjustedLoc.y - 10);
 		}

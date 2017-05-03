@@ -105,7 +105,7 @@ public class SpriteObject {
 	
 	public int getVerticalFrameNum(){
 		return this.verticalFrameNum;
-	}	
+	}
 	
 	public int getFrameSize(){
 		return this.frameSize;
@@ -119,7 +119,7 @@ public class SpriteObject {
 		return this.renderedImage;
 	}
 	
-	public void setRenderedImage(BufferedImage renderedImage){
+	public void setRenderedImage(BufferedImage renderedImage) {
 		this.renderedImage = renderedImage;
 	}
 	

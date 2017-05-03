@@ -27,5 +27,6 @@ public abstract class Card extends BoundingSprite {
 	public abstract boolean performAction(Vector2f pos);
 	
 	public abstract String getName();
-	
+
+	public abstract Card copy (Card card);
 }

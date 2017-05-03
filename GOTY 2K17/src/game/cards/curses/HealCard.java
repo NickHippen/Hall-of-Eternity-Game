@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
 import game.units.Unit;
 import game.units.monsters.Monster;
 import game.units.monsters.Zombie;
@@ -41,5 +42,9 @@ public class HealCard extends UnitSelectCard {
 			monster.setHealth(monster.getHealth() + HEAL);
 		}
 	}
-	
+
+	public Card copy (Card card){
+		  Card f = new HealCard(world);
+		  return f;
+	}
 }

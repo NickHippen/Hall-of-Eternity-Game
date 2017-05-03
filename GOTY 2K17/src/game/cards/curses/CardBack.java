@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
 import game.units.monsters.Zombie;
 import game.vectors.Vector2f;
 
@@ -36,5 +37,10 @@ public class CardBack extends ActionCard {
 
 	public String getName(){
 		return "Card Back";
+	}
+	
+	public Card copy (Card card){
+		  Card f = new CardBack(world);
+		  return f;
 	}
 }

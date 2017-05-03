@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
+import game.cards.curses.BlastCard;
 import game.units.traps.TrapType;
 
 public class VulnerableTrapCard extends TrapSpawnCard {
@@ -34,6 +36,11 @@ public class VulnerableTrapCard extends TrapSpawnCard {
 
 	public String getName(){
 		return "Vulnerable Trap";
+	}
+	
+	public Card copy (Card card){
+		  Card f = new VulnerableTrapCard(world);
+		  return f;
 	}
 	
 }

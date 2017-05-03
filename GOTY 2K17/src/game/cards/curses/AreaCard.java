@@ -18,7 +18,7 @@ public abstract class AreaCard extends CurseCard {
 	public boolean performAction(Vector2f pos) {
 		ArrayList<Tile> affectedTiles = getWorld().getSurroundingTilesDiag(getWorld().getTileAtPosition(pos).getLocation(),1);
 		for (Unit unit : getWorld().getUnits()) {
-			Tile tile = unit.getWorld().getTileAtPosition(unit.getLocation());
+			Tile tile = unit.getTile();
 			if (affectedTiles.contains(tile)) {
 				affectUnit(unit);
 			}

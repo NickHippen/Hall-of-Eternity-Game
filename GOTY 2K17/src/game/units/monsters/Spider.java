@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import game.TileFramework;
 import game.TileWorld;
+import game.units.LivingUnit;
 import game.vectors.AxisAlignedBoundingBox;
 import game.vectors.Vector2f;
 
@@ -36,10 +37,17 @@ public class Spider extends Monster {
 				new Vector2f(TileFramework.TILE_SIZE_X / 2F, -TileFramework.TILE_SIZE_Y / 2F)));
 		
 		this.setDamage(DAMAGE);
+		setOffsetY(-0.1f);
 	}
 	
 	public String getName(){
 		return "Spider";
+	}
+	
+	@Override
+	public void attack(LivingUnit target) {
+		super.attack(target);
+		target.getStatusEffects().applyPoisonStatus();
 	}
 	
 }
