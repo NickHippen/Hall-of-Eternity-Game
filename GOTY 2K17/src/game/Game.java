@@ -27,8 +27,7 @@ import game.menu.LevelSelect;
 import game.menu.TitleScreen;
 import game.sound.PlayerControl;
 import game.units.Unit;
-import game.units.heroes.Bard;
-import game.units.heroes.Freelancer;
+import game.units.heroes.Rogue;
 import game.units.monsters.Boss;
 import game.util.Matrix3x3f;
 import game.vectors.Vector2f;
@@ -59,6 +58,7 @@ public class Game extends TileFramework {
 	private boolean deckCreation;
 	private boolean gameplay;
 	private boolean pause;
+	private boolean firstTime=true;
 
 	private TitleScreen title;
 	private LevelSelect level;
@@ -70,8 +70,8 @@ public class Game extends TileFramework {
 	protected void initialize() {
 		super.initialize();
 
-		this.getWorld().setWaveNum(0);
-		this.getWorld().setBoneNum(123);
+		this.getWorld().setWaveNum(1);
+		this.getWorld().setBoneNum(75);
 		this.message = "";
 
 		selectedUnits = new ArrayList<Unit>();
@@ -85,6 +85,22 @@ public class Game extends TileFramework {
 		quitButton.setLocation(quitButton.getLocation().add(new Vector2f (0, -.3f)));
 		bg = new PlayerControl();
 		bg.playBG();
+		
+		deckEditor = new DeckMaker(getWorld());
+		deck = new Deck(getWorld()); 
+
+		deck = deckEditor.getDeck();
+		deck.resetDeck();
+		deck.getHand().clear();
+	}
+	
+	protected void restart(){
+		deck = deckEditor.getDeck();
+		deck.resetDeck();
+		deck.getHand().clear();
+		this.getWorld().setWaveNum(1);
+		this.getWorld().setBoneNum(75);
+
 	}
 
 	@Override
@@ -93,9 +109,6 @@ public class Game extends TileFramework {
 		mouseVec = getCenteredRelativeWorldMousePosition();
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
-			//Initialize deck here because you can't get back to the titlescreen, won't reset on initialize. This way the deck can save
-			deckEditor = new DeckMaker(getWorld());
-			deck = new Deck(getWorld()); 
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
 				if (mouse.buttonDownOnce(MouseEvent.BUTTON1)) {
 					titleScreen = false;
@@ -108,9 +121,6 @@ public class Game extends TileFramework {
 		}
 
 		if (levelSelection) {
-			deck = deckEditor.getDeck();
-			deck.resetDeck();
-			deck.getHand().clear();
 			// Player hovering over CARDS button
 			if (mouseVec.x < 2.8 && mouseVec.x > 2.29 && mouseVec.y < 1.15 && mouseVec.y > -.08) {
 				level.selectButton(4);
@@ -256,10 +266,11 @@ public class Game extends TileFramework {
 					}
 				}
 				if (keyboard.keyDownOnce(KeyEvent.VK_SPACE)) {
-//					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Freelancer(getWorld()));
-					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
-					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
-					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
+
+					getWorld().addUnitToTile(new TileLocation(0, RANDOM.nextInt(4) + 5), new Rogue(getWorld()));
+//					getWorld().addUnitToTile(new TileLocation(0, 5), new Bard(getWorld()));
+//					getWorld().addUnitToTile(new TileLocation(0, 5), new Freelancer(getWorld()));
+//					getWorld().addUnitToTile(new TileLocation(0, 8), new Freelancer(getWorld()));
 				}
 			}
 			if (keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)) {
@@ -284,8 +295,8 @@ public class Game extends TileFramework {
 					levelSelection = true;
 					gameplay = false;
 					pause = false;
+					this.restart();
 					bg.shutDownClips();
-					this.initialize();
 					return;
 				}
 			}
@@ -371,7 +382,7 @@ public class Game extends TileFramework {
 
 			g.setFont(new Font("Titillium Web", Font.PLAIN, 25));
 			g.drawString(String.format("%03d", getWorld().getWaveNum()), 99, 664);
-			g.drawString(String.format("%03d", getWorld().getBoneNum()), 1299, 664);
+			g.drawString(String.format("%04d", getWorld().getBoneNum()), 1292, 664);
 
 			// Renders map tile selection or area selection
 			if ((selectingArea && grabbedCard == null && !pause) && onBoard(mouseVec))

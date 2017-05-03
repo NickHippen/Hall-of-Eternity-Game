@@ -270,9 +270,9 @@ public class DeckMaker extends BoundingSprite{
 		for(int i = 0; i < deck.getDeck().size(); i++){
 			Card card = deck.getDeck().get(i);
 			//Needs to move 45.5 up each time, so 45 then 46 I guess
-			if(card instanceof MonsterSpawnCard) g2d.setColor(Color.YELLOW);
+			if(card instanceof MonsterSpawnCard) g2d.setColor(Color.ORANGE);
 			if(card instanceof CurseCard) g2d.setColor(Color.CYAN);
-			if(card instanceof TrapSpawnCard) g2d.setColor(Color.ORANGE);
+			if(card instanceof TrapSpawnCard) g2d.setColor(Color.RED);
 
 			g2d.setFont(new Font("Cooper Black", Font.PLAIN, 22));
 			g2d.drawString(card.getName(), 1222, yPos);
