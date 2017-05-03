@@ -296,6 +296,7 @@ public class Game extends TileFramework {
 					gameplay = false;
 					pause = false;
 					this.restart();
+					bg.shutDownClips();
 					return;
 				}
 			}
