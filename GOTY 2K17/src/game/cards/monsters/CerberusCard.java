@@ -43,4 +43,8 @@ public class CerberusCard extends MonsterSpawnCard {
 		  Card f = new CerberusCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 350;
+	}
 }

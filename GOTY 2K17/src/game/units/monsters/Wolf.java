@@ -9,8 +9,8 @@ import game.TileWorld;
 
 public class Wolf extends Monster {
 
-	private final static int MAX_HEALTH = 200;
-	private final static int DAMAGE = 30;
+	private final static int MAX_HEALTH = 150;
+	private final static int DAMAGE = 20;
 	
 	private static BufferedImage spriteSheet;
 	

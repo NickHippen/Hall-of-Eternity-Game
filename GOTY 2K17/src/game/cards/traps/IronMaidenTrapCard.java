@@ -42,4 +42,8 @@ public class IronMaidenTrapCard extends TrapSpawnCard {
 		  Card f = new IronMaidenTrapCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 300;
+	}
 }

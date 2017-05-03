@@ -13,8 +13,8 @@ import game.units.LivingUnit;
 
 public class Centaur extends Monster {
 
-	private final static int MAX_HEALTH = 300;
-	private final static int DAMAGE = 20;
+	private final static int MAX_HEALTH = 700;
+	private final static int DAMAGE = 25;
 	
 	private static BufferedImage spriteSheet;
 	

@@ -29,4 +29,6 @@ public abstract class Card extends BoundingSprite {
 	public abstract String getName();
 
 	public abstract Card copy (Card card);
+	
+	public abstract int getCost();
 }

@@ -13,8 +13,8 @@ import game.vectors.Vector2f;
 
 public class Spider extends Monster {
 
-	private final static int MAX_HEALTH = 150;
-	private final static int DAMAGE = 20;
+	private final static int MAX_HEALTH = 225;
+	private final static int DAMAGE = 25;
 	
 	private static BufferedImage spriteSheet;
 	

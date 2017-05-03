@@ -42,4 +42,8 @@ public class PitfallTrapCard extends TrapSpawnCard {
 		  Card f = new PitfallTrapCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 250;
+	}
 }

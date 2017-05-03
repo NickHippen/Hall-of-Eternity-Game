@@ -43,4 +43,7 @@ public class PoisonTrapCard extends TrapSpawnCard {
 		  return f;
 	}
 	
+	public int getCost(){
+		return 150;
+	}
 }

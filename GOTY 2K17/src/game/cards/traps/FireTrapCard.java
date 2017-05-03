@@ -42,4 +42,8 @@ public class FireTrapCard extends TrapSpawnCard {
 		  Card f = new FireTrapCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 250;
+	}
 }

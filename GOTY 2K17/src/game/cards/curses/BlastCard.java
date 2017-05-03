@@ -46,4 +46,8 @@ public class BlastCard extends AreaCard {
 		  Card f = new BlastCard(world);
 		  return f;
 	}
+	
+	public int getCost(){
+		return 50;
+	}
 }
