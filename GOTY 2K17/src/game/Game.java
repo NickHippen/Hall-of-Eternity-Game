@@ -93,7 +93,6 @@ public class Game extends TileFramework {
 	protected void processInput(float delta) {
 		super.processInput(delta);
 		mouseVec = getCenteredRelativeWorldMousePosition();
-		System.out.println(mouseVec.x + " " + mouseVec.y);
 		//THERE IS A BUG SOMEWHERE THAT CAUSES ISSUES WITH THE HIT BOXES OF BUTTONS, NOBODY COULD SOLVE IT SO VALUES ARE HARD CODED
 		if (titleScreen) {
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < -1.2 && mouseVec.y > -1.57) {
@@ -151,9 +150,11 @@ public class Game extends TileFramework {
 		}
 		
 		if(deckCreation){
-			if(mouse.buttonDownOnce(MouseEvent.BUTTON1)){
-				deckCreation=false;
+			deckEditor.processInput(mouseVec, mouse);
+			if(deckEditor.getQuit()){
+				deckEditor.setQuit(false);
 				levelSelection = true;
+				deckCreation = false;
 				return;
 			}
 		}
@@ -255,7 +256,6 @@ public class Game extends TileFramework {
 		}
 		
 		if(pause){
-			System.out.println(mouseVec.x + " " + mouseVec.y);
 			doneButton.selectButton(0);
 			if (mouseVec.x < .55 && mouseVec.x > -.55 && mouseVec.y < .515 && mouseVec.y > .073) {
 				doneButton.selectButton(1);
@@ -313,8 +313,7 @@ public class Game extends TileFramework {
 		}
 		
 		if (deckCreation){
-			deckEditor.setView(view);
-			deckEditor.draw(g2d);
+			deckEditor.render(view, g2d);
 		}
 
 		if (gameplay) {
