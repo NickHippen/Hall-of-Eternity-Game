@@ -38,7 +38,7 @@ public abstract class Hero extends LivingUnit {
 		this.classType = classType;
 		this.setHorizontalFrameNum(13);
 		this.setVerticalFrameNum(21);
-		this.animations = new BufferedImage[8][9];
+		this.animations = new BufferedImage[12][13];
 		this.createHeroAnimations();
 	}
 	
@@ -130,7 +130,12 @@ public abstract class Hero extends LivingUnit {
 			}
 		}
 		
-		//Add s
+		//Add shooting animations
+		for(int i = 16; i < 20; i++){
+			for(int j = 0; j < 13; j++){
+				animations[i-8][j] = (this.getSpriteSheet().getSubimage(j*48, i*48, 48, 48));
+			}
+		}
 	}
 	
 	public HeroClassType getClassType() {
@@ -165,6 +170,8 @@ public abstract class Hero extends LivingUnit {
 		}
 		
 		if(!isAttacking()) this.selectedAnimation += 4;
+		if(isAttacking() && this instanceof Archer) this.selectedAnimation += 8;
+		
 		animationTime += delta;
 		if (animationTime > animationSpeed) {
 			animationTime = 0;
