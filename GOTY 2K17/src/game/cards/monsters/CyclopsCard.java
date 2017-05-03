@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
+import game.cards.curses.BlastCard;
 import game.units.monsters.MonsterType;
 import game.units.monsters.Zombie;
 
@@ -37,4 +39,8 @@ public class CyclopsCard extends MonsterSpawnCard {
 		return "Cyclops";
 	}
 	
+	public Card copy (Card card){
+		  Card f = new CyclopsCard(world);
+		  return f;
+	}
 }

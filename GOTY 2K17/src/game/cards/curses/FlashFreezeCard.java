@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
 import game.units.LivingUnit;
 import game.units.Unit;
 
@@ -42,4 +43,8 @@ public class FlashFreezeCard extends AreaCard {
 		livingUnit.getStatusEffects().applyChillStatus();
 	}
 
+	public Card copy (Card card){
+		  Card f = new FlashFreezeCard(world);
+		  return f;
+	}
 }

@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
+import game.cards.curses.BlastCard;
 import game.units.traps.TrapType;
 
 public class StunTrapCard extends TrapSpawnCard {
@@ -36,4 +38,8 @@ public class StunTrapCard extends TrapSpawnCard {
 		return "Stun Trap";
 	}
 	
+	public Card copy (Card card){
+		  Card f = new StunTrapCard(world);
+		  return f;
+	}
 }

@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import game.TileWorld;
+import game.cards.Card;
 import game.units.monsters.Zombie;
 import game.vectors.Vector2f;
 
@@ -39,6 +40,11 @@ public class TransmuteCard extends ActionCard {
 	public boolean performAction(Vector2f pos) {
 		getWorld().addBones(RANDOM.nextInt(150));
 		return true;
+	}
+	
+	public Card copy (Card card){
+		  Card f = new TransmuteCard(world);
+		  return f;
 	}
 	
 }
